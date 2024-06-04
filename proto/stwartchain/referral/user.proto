@@ -1,0 +1,11 @@
+syntax = "proto3";
+package stwartchain.referral;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types";
+
+message User {
+  string accountAddress = 1; 
+  string referrer = 2; 
+  repeated string referrals = 3;
+}
+

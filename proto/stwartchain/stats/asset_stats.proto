@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package stwartchain.stats;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types";
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+message AssetDailyStats {
+  // fee policy module
+  repeated cosmos.base.v1beta1.Coin amountWithFee = 1 [(gogoproto.nullable) = false];
+  repeated cosmos.base.v1beta1.Coin amountNoFee = 2 [(gogoproto.nullable) = false];
+  repeated cosmos.base.v1beta1.Coin fee = 3 [(gogoproto.nullable) = false];
+  int32 countWithFee = 4;
+  int32 countNoFee = 5;
+
+  // core module
+  repeated cosmos.base.v1beta1.Coin burned = 6 [(gogoproto.nullable) = false];
+  uint64 countBurned = 7;
+  repeated cosmos.base.v1beta1.Coin issued = 8 [(gogoproto.nullable) = false];
+  uint64 countIssued = 9;
+  repeated cosmos.base.v1beta1.Coin withdraw = 10 [(gogoproto.nullable) = false];
+  uint64 countWithdraw = 11;
+
+  repeated cosmos.base.v1beta1.Coin refReward = 12 [(gogoproto.nullable) = false];
+  uint64 countRefReward = 13;
+  repeated cosmos.base.v1beta1.Coin sysRefReward = 16 [(gogoproto.nullable) = false];
+  uint64  countSysRefReward = 17;
+}

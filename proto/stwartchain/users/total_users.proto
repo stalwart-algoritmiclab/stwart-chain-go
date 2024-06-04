@@ -1,0 +1,9 @@
+syntax = "proto3";
+package stwartchain.users;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types";
+
+message TotalUsers {
+  
+  uint64 total = 1; 
+}

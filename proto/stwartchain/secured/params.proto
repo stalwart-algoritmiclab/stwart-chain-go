@@ -1,0 +1,15 @@
+syntax = "proto3";
+package stwartchain.secured;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "stwart/x/secured/Params";
+  option (gogoproto.equal) = true;
+
+  
+}

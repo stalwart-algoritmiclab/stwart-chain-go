@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package stwartchain.users;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/users/params.proto";
+import "stwartchain/users/stats.proto";
+import "stwartchain/users/unique_users.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types";
+
+// GenesisState defines the users module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params      params          = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Stats       statsList       = 2 [(gogoproto.nullable) = false] ;
+  repeated UniqueUsers uniqueUsersList = 3 [(gogoproto.nullable) = false] ;
+           uint64      totalUsers      = 4;
+}
+

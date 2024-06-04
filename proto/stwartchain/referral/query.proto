@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package stwartchain.referral;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/referral/params.proto";
+import "stwartchain/referral/user.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stwart/referral/params";
+  
+  }
+
+  // Queries a list of User items.
+  rpc User    (QueryGetUserRequest) returns (QueryGetUserResponse) {
+    option (google.api.http).get = "/stwart/referral/user/{accountAddress}";
+  
+  }
+  rpc UserAll (QueryAllUserRequest) returns (QueryAllUserResponse) {
+    option (google.api.http).get = "/stwart/referral/user";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetUserRequest {
+  string accountAddress = 1;
+}
+
+message QueryGetUserResponse {
+  User user = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllUserRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllUserResponse {
+  repeated User                                   user       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

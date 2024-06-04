@@ -1,0 +1,131 @@
+package simulation
+
+import (
+	"math/rand"
+
+	"github.com/cosmos/cosmos-sdk/baseapp"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	moduletestutil "github.com/cosmos/cosmos-sdk/types/module/testutil"
+	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
+	"github.com/cosmos/cosmos-sdk/x/simulation"
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/keeper"
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+)
+
+func SimulateMsgCreateTokens(
+	ak types.AccountKeeper,
+	bk types.BankKeeper,
+	k keeper.Keeper,
+) simtypes.Operation {
+	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
+	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
+		simAccount, _ := simtypes.RandomAcc(r, accs)
+
+		msg := &types.MsgCreateTokens{
+			Creator: simAccount.Address.String(),
+		}
+
+		txCtx := simulation.OperationInput{
+			R:               r,
+			App:             app,
+			TxGen:           moduletestutil.MakeTestEncodingConfig().TxConfig,
+			Cdc:             nil,
+			Msg:             msg,
+			Context:         ctx,
+			SimAccount:      simAccount,
+			ModuleName:      types.ModuleName,
+			CoinsSpentInMsg: sdk.NewCoins(),
+			AccountKeeper:   ak,
+			Bankkeeper:      bk,
+		}
+		return simulation.GenAndDeliverTxWithRandFees(txCtx)
+	}
+}
+
+func SimulateMsgUpdateTokens(
+	ak types.AccountKeeper,
+	bk types.BankKeeper,
+	k keeper.Keeper,
+) simtypes.Operation {
+	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
+	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
+		var (
+			simAccount = simtypes.Account{}
+			tokens     = types.Tokens{}
+			msg        = &types.MsgUpdateTokens{}
+			allTokens  = k.GetAllTokens(ctx)
+			found      = false
+		)
+		for _, obj := range allTokens {
+			simAccount, found = FindAccount(accs, obj.Creator)
+			if found {
+				tokens = obj
+				break
+			}
+		}
+		if !found {
+			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "tokens creator not found"), nil, nil
+		}
+		msg.Creator = simAccount.Address.String()
+		msg.Id = tokens.Id
+
+		txCtx := simulation.OperationInput{
+			R:               r,
+			App:             app,
+			TxGen:           moduletestutil.MakeTestEncodingConfig().TxConfig,
+			Cdc:             nil,
+			Msg:             msg,
+			Context:         ctx,
+			SimAccount:      simAccount,
+			ModuleName:      types.ModuleName,
+			CoinsSpentInMsg: sdk.NewCoins(),
+			AccountKeeper:   ak,
+			Bankkeeper:      bk,
+		}
+		return simulation.GenAndDeliverTxWithRandFees(txCtx)
+	}
+}
+
+func SimulateMsgDeleteTokens(
+	ak types.AccountKeeper,
+	bk types.BankKeeper,
+	k keeper.Keeper,
+) simtypes.Operation {
+	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
+	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
+		var (
+			simAccount = simtypes.Account{}
+			tokens     = types.Tokens{}
+			msg        = &types.MsgUpdateTokens{}
+			allTokens  = k.GetAllTokens(ctx)
+			found      = false
+		)
+		for _, obj := range allTokens {
+			simAccount, found = FindAccount(accs, obj.Creator)
+			if found {
+				tokens = obj
+				break
+			}
+		}
+		if !found {
+			return simtypes.NoOpMsg(types.ModuleName, sdk.MsgTypeURL(msg), "tokens creator not found"), nil, nil
+		}
+		msg.Creator = simAccount.Address.String()
+		msg.Id = tokens.Id
+
+		txCtx := simulation.OperationInput{
+			R:               r,
+			App:             app,
+			TxGen:           moduletestutil.MakeTestEncodingConfig().TxConfig,
+			Cdc:             nil,
+			Msg:             msg,
+			Context:         ctx,
+			SimAccount:      simAccount,
+			ModuleName:      types.ModuleName,
+			CoinsSpentInMsg: sdk.NewCoins(),
+			AccountKeeper:   ak,
+			Bankkeeper:      bk,
+		}
+		return simulation.GenAndDeliverTxWithRandFees(txCtx)
+	}
+}

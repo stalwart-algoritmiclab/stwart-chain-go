@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package stwartchain.stake;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/stake/params.proto";
+import "stwartchain/stake/stake.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stwart/stake/params";
+  
+  }
+  
+  // Queries a list of Stake items.
+  rpc Stake    (QueryGetStakeRequest) returns (QueryGetStakeResponse) {
+    option (google.api.http).get = "/stwart/stake/stake/{address}";
+  
+  }
+  rpc StakeAll (QueryAllStakeRequest) returns (QueryAllStakeResponse) {
+    option (google.api.http).get = "/stwart/stake/stake";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetStakeRequest {
+  string address = 1;
+}
+
+message QueryGetStakeResponse {
+  Stake stake = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStakeRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllStakeResponse {
+  repeated Stake                                  stake      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

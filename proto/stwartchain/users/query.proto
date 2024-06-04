@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package stwartchain.users;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/users/params.proto";
+import "stwartchain/users/stats.proto";
+import "stwartchain/users/unique_users.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stwart/users/params";
+  
+  }
+  
+  // Queries a list of Stats items.
+  rpc Stats    (QueryGetStatsRequest) returns (QueryGetStatsResponse) {
+    option (google.api.http).get = "/stwart/users/stats/{date}";
+  
+  }
+  rpc StatsAll (QueryAllStatsRequest) returns (QueryAllStatsResponse) {
+    option (google.api.http).get = "/stwart/users/stats";
+  
+  }
+  
+  // Queries a list of StatsByDate items.
+  rpc StatsByDate (QueryStatsByDateRequest) returns (QueryStatsByDateResponse) {
+    option (google.api.http).get = "/stwart/users/stats_by_date/{startDate}/{endDate}";
+  
+  }
+  
+  // Queries a list of UniqueUsers items.
+  rpc UniqueUsers    (QueryGetUniqueUsersRequest) returns (QueryGetUniqueUsersResponse) {
+    option (google.api.http).get = "/stwart/users/unique_users/{date}";
+  
+  }
+  rpc UniqueUsersAll (QueryAllUniqueUsersRequest) returns (QueryAllUniqueUsersResponse) {
+    option (google.api.http).get = "/stwart/users/unique_users";
+  
+  }
+  
+  // Queries a list of Total items.
+  rpc Total (QueryTotalRequest) returns (QueryTotalResponse) {
+    option (google.api.http).get = "/stwart/users/total";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetStatsRequest {
+  string date = 1;
+}
+
+message QueryGetStatsResponse {
+  Stats stats = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllStatsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllStatsResponse {
+  repeated Stats                                  stats      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryStatsByDateRequest {
+  string                                startDate  = 1;
+  string                                endDate    = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryStatsByDateResponse {
+  repeated Stats                                  stats      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetUniqueUsersRequest {
+  string date = 1;
+}
+
+message QueryGetUniqueUsersResponse {
+  UniqueUsers uniqueUsers = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllUniqueUsersRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllUniqueUsersResponse {
+  repeated UniqueUsers                            uniqueUsers = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+
+message QueryTotalRequest {}
+
+message QueryTotalResponse {
+  string count = 1;
+}
+

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package stwartchain.systemrewards;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/systemrewards/params.proto";
+import "stwartchain/systemrewards/stats.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types";
+
+// GenesisState defines the systemrewards module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params params    = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Stats  statsList = 2 [(gogoproto.nullable) = false] ;
+}
+

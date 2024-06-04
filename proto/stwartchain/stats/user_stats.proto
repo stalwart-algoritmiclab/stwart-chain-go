@@ -1,0 +1,9 @@
+syntax = "proto3";
+package stwartchain.stats;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types";
+
+message UserStats {
+  uint64 countUniqueActiveUsers = 1; 
+  uint64 countNewUsers = 2; 
+}

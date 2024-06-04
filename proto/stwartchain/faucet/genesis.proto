@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package stwartchain.faucet;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/faucet/params.proto";
+import "stwartchain/faucet/tokens.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types";
+
+// GenesisState defines the faucet module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params params      = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated Tokens tokensList  = 2 [(gogoproto.nullable) = false] ;
+           uint64 tokensCount = 3;
+}
+

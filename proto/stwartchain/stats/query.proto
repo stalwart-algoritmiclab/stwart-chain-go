@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package stwartchain.stats;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/stats/params.proto";
+import "stwartchain/stats/stats.proto";
+import "stwartchain/stats/fee_stats.proto";
+import "stwartchain/stats/fee_daily_stats.proto";
+import "stwartchain/stats/user_stats.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types";
+
+// Query defines the gRPC querier service.
+service Query {
+
+  rpc AssetStats (QueryDateRequest) returns (QueryAssetStatsResponse) {
+    option (google.api.http).get = "/stwart/stats/asset/{startDate}/{endDate}";
+  }
+
+  rpc UserStats (QueryDateRequest) returns (QueryUserStatsResponse) {
+    option (google.api.http).get = "/stwart/stats/user/{startDate}/{endDate}";
+  }
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stwart/stats/params";
+  
+  }
+  
+  // Queries a list of FeeStats items.
+  rpc FeeStats    (QueryGetFeeStatsRequest) returns (QueryGetFeeStatsResponse) {
+    option (google.api.http).get = "/stwart/stats/fee_stats/{date}";
+  
+  }
+  rpc FeeStatsAll (QueryAllFeeStatsRequest) returns (QueryAllFeeStatsResponse) {
+    option (google.api.http).get = "/stwart/stats/fee_stats";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryDateRequest {
+  string startDate = 1;
+  string endDate   = 2;
+}
+
+message QueryDateWithPaginationRequest {
+  string                                startDate  = 1;
+  string                                endDate    = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryAssetStatsResponse {
+  AssetStats stats = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetFeeStatsRequest {
+  string date = 1;
+}
+
+message QueryGetFeeStatsResponse {
+  FeeStats feeStats = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFeeStatsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllFeeStatsResponse {
+  repeated FeeStats                               feeStats   = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetFeeStatsByIndexesRequest {
+  string                                start_index = 1;
+  string                                end_index   = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination  = 3;
+}
+
+message QueryGetFeeStatsByDateRequest {
+  string                                start_date = 1;
+  string                                end_date   = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryUserStatsResponse {
+  UserStats stats = 1 [(gogoproto.nullable) = false];
+}

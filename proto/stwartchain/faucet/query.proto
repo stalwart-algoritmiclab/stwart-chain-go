@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package stwartchain.faucet;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/faucet/params.proto";
+import "stwartchain/faucet/tokens.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/faucet/params";
+  
+  }
+  
+  // Queries a list of Tokens items.
+  rpc Tokens    (QueryGetTokensRequest) returns (QueryGetTokensResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/faucet/tokens/{id}";
+  
+  }
+  rpc TokensAll (QueryAllTokensRequest) returns (QueryAllTokensResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/faucet/tokens";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetTokensRequest {
+  uint64 id = 1;
+}
+
+message QueryGetTokensResponse {
+  Tokens Tokens = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTokensRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTokensResponse {
+  repeated Tokens                                 Tokens     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

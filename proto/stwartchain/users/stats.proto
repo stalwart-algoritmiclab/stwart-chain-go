@@ -1,0 +1,11 @@
+syntax = "proto3";
+package stwartchain.users;
+import "stwartchain/users/daily_stats.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types";
+
+message Stats {
+  string date = 1;
+  DailyStats dailyStats = 2;
+}
+

@@ -1,0 +1,37 @@
+validation: sovereign
+version: 1
+accounts:
+- name: alice
+  coins:
+  - 20000token
+  - 200000000stake
+  mnemonic: duck thought false card distance ancient assume now maple cable bamboo
+    affair cash bulb flower modify execute ethics giant merry bus remind labor goat
+- name: bob
+  coins:
+  - 10000token
+  - 100000000stake
+  mnemonic: describe jar peanut song duty tourist capital yard dog point town boy
+    early fox panic buzz appear cruise ribbon vacuum stable reward unique certain
+- name: mari
+  coins:
+  - 10000token
+  - 1000000stake
+  mnemonic: cannon inhale grain lottery accident squeeze oyster double small tourist
+    portion tumble sphere captain evil result fossil twice sauce exit robot million
+    draft business
+faucet:
+  name: bob
+  coins:
+  - 5token
+  - 100000stake
+client:
+  typescript:
+    path: ts-client
+  hooks:
+    path: react/src/hooks
+  openapi:
+    path: docs/static/openapi.yml
+validators:
+- name: alice
+  bonded: 100000000stake

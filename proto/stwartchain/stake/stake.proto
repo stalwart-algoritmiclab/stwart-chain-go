@@ -1,0 +1,13 @@
+syntax = "proto3";
+package stwartchain.stake;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types";
+import "gogoproto/gogo.proto"; 
+import "cosmos/base/v1beta1/coin.proto"; 
+
+message Stake {
+  string address = 1; 
+  cosmos.base.v1beta1.Coin sellAmount = 2 [(gogoproto.nullable) = false]; 
+  
+}
+

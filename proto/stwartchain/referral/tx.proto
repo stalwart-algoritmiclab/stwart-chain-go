@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package stwartchain.referral;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/referral/params.proto";
+import "stwartchain/referral/user.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc CreateUser   (MsgCreateUser  ) returns (MsgCreateUserResponse  );
+  rpc UpdateUser   (MsgUpdateUser  ) returns (MsgUpdateUserResponse  );
+  rpc DeleteUser   (MsgDeleteUser  ) returns (MsgDeleteUserResponse  );
+  rpc SetReferrer  (MsgSetReferrer ) returns (MsgSetReferrerResponse );
+}
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) =                         "authority";
+  option           (amino.name) = "stwart/x/referral/MsgUpdateParams";
+  
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+  
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+message MsgCreateUser {
+  option (cosmos.msg.v1.signer) = "creator";
+           string creator        = 1;
+           string accountAddress = 2;
+           string referrer       = 3;
+  repeated string referrals      = 4;
+}
+
+message MsgCreateUserResponse {}
+
+message MsgUpdateUser {
+  option (cosmos.msg.v1.signer) = "creator";
+           string creator        = 1;
+           string accountAddress = 2;
+           string referrer       = 3;
+  repeated string referrals      = 4;
+}
+
+message MsgUpdateUserResponse {}
+
+message MsgDeleteUser {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator        = 1;
+  string accountAddress = 2;
+}
+
+message MsgDeleteUserResponse {}
+
+message MsgSetReferrer {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator         = 1;
+  string referrerAddress = 2;
+  string referralAddress = 3;
+}
+
+message MsgSetReferrerResponse {}
+

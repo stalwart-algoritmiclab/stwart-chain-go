@@ -1,0 +1,26 @@
+# Dependencies
+release/
+vendor/
+
+# Front-end
+vue/dist
+vue/node_modules
+
+!cmd/stwartd
+stwartd
+scripts/volume
+volume
+volumes/chain/
+
+# IDE
+.DS_Store
+.idea/
+.run/
+.vscode/
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+lo.sh

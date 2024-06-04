@@ -1,0 +1,959 @@
+swagger: '2.0'
+info:
+  title: HTTP API Console stwartchain.feepolicy
+  name: ''
+  description: ''
+paths:
+  /stwart/feepolicy/addresses:
+    get:
+      operationId: Query_AddressesAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Addresses:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    address:
+                      type: string
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                  total:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  /stwart/feepolicy/addresses/{id}:
+    get:
+      operationId: Query_Addresses
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              Addresses:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  address:
+                    type: string
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
+  /stwart/feepolicy/params:
+    get:
+      operationId: Query_Params
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /stwart/feepolicy/tariff:
+    get:
+      operationId: Query_TariffAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              tariff:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    id:
+                      type: string
+                      format: uint64
+                    amount:
+                      type: string
+                    minRefBalance:
+                      type: string
+                    fees:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          amountFrom:
+                            type: string
+                          fee:
+                            type: string
+                          refReward:
+                            type: string
+                          stakeReward:
+                            type: string
+                          minAmount:
+                            type: string
+                            format: uint64
+                          noRefReward:
+                            type: boolean
+                          creator:
+                            type: string
+                          id:
+                            type: string
+                            format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                  total:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  /stwart/feepolicy/tariff/{denom}:
+    get:
+      operationId: Query_Tariff
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              tariff:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  id:
+                    type: string
+                    format: uint64
+                  amount:
+                    type: string
+                  minRefBalance:
+                    type: string
+                  fees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        amountFrom:
+                          type: string
+                        fee:
+                          type: string
+                        refReward:
+                          type: string
+                        stakeReward:
+                          type: string
+                        minAmount:
+                          type: string
+                          format: uint64
+                        noRefReward:
+                          type: boolean
+                        creator:
+                          type: string
+                        id:
+                          type: string
+                          format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: denom
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /stwart/feepolicy/tariffs:
+    get:
+      operationId: Query_TariffsAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              tariffs:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    tariffs:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          denom:
+                            type: string
+                          id:
+                            type: string
+                            format: uint64
+                          amount:
+                            type: string
+                          minRefBalance:
+                            type: string
+                          fees:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                amountFrom:
+                                  type: string
+                                fee:
+                                  type: string
+                                refReward:
+                                  type: string
+                                stakeReward:
+                                  type: string
+                                minAmount:
+                                  type: string
+                                  format: uint64
+                                noRefReward:
+                                  type: boolean
+                                creator:
+                                  type: string
+                                id:
+                                  type: string
+                                  format: uint64
+                    creator:
+                      type: string
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                  total:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  /stwart/feepolicy/tariffs/{denom}:
+    get:
+      operationId: Query_Tariffs
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              tariffs:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  tariffs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        denom:
+                          type: string
+                        id:
+                          type: string
+                          format: uint64
+                        amount:
+                          type: string
+                        minRefBalance:
+                          type: string
+                        fees:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              amountFrom:
+                                type: string
+                              fee:
+                                type: string
+                              refReward:
+                                type: string
+                              stakeReward:
+                                type: string
+                              minAmount:
+                                type: string
+                                format: uint64
+                              noRefReward:
+                                type: boolean
+                              creator:
+                                type: string
+                              id:
+                                type: string
+                                format: uint64
+                  creator:
+                    type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: denom
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+definitions:
+  Any:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  Status:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            '@type':
+              type: string
+          additionalProperties: {}
+  Address:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      address:
+        type: string
+      creator:
+        type: string
+  Fees:
+    type: object
+    properties:
+      amountFrom:
+        type: string
+      fee:
+        type: string
+      refReward:
+        type: string
+      stakeReward:
+        type: string
+      minAmount:
+        type: string
+        format: uint64
+      noRefReward:
+        type: boolean
+      creator:
+        type: string
+      id:
+        type: string
+        format: uint64
+  PageRequest:
+    type: object
+    properties:
+      key:
+        type: string
+        format: byte
+      offset:
+        type: string
+        format: uint64
+      limit:
+        type: string
+        format: uint64
+      count_total:
+        type: boolean
+      reverse:
+        type: boolean
+  PageResponse:
+    type: object
+    properties:
+      next_key:
+        type: string
+        format: byte
+      total:
+        type: string
+        format: uint64
+  QueryAllAddressesResponse:
+    type: object
+    properties:
+      Addresses:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            address:
+              type: string
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+          total:
+            type: string
+            format: uint64
+  QueryAllTariffResponse:
+    type: object
+    properties:
+      tariff:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            id:
+              type: string
+              format: uint64
+            amount:
+              type: string
+            minRefBalance:
+              type: string
+            fees:
+              type: array
+              items:
+                type: object
+                properties:
+                  amountFrom:
+                    type: string
+                  fee:
+                    type: string
+                  refReward:
+                    type: string
+                  stakeReward:
+                    type: string
+                  minAmount:
+                    type: string
+                    format: uint64
+                  noRefReward:
+                    type: boolean
+                  creator:
+                    type: string
+                  id:
+                    type: string
+                    format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+          total:
+            type: string
+            format: uint64
+  QueryAllTariffsResponse:
+    type: object
+    properties:
+      tariffs:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            tariffs:
+              type: array
+              items:
+                type: object
+                properties:
+                  denom:
+                    type: string
+                  id:
+                    type: string
+                    format: uint64
+                  amount:
+                    type: string
+                  minRefBalance:
+                    type: string
+                  fees:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        amountFrom:
+                          type: string
+                        fee:
+                          type: string
+                        refReward:
+                          type: string
+                        stakeReward:
+                          type: string
+                        minAmount:
+                          type: string
+                          format: uint64
+                        noRefReward:
+                          type: boolean
+                        creator:
+                          type: string
+                        id:
+                          type: string
+                          format: uint64
+            creator:
+              type: string
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+          total:
+            type: string
+            format: uint64
+  QueryGetAddressesResponse:
+    type: object
+    properties:
+      Addresses:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          address:
+            type: string
+          creator:
+            type: string
+  QueryGetTariffResponse:
+    type: object
+    properties:
+      tariff:
+        type: object
+        properties:
+          denom:
+            type: string
+          id:
+            type: string
+            format: uint64
+          amount:
+            type: string
+          minRefBalance:
+            type: string
+          fees:
+            type: array
+            items:
+              type: object
+              properties:
+                amountFrom:
+                  type: string
+                fee:
+                  type: string
+                refReward:
+                  type: string
+                stakeReward:
+                  type: string
+                minAmount:
+                  type: string
+                  format: uint64
+                noRefReward:
+                  type: boolean
+                creator:
+                  type: string
+                id:
+                  type: string
+                  format: uint64
+  QueryGetTariffsResponse:
+    type: object
+    properties:
+      tariffs:
+        type: object
+        properties:
+          denom:
+            type: string
+          tariffs:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                id:
+                  type: string
+                  format: uint64
+                amount:
+                  type: string
+                minRefBalance:
+                  type: string
+                fees:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amountFrom:
+                        type: string
+                      fee:
+                        type: string
+                      refReward:
+                        type: string
+                      stakeReward:
+                        type: string
+                      minAmount:
+                        type: string
+                        format: uint64
+                      noRefReward:
+                        type: boolean
+                      creator:
+                        type: string
+                      id:
+                        type: string
+                        format: uint64
+          creator:
+            type: string
+  QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        type: object
+  feepolicy.Params:
+    type: object
+  feepolicy.Tariff:
+    type: object
+    properties:
+      denom:
+        type: string
+      id:
+        type: string
+        format: uint64
+      amount:
+        type: string
+      minRefBalance:
+        type: string
+      fees:
+        type: array
+        items:
+          type: object
+          properties:
+            amountFrom:
+              type: string
+            fee:
+              type: string
+            refReward:
+              type: string
+            stakeReward:
+              type: string
+            minAmount:
+              type: string
+              format: uint64
+            noRefReward:
+              type: boolean
+            creator:
+              type: string
+            id:
+              type: string
+              format: uint64
+  feepolicy.Tariffs:
+    type: object
+    properties:
+      denom:
+        type: string
+      tariffs:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            id:
+              type: string
+              format: uint64
+            amount:
+              type: string
+            minRefBalance:
+              type: string
+            fees:
+              type: array
+              items:
+                type: object
+                properties:
+                  amountFrom:
+                    type: string
+                  fee:
+                    type: string
+                  refReward:
+                    type: string
+                  stakeReward:
+                    type: string
+                  minAmount:
+                    type: string
+                    format: uint64
+                  noRefReward:
+                    type: boolean
+                  creator:
+                    type: string
+                  id:
+                    type: string
+                    format: uint64
+      creator:
+        type: string
+  MsgCreateAddressesResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+  MsgCreateTariffsResponse:
+    type: object
+  MsgDeleteAddressesResponse:
+    type: object
+  MsgDeleteTariffsResponse:
+    type: object
+  MsgUpdateAddressesResponse:
+    type: object
+  MsgUpdateParamsResponse:
+    type: object
+  MsgUpdateTariffsResponse:
+    type: object
+  Params:
+    type: object
+  Tariff:
+    type: object
+    properties:
+      denom:
+        type: string
+      id:
+        type: string
+        format: uint64
+      amount:
+        type: string
+      minRefBalance:
+        type: string
+      fees:
+        type: array
+        items:
+          type: object
+          properties:
+            amountFrom:
+              type: string
+            fee:
+              type: string
+            refReward:
+              type: string
+            stakeReward:
+              type: string
+            minAmount:
+              type: string
+              format: uint64
+            noRefReward:
+              type: boolean
+            creator:
+              type: string
+            id:
+              type: string
+              format: uint64

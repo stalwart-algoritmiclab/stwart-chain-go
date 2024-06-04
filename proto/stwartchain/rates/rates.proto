@@ -1,0 +1,12 @@
+syntax = "proto3";
+package stwartchain.rates;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types";
+
+message Rates {
+  string denom = 1; 
+  double rate = 2;
+  string creator = 3;
+  int32 decimals = 4;
+}
+

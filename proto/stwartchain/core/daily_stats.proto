@@ -1,0 +1,16 @@
+syntax = "proto3";
+package stwartchain.core;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types";
+import "gogoproto/gogo.proto"; 
+import "cosmos/base/v1beta1/coin.proto"; 
+
+message DailyStats {
+  
+  repeated cosmos.base.v1beta1.Coin issuedCoins = 1 [(gogoproto.nullable) = false]; 
+  uint64 countIssued = 2; 
+  repeated cosmos.base.v1beta1.Coin burnedCoins = 3 [(gogoproto.nullable) = false]; 
+  uint64 countBurned = 4; 
+  repeated cosmos.base.v1beta1.Coin withdrawCoins = 5 [(gogoproto.nullable) = false]; 
+  uint64 countWithdraw = 6; 
+}

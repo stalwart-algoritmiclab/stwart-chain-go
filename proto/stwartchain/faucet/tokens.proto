@@ -1,0 +1,11 @@
+syntax = "proto3";
+package stwartchain.faucet;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types";
+
+message Tokens {
+  uint64 id = 1;
+  string denom = 2; 
+  string amount = 3; 
+  string creator = 4;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package stwartchain.stats;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types";
+import "stwartchain/stats/asset_stats.proto";
+import "gogoproto/gogo.proto";
+
+message AssetStats {
+  AssetDailyStats dailyStats = 1;
+}
+

@@ -1,0 +1,11 @@
+syntax = "proto3";
+package stwartchain.users;
+import "stwartchain/users/unique_user_addresses.proto";
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types";
+
+message UniqueUsers {
+  string date = 1;
+  UniqueUserAddresses uniqueUserAddresses = 2;
+}
+

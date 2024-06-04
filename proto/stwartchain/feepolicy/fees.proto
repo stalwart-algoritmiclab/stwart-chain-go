@@ -1,0 +1,16 @@
+syntax = "proto3";
+package stwartchain.feepolicy;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types";
+
+message Fees {
+  
+  string amountFrom = 1; 
+  string fee = 2; 
+  string refReward = 3; 
+  string stakeReward = 4; 
+  uint64 minAmount = 5; 
+  bool noRefReward = 6; 
+  string creator = 7; 
+  uint64 id = 8; 
+}

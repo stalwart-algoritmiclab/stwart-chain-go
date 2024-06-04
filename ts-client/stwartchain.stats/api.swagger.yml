@@ -1,0 +1,989 @@
+swagger: '2.0'
+info:
+  title: HTTP API Console stwartchain.stats
+  name: ''
+  description: ''
+paths:
+  /stwart/stats/asset/{startDate}/{endDate}:
+    get:
+      operationId: Query_AssetStats
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              stats:
+                type: object
+                properties:
+                  dailyStats:
+                    type: object
+                    properties:
+                      amountWithFee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      amountNoFee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      fee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countWithFee:
+                        type: integer
+                        format: int32
+                      countNoFee:
+                        type: integer
+                        format: int32
+                      burned:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countBurned:
+                        type: string
+                        format: uint64
+                      issued:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countIssued:
+                        type: string
+                        format: uint64
+                      withdraw:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countWithdraw:
+                        type: string
+                        format: uint64
+                      refReward:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countRefReward:
+                        type: string
+                        format: uint64
+                      sysRefReward:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countSysRefReward:
+                        type: string
+                        format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: startDate
+          in: path
+          required: true
+          type: string
+        - name: endDate
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /stwart/stats/fee_stats:
+    get:
+      operationId: Query_FeeStatsAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              feeStats:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                    index:
+                      type: string
+                    stats:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uint64
+                        amountWithFee:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              denom:
+                                type: string
+                              amount:
+                                type: string
+                        amountNoFee:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              denom:
+                                type: string
+                              amount:
+                                type: string
+                        fee:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              denom:
+                                type: string
+                              amount:
+                                type: string
+                        countWithFee:
+                          type: integer
+                          format: int32
+                        countNoFee:
+                          type: integer
+                          format: int32
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                  total:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  /stwart/stats/fee_stats/{date}:
+    get:
+      operationId: Query_FeeStats
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              feeStats:
+                type: object
+                properties:
+                  date:
+                    type: string
+                  index:
+                    type: string
+                  stats:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uint64
+                      amountWithFee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      amountNoFee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      fee:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            denom:
+                              type: string
+                            amount:
+                              type: string
+                      countWithFee:
+                        type: integer
+                        format: int32
+                      countNoFee:
+                        type: integer
+                        format: int32
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: date
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /stwart/stats/params:
+    get:
+      operationId: Query_Params
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /stwart/stats/user/{startDate}/{endDate}:
+    get:
+      operationId: Query_UserStats
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              stats:
+                type: object
+                properties:
+                  countUniqueActiveUsers:
+                    type: string
+                    format: uint64
+                  countNewUsers:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: startDate
+          in: path
+          required: true
+          type: string
+        - name: endDate
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+definitions:
+  Any:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  Status:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            '@type':
+              type: string
+          additionalProperties: {}
+  AssetDailyStats:
+    type: object
+    properties:
+      amountWithFee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      amountNoFee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      fee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countWithFee:
+        type: integer
+        format: int32
+      countNoFee:
+        type: integer
+        format: int32
+      burned:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countBurned:
+        type: string
+        format: uint64
+      issued:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countIssued:
+        type: string
+        format: uint64
+      withdraw:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countWithdraw:
+        type: string
+        format: uint64
+      refReward:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countRefReward:
+        type: string
+        format: uint64
+      sysRefReward:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countSysRefReward:
+        type: string
+        format: uint64
+  Coin:
+    type: object
+    properties:
+      denom:
+        type: string
+      amount:
+        type: string
+  FeeDailyStats:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      amountWithFee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      amountNoFee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      fee:
+        type: array
+        items:
+          type: object
+          properties:
+            denom:
+              type: string
+            amount:
+              type: string
+      countWithFee:
+        type: integer
+        format: int32
+      countNoFee:
+        type: integer
+        format: int32
+  PageRequest:
+    type: object
+    properties:
+      key:
+        type: string
+        format: byte
+      offset:
+        type: string
+        format: uint64
+      limit:
+        type: string
+        format: uint64
+      count_total:
+        type: boolean
+      reverse:
+        type: boolean
+  PageResponse:
+    type: object
+    properties:
+      next_key:
+        type: string
+        format: byte
+      total:
+        type: string
+        format: uint64
+  QueryAllFeeStatsResponse:
+    type: object
+    properties:
+      feeStats:
+        type: array
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+            index:
+              type: string
+            stats:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uint64
+                amountWithFee:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      denom:
+                        type: string
+                      amount:
+                        type: string
+                amountNoFee:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      denom:
+                        type: string
+                      amount:
+                        type: string
+                fee:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      denom:
+                        type: string
+                      amount:
+                        type: string
+                countWithFee:
+                  type: integer
+                  format: int32
+                countNoFee:
+                  type: integer
+                  format: int32
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+          total:
+            type: string
+            format: uint64
+  QueryAssetStatsResponse:
+    type: object
+    properties:
+      stats:
+        type: object
+        properties:
+          dailyStats:
+            type: object
+            properties:
+              amountWithFee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              amountNoFee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              fee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countWithFee:
+                type: integer
+                format: int32
+              countNoFee:
+                type: integer
+                format: int32
+              burned:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countBurned:
+                type: string
+                format: uint64
+              issued:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countIssued:
+                type: string
+                format: uint64
+              withdraw:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countWithdraw:
+                type: string
+                format: uint64
+              refReward:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countRefReward:
+                type: string
+                format: uint64
+              sysRefReward:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countSysRefReward:
+                type: string
+                format: uint64
+  QueryGetFeeStatsResponse:
+    type: object
+    properties:
+      feeStats:
+        type: object
+        properties:
+          date:
+            type: string
+          index:
+            type: string
+          stats:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uint64
+              amountWithFee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              amountNoFee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              fee:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    denom:
+                      type: string
+                    amount:
+                      type: string
+              countWithFee:
+                type: integer
+                format: int32
+              countNoFee:
+                type: integer
+                format: int32
+  QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        type: object
+  QueryUserStatsResponse:
+    type: object
+    properties:
+      stats:
+        type: object
+        properties:
+          countUniqueActiveUsers:
+            type: string
+            format: uint64
+          countNewUsers:
+            type: string
+            format: uint64
+  stats.AssetStats:
+    type: object
+    properties:
+      dailyStats:
+        type: object
+        properties:
+          amountWithFee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          amountNoFee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          fee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countWithFee:
+            type: integer
+            format: int32
+          countNoFee:
+            type: integer
+            format: int32
+          burned:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countBurned:
+            type: string
+            format: uint64
+          issued:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countIssued:
+            type: string
+            format: uint64
+          withdraw:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countWithdraw:
+            type: string
+            format: uint64
+          refReward:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countRefReward:
+            type: string
+            format: uint64
+          sysRefReward:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countSysRefReward:
+            type: string
+            format: uint64
+  stats.FeeStats:
+    type: object
+    properties:
+      date:
+        type: string
+      index:
+        type: string
+      stats:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          amountWithFee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          amountNoFee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          fee:
+            type: array
+            items:
+              type: object
+              properties:
+                denom:
+                  type: string
+                amount:
+                  type: string
+          countWithFee:
+            type: integer
+            format: int32
+          countNoFee:
+            type: integer
+            format: int32
+  stats.Params:
+    type: object
+  stats.UserStats:
+    type: object
+    properties:
+      countUniqueActiveUsers:
+        type: string
+        format: uint64
+      countNewUsers:
+        type: string
+        format: uint64
+  MsgUpdateParamsResponse:
+    type: object
+  Params:
+    type: object

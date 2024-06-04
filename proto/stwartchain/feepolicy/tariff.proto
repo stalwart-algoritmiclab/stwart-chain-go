@@ -1,0 +1,14 @@
+syntax = "proto3";
+package stwartchain.feepolicy;
+
+option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types";
+import "stwartchain/feepolicy/fees.proto";
+
+message Tariff {
+  string denom = 1;
+  uint64 id = 2;
+  string amount = 3;
+  string minRefBalance = 4;
+  repeated Fees fees = 5;
+}
+
