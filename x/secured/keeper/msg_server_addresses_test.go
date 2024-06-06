@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper_test
 
 import (
@@ -6,6 +12,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
 )
@@ -36,13 +44,18 @@ func TestAddressesMsgServerUpdate(t *testing.T) {
 		},
 		{
 			desc:    "Unauthorized",
-			request: &types.MsgUpdateAddresses{Creator: "B"},
+			request: &types.MsgUpdateAddresses{Creator: "Some address", Address: []string{"Some address"}},
 			err:     sdkerrors.ErrUnauthorized,
 		},
 		{
 			desc:    "Unauthorized",
 			request: &types.MsgUpdateAddresses{Creator: creator, Id: 10},
 			err:     sdkerrors.ErrKeyNotFound,
+		},
+		{
+			desc:    "Nil request",
+			request: nil,
+			err:     status.Error(codes.InvalidArgument, "invalid request"),
 		},
 	}
 	for _, tc := range tests {
@@ -53,8 +66,7 @@ func TestAddressesMsgServerUpdate(t *testing.T) {
 			_, err := srv.CreateAddresses(wctx, &types.MsgCreateAddresses{Creator: creator})
 			require.NoError(t, err)
 
-			_, err = srv.UpdateAddresses(wctx, tc.request)
-			if tc.err != nil {
+			if _, err = srv.UpdateAddresses(wctx, tc.request); tc.err != nil {
 				require.ErrorIs(t, err, tc.err)
 			} else {
 				require.NoError(t, err)
@@ -63,7 +75,7 @@ func TestAddressesMsgServerUpdate(t *testing.T) {
 	}
 }
 
-func TestAddressesMsgServerDelete(t *testing.T) {
+func TestAddressesMsgServerCreateAddresses(t *testing.T) {
 	creator := "A"
 
 	tests := []struct {

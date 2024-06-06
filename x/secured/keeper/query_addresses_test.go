@@ -1,16 +1,25 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper_test
 
 import (
+	"reflect"
 	"testing"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/types/query"
+	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
 	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/rand"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
 )
 
@@ -112,4 +121,203 @@ func TestAddressesQueryPaginated(t *testing.T) {
 		_, err := keeper.AddressesAll(ctx, nil)
 		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
 	})
+}
+
+func TestKeeper_AddressesByAddress(t *testing.T) {
+	k, _, ctx := setupMsgServer(t)
+	account, _ := simtypes.RandomAcc(rand.NewRand(), simtypes.RandomAccounts(rand.NewRand(), 1))
+	a := types.Addresses{
+		Id:      1,
+		Address: []string{account.Address.String()},
+		Creator: account.Address.String(),
+	}
+	k.SetAddresses(ctx, a)
+
+	type args struct {
+		req *types.QueryGetAddressRequest
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    *types.QueryGetAddressesResponse
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				req: &types.QueryGetAddressRequest{
+					Address: account.Address.String(),
+				},
+			},
+			want: &types.QueryGetAddressesResponse{
+				Addresses: types.Addresses{
+					Id:      a.Id,
+					Address: a.Address,
+					Creator: a.Creator,
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Empty request",
+			args: args{
+				req: nil,
+			},
+			want:    nil,
+			wantErr: true,
+		},
+		{
+			name: "Invalid address",
+			args: args{
+				req: &types.QueryGetAddressRequest{
+					Address: "Some address",
+				},
+			},
+			want:    nil,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := k.AddressesByAddress(ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("AddressesByAddress() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("AddressesByAddress() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestKeeper_AddressesAll(t *testing.T) {
+	k, _, ctx := setupMsgServer(t)
+	accounts := simtypes.RandomAccounts(rand.NewRand(), 3)
+	if len(accounts) < 3 {
+		t.Errorf("Not enough accounts: %v < 3", len(accounts))
+		return
+	}
+
+	addresses := make([]string, 0, len(accounts))
+	for _, a := range accounts {
+		addresses = append(addresses, a.Address.String())
+	}
+
+	creator := addresses[0]
+
+	k.SetAddresses(ctx, types.Addresses{
+		Id:      1,
+		Address: addresses,
+		Creator: creator,
+	})
+
+	type args struct {
+		req *types.QueryAllAddressesRequest
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success with limit",
+			args: args{
+				req: &types.QueryAllAddressesRequest{Pagination: &query.PageRequest{Limit: 2}},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Success with offset",
+			args: args{
+				req: &types.QueryAllAddressesRequest{Pagination: &query.PageRequest{Offset: 1}},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Success with reverse",
+			args: args{
+				req: &types.QueryAllAddressesRequest{Pagination: &query.PageRequest{Reverse: true}},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Success with key",
+			args: args{
+				req: &types.QueryAllAddressesRequest{Pagination: &query.PageRequest{Key: []byte(creator)}},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Success without pagination",
+			args: args{
+				req: &types.QueryAllAddressesRequest{},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Failed with nil request",
+			args: args{
+				req: nil,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if _, err := k.AddressesAll(ctx, tt.args.req); (err != nil) != tt.wantErr {
+				t.Errorf("AddressesAll() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
+}
+
+func TestKeeper_Addresses(t *testing.T) {
+	k, _, ctx := setupMsgServer(t)
+	account, _ := simtypes.RandomAcc(rand.NewRand(), simtypes.RandomAccounts(rand.NewRand(), 1))
+	k.SetAddresses(ctx, types.Addresses{
+		Id:      1,
+		Address: []string{account.Address.String()},
+		Creator: account.Address.String(),
+	})
+
+	type args struct {
+		req *types.QueryGetAddressesRequest
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				req: &types.QueryGetAddressesRequest{Id: 1},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Failed with not found id",
+			args: args{
+				req: &types.QueryGetAddressesRequest{Id: 100},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Failed with nil request",
+			args: args{
+				req: nil,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if _, err := k.Addresses(ctx, tt.args.req); (err != nil) != tt.wantErr {
+				t.Errorf("Addresses() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+		})
+	}
 }

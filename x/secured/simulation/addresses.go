@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package simulation
 
 import (
@@ -16,7 +22,7 @@ import (
 func SimulateMsgCreateAddresses(
 	ak types.AccountKeeper,
 	bk types.BankKeeper,
-	k keeper.Keeper,
+	_ keeper.Keeper,
 ) simtypes.Operation {
 	return func(r *rand.Rand, app *baseapp.BaseApp, ctx sdk.Context, accs []simtypes.Account, chainID string,
 	) (simtypes.OperationMsg, []simtypes.FutureOperation, error) {
@@ -127,6 +133,7 @@ func SimulateMsgDeleteAddresses(
 			AccountKeeper:   ak,
 			Bankkeeper:      bk,
 		}
+
 		return simulation.GenAndDeliverTxWithRandFees(txCtx)
 	}
 }

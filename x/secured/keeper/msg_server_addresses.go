@@ -1,29 +1,38 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper
 
 import (
 	"context"
 	"fmt"
 
+	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
-
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
-
-	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
 )
 
-func (k msgServer) CreateAddresses(goCtx context.Context, msg *types.MsgCreateAddresses) (*types.MsgCreateAddressesResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	var addresses = types.Addresses{
-		Creator: msg.Creator,
-		Address: msg.Address,
+func (m msgServer) CreateAddresses(
+	goCtx context.Context,
+	msg *types.MsgCreateAddresses,
+) (*types.MsgCreateAddressesResponse, error) {
+	if msg == nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	if err := k.checkAddress(ctx, msg.Creator); err != nil {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if err := m.checkAddress(ctx, msg.Creator); err != nil {
 		return nil, err
 	}
 
@@ -32,36 +41,37 @@ func (k msgServer) CreateAddresses(goCtx context.Context, msg *types.MsgCreateAd
 			return nil, errorsmod.Wrapf(sdkerrors.ErrConflict, "address is empty")
 		}
 
-		if _, found := k.GetAddressesByAddress(ctx, address); found {
+		if _, found := m.GetAddressesByAddress(ctx, address); found {
 			return nil, errorsmod.Wrapf(sdkerrors.ErrConflict, "address %s already exists", msg.Address)
 		}
 	}
 
-	id := k.AppendAddresses(
-		ctx,
-		addresses,
-	)
+	id := m.AppendAddresses(ctx, types.Addresses{
+		Creator: msg.Creator,
+		Address: msg.Address,
+	})
 
 	return &types.MsgCreateAddressesResponse{
 		Id: id,
 	}, nil
 }
 
-func (k msgServer) UpdateAddresses(goCtx context.Context, msg *types.MsgUpdateAddresses) (*types.MsgUpdateAddressesResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	var addresses = types.Addresses{
-		Creator: msg.Creator,
-		Id:      msg.Id,
-		Address: msg.Address,
+func (m msgServer) UpdateAddresses(
+	goCtx context.Context,
+	msg *types.MsgUpdateAddresses,
+) (*types.MsgUpdateAddressesResponse, error) {
+	if msg == nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	if err := k.checkAddress(ctx, msg.Creator); err != nil {
+	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if err := m.checkAddress(ctx, msg.Creator); err != nil {
 		return nil, err
 	}
 
 	// Checks that the element exists
-	val, found := k.GetAddresses(ctx, msg.Id)
+	val, found := m.GetAddresses(ctx, msg.Id)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
@@ -71,20 +81,31 @@ func (k msgServer) UpdateAddresses(goCtx context.Context, msg *types.MsgUpdateAd
 		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-	k.SetAddresses(ctx, addresses)
+	m.SetAddresses(ctx, types.Addresses{
+		Creator: msg.Creator,
+		Id:      msg.Id,
+		Address: msg.Address,
+	})
 
 	return &types.MsgUpdateAddressesResponse{}, nil
 }
 
-func (k msgServer) DeleteAddresses(goCtx context.Context, msg *types.MsgDeleteAddresses) (*types.MsgDeleteAddressesResponse, error) {
+func (m msgServer) DeleteAddresses(
+	goCtx context.Context,
+	msg *types.MsgDeleteAddresses,
+) (*types.MsgDeleteAddressesResponse, error) {
+	if msg == nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid request")
+	}
+
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	if err := k.checkAddress(ctx, msg.Creator); err != nil {
+	if err := m.checkAddress(ctx, msg.Creator); err != nil {
 		return nil, err
 	}
 
 	// Checks that the element exists
-	val, found := k.GetAddresses(ctx, msg.Id)
+	val, found := m.GetAddresses(ctx, msg.Id)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
@@ -94,13 +115,13 @@ func (k msgServer) DeleteAddresses(goCtx context.Context, msg *types.MsgDeleteAd
 		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-	k.RemoveByID(ctx, msg.Id)
+	m.RemoveByID(ctx, msg.Id)
 
 	return &types.MsgDeleteAddressesResponse{}, nil
 }
 
-func (k msgServer) checkAddress(ctx context.Context, address string) error {
-	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
+func (m msgServer) checkAddress(ctx context.Context, address string) error {
+	storeAdapter := runtime.KVStoreAdapter(m.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.AddressesKey))
 	addressesStore := prefix.NewStore(store, types.KeyPrefix(types.AddressesKey))
 
@@ -110,7 +131,7 @@ func (k msgServer) checkAddress(ctx context.Context, address string) error {
 	var list []string
 	for ; iterator.Valid(); iterator.Next() {
 		var addresses types.Addresses
-		k.cdc.MustUnmarshal(iterator.Value(), &addresses)
+		m.cdc.MustUnmarshal(iterator.Value(), &addresses)
 
 		for _, a := range addresses.Address {
 			list = append(list, a)
@@ -125,32 +146,4 @@ func (k msgServer) checkAddress(ctx context.Context, address string) error {
 	}
 
 	return errorsmod.Wrap(sdkerrors.ErrUnauthorized, "this address is not allowed to send transactions")
-}
-
-func (k msgServer) DeleteByAddresses(
-	goCtx context.Context,
-	msg *types.MsgDeleteByAddresses,
-) (*types.MsgDeleteAddressesResponse, error) {
-	ctx := sdk.UnwrapSDKContext(goCtx)
-
-	if err := k.checkAddress(ctx, msg.Creator); err != nil {
-		return nil, err
-	}
-
-	// Checks that the element exists
-	for _, address := range msg.Address {
-		val, found := k.GetAddressesByAddress(ctx, address)
-		if !found {
-			return nil, errorsmod.Wrapf(sdkerrors.ErrKeyNotFound, "address %s doesn't exist", msg.Address)
-		}
-
-		// Checks if the msg creator is the same as the current owner
-		if msg.Creator != val.Creator {
-			return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
-		}
-
-		k.RemoveByID(ctx, val.Id)
-	}
-
-	return &types.MsgDeleteAddressesResponse{}, nil
 }

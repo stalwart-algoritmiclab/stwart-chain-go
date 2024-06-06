@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper
 
 import (
@@ -11,10 +17,13 @@ import (
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
 )
 
-func (k msgServer) CreateTokens(goCtx context.Context, msg *types.MsgCreateTokens) (*types.MsgCreateTokensResponse, error) {
+func (m msgServer) CreateTokens(
+	goCtx context.Context,
+	msg *types.MsgCreateTokens,
+) (*types.MsgCreateTokensResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
+	_, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
 	if !found {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
 	}
@@ -25,20 +34,20 @@ func (k msgServer) CreateTokens(goCtx context.Context, msg *types.MsgCreateToken
 		Amount:  msg.Amount,
 	}
 
-	id := k.AppendTokens(
-		ctx,
-		tokens,
-	)
+	id := m.AppendTokens(ctx, tokens)
 
 	return &types.MsgCreateTokensResponse{
 		Id: id,
 	}, nil
 }
 
-func (k msgServer) UpdateTokens(goCtx context.Context, msg *types.MsgUpdateTokens) (*types.MsgUpdateTokensResponse, error) {
+func (m msgServer) UpdateTokens(
+	goCtx context.Context,
+	msg *types.MsgUpdateTokens,
+) (*types.MsgUpdateTokensResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
+	_, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
 	if !found {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
 	}
@@ -51,7 +60,7 @@ func (k msgServer) UpdateTokens(goCtx context.Context, msg *types.MsgUpdateToken
 	}
 
 	// Checks that the element exists
-	val, found := k.GetTokens(ctx, msg.Id)
+	val, found := m.GetTokens(ctx, msg.Id)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
@@ -61,21 +70,24 @@ func (k msgServer) UpdateTokens(goCtx context.Context, msg *types.MsgUpdateToken
 		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-	k.SetTokens(ctx, tokens)
+	m.SetTokens(ctx, tokens)
 
 	return &types.MsgUpdateTokensResponse{}, nil
 }
 
-func (k msgServer) DeleteTokens(goCtx context.Context, msg *types.MsgDeleteTokens) (*types.MsgDeleteTokensResponse, error) {
+func (m msgServer) DeleteTokens(
+	goCtx context.Context,
+	msg *types.MsgDeleteTokens,
+) (*types.MsgDeleteTokensResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
+	_, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
 	if !found {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
 	}
 
 	// Checks that the element exists
-	val, found := k.GetTokens(ctx, msg.Id)
+	val, found := m.GetTokens(ctx, msg.Id)
 	if !found {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
@@ -85,7 +97,7 @@ func (k msgServer) DeleteTokens(goCtx context.Context, msg *types.MsgDeleteToken
 		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-	k.RemoveTokens(ctx, msg.Id)
+	m.RemoveTokens(ctx, msg.Id)
 
 	return &types.MsgDeleteTokensResponse{}, nil
 }

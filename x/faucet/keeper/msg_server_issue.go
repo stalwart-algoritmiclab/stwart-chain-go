@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper
 
 import (
@@ -11,35 +17,34 @@ import (
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
 )
 
-func (k msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {
+func (m msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
-	if !found {
+	if _, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator); !found {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
 	}
 
 	// get list of tokens
-	tokens := k.Keeper.GetAllTokens(ctx)
+	tokens := m.Keeper.GetAllTokens(ctx)
 
 	for _, token := range tokens {
-		address, _ := sdk.AccAddressFromBech32(msg.Address)
+		address, err := sdk.AccAddressFromBech32(msg.Address)
+		if err != nil {
+			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "address: %s", err.Error())
+		}
 
 		amount, ok := math.NewIntFromString(token.Amount)
-		if !ok {
+		if !ok || amount.IsZero() {
 			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount (%s)", token.Amount)
 		}
 
-		coinAmount := sdk.NewCoin(token.Denom, amount)
-		coins := sdk.NewCoins(coinAmount)
+		coins := sdk.NewCoins(sdk.NewCoin(token.Denom, amount))
 
-		err := k.Keeper.bankKeeper.MintCoins(ctx, types.ModuleName, coins)
-		if err != nil {
+		if err = m.Keeper.bankKeeper.MintCoins(ctx, types.ModuleName, coins); err != nil {
 			return nil, err
 		}
 
-		err = k.Keeper.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, address, coins)
-		if err != nil {
+		if err = m.Keeper.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, address, coins); err != nil {
 			return nil, err
 		}
 

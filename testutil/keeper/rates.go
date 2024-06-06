@@ -1,6 +1,13 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper
 
 import (
+	"context"
 	"testing"
 
 	"cosmossdk.io/log"
@@ -19,6 +26,13 @@ import (
 
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	ratestypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
+	securedtypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+)
+
+const (
+	testSecuredAddress = "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at"
 )
 
 func RatesKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
@@ -32,7 +46,10 @@ func RatesKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	registry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
-	securedKeeper, _ := SecuredKeeper(t)
+	securedKeeper := securedkeeper.NewKeeper(cdc,
+		runtime.NewKVStoreService(storeKey),
+		log.NewNopLogger(),
+		authority.String())
 
 	k := keeper.NewKeeper(
 		cdc,
@@ -44,10 +61,26 @@ func RatesKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	ctx := sdk.NewContext(stateStore, cmtproto.Header{}, false, log.NewNopLogger())
 
+	prepareRatesTestData(ctx, securedKeeper, k)
+
 	// Initialize params
 	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
 		panic(err)
 	}
 
 	return k, ctx
+}
+
+func prepareRatesTestData(ctx context.Context, securedKeeper securedkeeper.Keeper, ratesKeeper keeper.Keeper) {
+	securedKeeper.AppendAddresses(ctx, securedtypes.Addresses{
+		Address: []string{testSecuredAddress},
+		Creator: testSecuredAddress,
+	})
+
+	ratesKeeper.SetRates(ctx, ratestypes.Rates{
+		Denom:    "usdc",
+		Rate:     1,
+		Creator:  testSecuredAddress,
+		Decimals: 8,
+	})
 }

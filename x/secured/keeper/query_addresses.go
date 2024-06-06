@@ -1,3 +1,9 @@
+/*
+ * SPDX-License-Identifier: BUSL-1.1
+ * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ */
+
 package keeper
 
 import (
@@ -15,12 +21,15 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (k Keeper) AddressesAll(ctx context.Context, req *types.QueryAllAddressesRequest) (*types.QueryAllAddressesResponse, error) {
+func (k Keeper) AddressesAll(
+	ctx context.Context,
+	req *types.QueryAllAddressesRequest,
+) (*types.QueryAllAddressesResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
 
-	var addressess []types.Addresses
+	addressesList := make([]types.Addresses, 0)
 
 	store := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	addressesStore := prefix.NewStore(store, types.KeyPrefix(types.AddressesKey))
@@ -31,18 +40,20 @@ func (k Keeper) AddressesAll(ctx context.Context, req *types.QueryAllAddressesRe
 			return err
 		}
 
-		addressess = append(addressess, addresses)
+		addressesList = append(addressesList, addresses)
 		return nil
 	})
-
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &types.QueryAllAddressesResponse{Addresses: addressess, Pagination: pageRes}, nil
+	return &types.QueryAllAddressesResponse{Addresses: addressesList, Pagination: pageRes}, nil
 }
 
-func (k Keeper) Addresses(ctx context.Context, req *types.QueryGetAddressesRequest) (*types.QueryGetAddressesResponse, error) {
+func (k Keeper) Addresses(
+	ctx context.Context,
+	req *types.QueryGetAddressesRequest,
+) (*types.QueryGetAddressesResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
