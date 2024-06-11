@@ -52,4 +52,7 @@ curl https://get.ignite.com/username/stwart@latest! | sudo bash
 - [Ignite CLI docs](https://docs.ignite.com)
 - [Cosmos SDK docs](https://docs.cosmos.network)
 - [Developer Chat](https://discord.gg/ignite)
--
+
+## About
+Business Source License 1.1 applies. 
+Where explicitly indicated, specific components are distributed under different licenses.

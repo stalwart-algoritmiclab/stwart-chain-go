@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -17,25 +17,31 @@ import (
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
 )
 
-func (k msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {
+func (m msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
-	if !found {
+	if _, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator); !found {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
 	}
 
-	address, _ := sdk.AccAddressFromBech32(msg.Address)
+	address, err := sdk.AccAddressFromBech32(msg.Address)
+	if err != nil {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "address: %s is not correct", address)
+	}
 
 	amount, ok := math.NewIntFromString(msg.Amount)
-	if !ok {
+	if amount.IsNil() || !ok {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount (%s)", msg.Amount)
 	}
 
 	// check if it is a new user // TODO: add stats
-	if !k.accountKeeper.HasAccount(ctx, address) {
-		k.userKeeper.AddNewUserToStat(ctx)
-		k.userKeeper.IncrementTotalUsers(ctx)
+	if !m.accountKeeper.HasAccount(ctx, address) {
+		m.userKeeper.AddNewUserToStat(ctx)
+		m.userKeeper.IncrementTotalUsers(ctx)
+	}
+
+	if msg.Denom == "" {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
 	}
 
 	coinAmount := sdk.NewCoin(msg.Denom, amount)
@@ -45,19 +51,17 @@ func (k msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.Msg
 	//	return nil, errorsmod.Wrapf(sdkerrors.ErrInsufficientFunds, "cannot issue stake")
 	// }
 
-	err := k.Keeper.bankKeeper.MintCoins(ctx, types.ModuleName, coins)
-	if err != nil {
+	if err = m.Keeper.bankKeeper.MintCoins(ctx, types.ModuleName, coins); err != nil {
 		return nil, err
 	}
 
-	err = k.Keeper.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, address, coins)
-	if err != nil {
+	if err = m.Keeper.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, address, coins); err != nil {
 		return nil, err
 	}
 
-	k.AddIssuedToDailyStats(ctx, coins...)
+	m.AddIssuedToDailyStats(ctx, coins...)
 
-	if err := ctx.EventManager().EmitTypedEvents(msg); err != nil {
+	if err = ctx.EventManager().EmitTypedEvents(msg); err != nil {
 		return nil, err
 	}
 

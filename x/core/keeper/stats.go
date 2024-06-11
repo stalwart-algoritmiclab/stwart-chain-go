@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -11,13 +11,12 @@ import (
 	"time"
 
 	sdkioerrors "cosmossdk.io/errors"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
 )
 
 // SetStats set a specific stats in the store from its index
@@ -25,17 +24,11 @@ func (k Keeper) SetStats(ctx context.Context, stats types.Stats) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.StatsKeyPrefix))
 	b := k.cdc.MustMarshal(&stats)
-	store.Set(types.StatsKey(
-		stats.Date,
-	), b)
+	store.Set(types.StatsKey(stats.Date), b)
 }
 
 // GetStats returns a stats from its index
-func (k Keeper) GetStats(
-	ctx context.Context,
-	date string,
-
-) (val types.Stats, found bool) {
+func (k Keeper) GetStats(ctx context.Context, date string) (val types.Stats, found bool) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.StatsKeyPrefix))
 
@@ -51,16 +44,10 @@ func (k Keeper) GetStats(
 }
 
 // RemoveStats removes a stats from the store
-func (k Keeper) RemoveStats(
-	ctx context.Context,
-	date string,
-
-) {
+func (k Keeper) RemoveStats(ctx context.Context, date string) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.StatsKeyPrefix))
-	store.Delete(types.StatsKey(
-		date,
-	))
+	store.Delete(types.StatsKey(date))
 }
 
 // GetAllStats returns all stats

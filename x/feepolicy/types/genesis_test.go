@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package types_test
@@ -29,7 +29,7 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
-				AddressesList: []types.Addresses{
+				AddressesList: []types.Address{
 					{
 						Id: 0,
 					},
@@ -61,7 +61,7 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "duplicated addresses",
 			genState: &types.GenesisState{
-				AddressesList: []types.Addresses{
+				AddressesList: []types.Address{
 					{
 						Id: 0,
 					},
@@ -75,7 +75,7 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "invalid addresses count",
 			genState: &types.GenesisState{
-				AddressesList: []types.Addresses{
+				AddressesList: []types.Address{
 					{
 						Id: 1,
 					},

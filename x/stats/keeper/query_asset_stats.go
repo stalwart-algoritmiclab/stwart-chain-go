@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -92,16 +92,16 @@ func (k Keeper) AssetStats(goCtx context.Context, req *types.QueryDateRequest) (
 	}
 
 	// Module stake rewards // TODO: add stake rewards
-	//stakeRewardsStats, err := k.stakeRewardsKeeper.GetStatsByDate(ctx, start, end)
-	//if err != nil {
+	// stakeRewardsStats, err := k.stakeRewardsKeeper.GetStatsByDate(ctx, start, end)
+	// if err != nil {
 	//	return nil, status.Errorf(codes.Internal, "invalid get stats by date from stake rewards module %s", err.Error())
-	//}
+	// }
 	//
-	//for _, stat := range stakeRewardsStats {
+	// for _, stat := range stakeRewardsStats {
 	//	newStats := stat.DailyStats
 	//	stats.SysReward = sdk.NewCoins(stats.SysReward...).Add(newStats.SysReward...)
 	//	stats.CountSysReward += newStats.CountSysReward
-	//}
+	// }
 
 	rewardsStats, err := k.rewardsKeeper.GetStatsByDate(ctx, start, end)
 	if err != nil {

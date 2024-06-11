@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package ante
@@ -63,19 +63,33 @@ func (f CoreDecorator) processMsgSend(ctx sdk.Context, tx sdk.Tx, msgSend sdk.Ms
 		tokens := sendCoin.Amount
 
 		if tokens.IsZero() || tokens.IsNegative() {
-			return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInvalidCoins, "amount have to be > 0, got %s", tokens.String())
+			return ctx, sdkioerrors.Wrapf(
+				sdkerrors.ErrInvalidCoins,
+				"amount have to be > 0, got %s",
+				tokens.String(),
+			)
 		}
 
 		assets := f.bk.SpendableCoins(ctx, feePayer)
 		spendable := assets.AmountOf(sendCoin.Denom)
 		if spendable.LT(tokens) {
-			return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInsufficientFunds, "sender have not enough funds, want %s, got %s", tokens.String(), spendable.String())
+			return ctx, sdkioerrors.Wrapf(
+				sdkerrors.ErrInsufficientFunds,
+				"sender have not enough funds, want %s, got %s",
+				tokens.String(),
+				spendable.String(),
+			)
 		}
 
 		if sendCoin.Denom == domain.DenomStake {
 			spendable = f.stakeKeeper.GetFreeStake(ctx, feePayer)
 			if spendable.LT(tokens) {
-				return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInsufficientFunds, "sender have not enough funds, want %s, got %s", tokens.String(), spendable.String())
+				return ctx, sdkioerrors.Wrapf(
+					sdkerrors.ErrInsufficientFunds,
+					"sender have not enough funds, want %s, got %s",
+					tokens.String(),
+					spendable.String(),
+				)
 			}
 		}
 
@@ -113,10 +127,11 @@ func (f CoreDecorator) processMsgSend(ctx sdk.Context, tx sdk.Tx, msgSend sdk.Ms
 			if err != nil {
 				return ctx, err
 			}
-		} else {
-			// todo stats
-			//	f.corek.SetStatsNoFee(ctx, txFullAmount)
 		}
+		// else {
+		//	// todo stats
+		//	f.corek.SetStatsNoFee(ctx, txFullAmount)
+		// }
 	}
 
 	f.uk.CountUsers(ctx, []string{feePayer.String()})

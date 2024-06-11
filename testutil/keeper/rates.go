@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -25,7 +25,6 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
 	ratestypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
 	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
 	securedtypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
@@ -36,7 +35,7 @@ const (
 )
 
 func RatesKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
-	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
+	storeKey := storetypes.NewKVStoreKey(ratestypes.StoreKey)
 
 	db := dbm.NewMemDB()
 	stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
@@ -64,7 +63,7 @@ func RatesKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	prepareRatesTestData(ctx, securedKeeper, k)
 
 	// Initialize params
-	if err := k.SetParams(ctx, types.DefaultParams()); err != nil {
+	if err := k.SetParams(ctx, ratestypes.DefaultParams()); err != nil {
 		panic(err)
 	}
 

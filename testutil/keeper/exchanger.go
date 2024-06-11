@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -24,26 +24,23 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	authkeeper "github.com/cosmos/cosmos-sdk/x/auth/keeper"
-	auth "github.com/cosmos/cosmos-sdk/x/auth/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	bankkeeper "github.com/cosmos/cosmos-sdk/x/bank/keeper"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/keeper"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
 	rateskeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
 	ratestypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
-)
-
-const (
-	testAddress = "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at"
+	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
 )
 
 func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
 	config := sdk.GetConfig()
-	config.SetBech32PrefixForAccount("stwart", "pub")
+	config.SetBech32PrefixForAccount(PrefixSTWART, "pub")
 	config.Seal()
 
 	db := dbm.NewMemDB()
@@ -51,17 +48,22 @@ func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	stateStore.MountStoreWithDB(storeKey, storetypes.StoreTypeIAVL, db)
 	require.NoError(t, stateStore.LoadLatestVersion())
 	registry := codectypes.NewInterfaceRegistry()
-	auth.RegisterInterfaces(registry)
+	authtypes.RegisterInterfaces(registry)
 	std.RegisterInterfaces(registry)
 	cdc := codec.NewProtoCodec(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
-
-	securedKeeper, _ := SecuredKeeper(t) // unused keeper
-
 	storeService := runtime.NewKVStoreService(storeKey)
+
+	securedKeeper := securedkeeper.NewKeeper(
+		cdc,
+		storeService,
+		log.NewNopLogger(),
+		authority.String(),
+	)
+
 	ratesKeeper := rateskeeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 		securedKeeper,
@@ -72,8 +74,8 @@ func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		storeService,
 		authtypes.ProtoBaseAccount,
 		maccPerms,
-		addresscodec.NewBech32Codec("stwart"),
-		"stwart",
+		addresscodec.NewBech32Codec(sdk.GetConfig().GetBech32AccountAddrPrefix()),
+		sdk.GetConfig().GetBech32AccountAddrPrefix(),
 		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
 	)
 
@@ -81,14 +83,14 @@ func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		cdc,
 		storeService,
 		accountKeeper,
-		nil, // TODO: previously app.BlockedModuleAccountAddrs()
-		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		BlockedAddresses(),
+		authority.String(),
 		log.NewNopLogger(),
 	)
 
 	k := keeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 		bankKeeper,
@@ -113,7 +115,7 @@ func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 func prepareTestData(ctx context.Context, bankKeeper bankkeeper.Keeper, ratesKeeper rateskeeper.Keeper) error {
 	if err := bankKeeper.MintCoins(ctx, types.ModuleName, sdk.Coins{
 		sdk.Coin{
-			Denom:  "ssc",
+			Denom:  domain.DenomStableIndex,
 			Amount: math.NewInt(100_0000_0000),
 		},
 		sdk.Coin{
@@ -127,7 +129,7 @@ func prepareTestData(ctx context.Context, bankKeeper bankkeeper.Keeper, ratesKee
 	if err := bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, sdk.MustAccAddressFromBech32(testAddress),
 		sdk.Coins{
 			sdk.Coin{
-				Denom:  "ssc",
+				Denom:  domain.DenomStableIndex,
 				Amount: math.NewInt(10_0000_0000),
 			},
 			sdk.Coin{

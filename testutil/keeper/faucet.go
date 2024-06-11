@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -35,9 +35,9 @@ import (
 
 func FaucetKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
-	//config := sdk.GetConfig()
-	//config.SetBech32PrefixForAccount(client.PrefixSTWART, "pub")
-	//config.Seal()
+	// config := sdk.GetConfig()
+	// config.SetBech32PrefixForAccount(PrefixSTWART, "pub")
+	// config.Seal()
 
 	db := dbm.NewMemDB()
 	stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
@@ -47,16 +47,17 @@ func FaucetKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 
 	registry := codectypes.NewInterfaceRegistry()
 	cdc := codec.NewProtoCodec(registry)
+	authtypes.RegisterInterfaces(registry)
+	std.RegisterInterfaces(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+	storeService := runtime.NewKVStoreService(storeKey)
 
 	securedKeeper := securedkeeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 	)
-
-	storeService := runtime.NewKVStoreService(storeKey)
 
 	accountKeeper := authkeeper.NewAccountKeeper(
 		cdc,
@@ -65,7 +66,7 @@ func FaucetKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		maccPerms,
 		addresscodec.NewBech32Codec(sdk.GetConfig().GetBech32AccountAddrPrefix()),
 		sdk.GetConfig().GetBech32AccountAddrPrefix(),
-		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		authority.String(),
 	)
 
 	bankKeeper := bankkeeper.NewBaseKeeper(
@@ -73,13 +74,13 @@ func FaucetKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 		storeService,
 		accountKeeper,
 		BlockedAddresses(),
-		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		authority.String(),
 		log.NewNopLogger(),
 	)
 
 	k := keeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 		securedKeeper,
@@ -109,17 +110,16 @@ func FaucetKeeperWithAddresses(t testing.TB, addresses securedtypes.Addresses) (
 	authtypes.RegisterInterfaces(registry)
 	std.RegisterInterfaces(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+	storeService := runtime.NewKVStoreService(storeKey)
 
 	securedKeeper := securedkeeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 	)
 
 	securedKeeper.AppendAddresses(ctx, addresses)
-
-	storeService := runtime.NewKVStoreService(storeKey)
 
 	accountKeeper := authkeeper.NewAccountKeeper(
 		cdc,
@@ -128,7 +128,7 @@ func FaucetKeeperWithAddresses(t testing.TB, addresses securedtypes.Addresses) (
 		maccPerms,
 		addresscodec.NewBech32Codec(sdk.GetConfig().GetBech32AccountAddrPrefix()),
 		sdk.GetConfig().GetBech32AccountAddrPrefix(),
-		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		authority.String(),
 	)
 
 	bankKeeper := bankkeeper.NewBaseKeeper(
@@ -136,12 +136,13 @@ func FaucetKeeperWithAddresses(t testing.TB, addresses securedtypes.Addresses) (
 		storeService,
 		accountKeeper,
 		BlockedAddresses(),
-		authtypes.NewModuleAddress(govtypes.ModuleName).String(),
+		authority.String(),
 		log.NewNopLogger(),
 	)
+
 	k := keeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 		securedKeeper,

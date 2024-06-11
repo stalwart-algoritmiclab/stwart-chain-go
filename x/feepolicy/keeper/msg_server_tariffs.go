@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -96,7 +96,7 @@ func (k msgServer) UpdateTariffs(goCtx context.Context, msg *types.MsgUpdateTari
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-	if msg.Tariffs.Id > uint64(len(tariffs.Tariffs)-1) {
+	if msg.Tariffs.Id > uint64(len(tariffs.Tariffs)-1) { // TODO: check it after cli test
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "tariff id is not set")
 	}
 
@@ -105,7 +105,7 @@ func (k msgServer) UpdateTariffs(goCtx context.Context, msg *types.MsgUpdateTari
 	tariff.Amount = msg.Tariffs.Amount
 	tariff.MinRefBalance = msg.Tariffs.MinRefBalance
 
-	if msg.Tariffs.Fees[0].Id > uint64(len(tariff.Fees)-1) {
+	if msg.Tariffs.Fees[0].Id > uint64(len(tariff.Fees)-1) { // TODO: check it after cli test
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "fee id is not set")
 	}
 

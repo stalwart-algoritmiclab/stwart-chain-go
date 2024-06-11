@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -11,48 +11,57 @@ import (
 
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-func (k msgServer) Withdraw(goCtx context.Context, msg *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
+func (m msgServer) Withdraw(goCtx context.Context, msg *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	_, found := k.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator)
-	if !found {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "address %s is not allowed", msg.Creator)
+	if _, found := m.Keeper.securedKeeper.GetAddressesByAddress(ctx, msg.Creator); !found {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrUnauthorized, "cretor %s is not allowed", msg.Creator)
 	}
 
-	address, _ := sdk.AccAddressFromBech32(msg.Address)
-	acc := k.Keeper.accountKeeper.GetAccount(ctx, address)
-	if acc == nil {
+	address, err := sdk.AccAddressFromBech32(msg.Address)
+	if err != nil {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "address: %s is not correct", address)
+	}
+
+	if acc := m.Keeper.accountKeeper.GetAccount(ctx, address); acc == nil {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrNotFound, "address %s is not found", msg.Address)
 	}
 
 	amount, ok := math.NewIntFromString(msg.Amount)
 	if !ok {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount (%s)", msg.Amount)
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount: %s", msg.Amount)
+	}
+
+	if msg.Denom == "" {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
 	}
 
 	coinAmount := sdk.NewCoin(msg.Denom, amount)
 	coins := sdk.NewCoins(coinAmount)
 
+	if coinAmount.IsZero() {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount: %s", msg.Amount)
+	}
+
 	if coinAmount.Denom == domain.DenomStake {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInsufficientFunds, "cannot withdraw stake")
 	}
 
-	if err := k.Burn(ctx, address, coinAmount); err != nil {
+	if err = m.Burn(ctx, address, coinAmount); err != nil {
 		return nil, err
 	}
 
-	k.AddWithdrawnToDailyStats(ctx, coins...)
-	k.AddBurnedToDailyStats(ctx, coins...)
+	m.AddWithdrawnToDailyStats(ctx, coins...)
+	m.AddBurnedToDailyStats(ctx, coins...)
 
-	if err := ctx.EventManager().EmitTypedEvents(msg); err != nil {
+	if err = ctx.EventManager().EmitTypedEvents(msg); err != nil {
 		return nil, err
 	}
 

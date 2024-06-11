@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -15,10 +15,21 @@ import (
 	icatypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v8/modules/apps/transfer/types"
 
+	coremoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
 	exchangermoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
 	faucetmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	feepolicymoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
 	securedmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
 	stwartmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/types"
+	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+)
+
+const PrefixSTWART = "stwart"
+
+const (
+	testAmount = 100_0000_0000
+
+	testAddress = "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at"
 )
 
 var (
@@ -34,10 +45,13 @@ var (
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 
 		// Custom module accounts
-		exchangermoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner},
-		faucetmoduletypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
-		securedmoduletypes.ModuleName:   {authtypes.Minter, authtypes.Burner},
-		stwartmoduletypes.ModuleName:    nil,
+		coremoduletypes.ModuleName:          {authtypes.Minter, authtypes.Burner},
+		exchangermoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
+		faucetmoduletypes.ModuleName:        {authtypes.Minter, authtypes.Burner},
+		feepolicymoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner},
+		securedmoduletypes.ModuleName:       {authtypes.Minter, authtypes.Burner},
+		systemrewardsmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner},
+		stwartmoduletypes.ModuleName:        nil,
 	}
 
 	blockedModuleAccounts = map[string]bool{

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -10,14 +10,11 @@ import (
 	"fmt"
 
 	"cosmossdk.io/core/store"
-	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
 	exchangermoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
 	feepolicymoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
 	securedmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
@@ -25,6 +22,8 @@ import (
 	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
 	usersmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/keeper"
 )
+
+var _ CoreKeeper = (*Keeper)(nil)
 
 type (
 	Keeper struct {
@@ -47,11 +46,11 @@ func NewKeeper(
 	cdc codec.BinaryCodec,
 	storeService store.KVStoreService,
 	logger log.Logger,
-	bankKeeper types.BankKeeper,
-	securedKeeper securedmodulekeeper.SecuredKeeper,
-	accountKeeper types.AccountKeeper,
-	userKeeper usersmodulekeeper.Keeper,
 	authority string,
+	securedKeeper securedmodulekeeper.SecuredKeeper,
+	userKeeper usersmodulekeeper.Keeper,
+	accountKeeper types.AccountKeeper,
+	bankKeeper types.BankKeeper,
 ) Keeper {
 	if _, err := sdk.AccAddressFromBech32(authority); err != nil {
 		panic(fmt.Sprintf("invalid authority address: %s", authority))
@@ -60,13 +59,13 @@ func NewKeeper(
 	// init modules names and addresses list
 	modulesAddresses := []string{
 		types.ModuleName,
-		feepolicymoduletypes.ModuleName,
-		securedmoduletypes.ModuleName,
-		systemrewardsmoduletypes.ModuleName,
 		exchangermoduletypes.ModuleName,
+		securedmoduletypes.ModuleName,
+		feepolicymoduletypes.ModuleName,
+		systemrewardsmoduletypes.ModuleName,
 	}
 
-	var modulesList []types.ModuleInfo
+	modulesList := make([]types.ModuleInfo, 0, len(modulesAddresses))
 	for _, s := range modulesAddresses {
 		addr := accountKeeper.GetModuleAddress(s)
 		if addr == nil {
@@ -101,43 +100,4 @@ func (k Keeper) GetAuthority() string {
 // Logger returns a module-specific logger.
 func (k Keeper) Logger() log.Logger {
 	return k.logger.With("module", fmt.Sprintf("x/%s", types.ModuleName))
-}
-
-// Burn burns coins from the void module account.
-func (k Keeper) Burn(ctx sdk.Context, address sdk.AccAddress, amount sdk.Coin) error {
-	if amount.IsZero() {
-		return nil
-	}
-
-	if amount.IsNegative() {
-		return fmt.Errorf("invalid amount: %s", amount)
-	}
-
-	if amount.Denom == domain.DenomStake {
-		return errorsmod.Wrapf(sdkerrors.ErrInsufficientFunds, "cannot burn stake")
-	}
-
-	coins := sdk.NewCoins(amount)
-
-	if err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, address, types.ModuleName, coins); err != nil {
-		return err
-	}
-
-	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, coins); err != nil {
-		return err
-	}
-
-	k.AddBurnedToDailyStats(ctx, coins...)
-
-	msg := &types.MsgBurn{
-		Creator: types.ModuleName,
-		Amount:  amount.Amount.Uint64(),
-		Denom:   amount.Denom,
-		Address: address.String(),
-	}
-	if err := ctx.EventManager().EmitTypedEvents(msg); err != nil {
-		return err
-	}
-
-	return nil
 }

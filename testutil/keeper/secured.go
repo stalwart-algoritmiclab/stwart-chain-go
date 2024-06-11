@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper
@@ -30,9 +30,9 @@ import (
 
 func SecuredKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	storeKey := storetypes.NewKVStoreKey(types.StoreKey)
-	//config := sdk.GetConfig()
-	//config.SetBech32PrefixForAccount(client.PrefixSTWART, "pub")
-	//config.Seal()
+	config := sdk.GetConfig()
+	config.SetBech32PrefixForAccount(PrefixSTWART, "pub")
+	config.Seal()
 
 	db := dbm.NewMemDB()
 	stateStore := store.NewCommitMultiStore(db, log.NewNopLogger(), metrics.NewNoOpMetrics())
@@ -45,10 +45,11 @@ func SecuredKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {
 	authtypes.RegisterInterfaces(registry)
 	std.RegisterInterfaces(registry)
 	authority := authtypes.NewModuleAddress(govtypes.ModuleName)
+	storeService := runtime.NewKVStoreService(storeKey)
 
 	k := keeper.NewKeeper(
 		cdc,
-		runtime.NewKVStoreService(storeKey),
+		storeService,
 		log.NewNopLogger(),
 		authority.String(),
 	)

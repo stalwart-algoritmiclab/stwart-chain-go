@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package keeper_test
@@ -14,6 +14,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
+	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
 	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
 )
 
@@ -23,7 +24,7 @@ func TestAddressesMsgServerExchange(t *testing.T) {
 
 	_, err := srv.Exchange(wctx, &types.MsgExchange{
 		Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
-		Denom:   "ssc",
+		Denom:   domain.DenomStableIndex,
 		Amount:  "10000000",
 		DenomTo: "usdt",
 	})
@@ -51,7 +52,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 				goCtx: wctx,
 				msg: &types.MsgExchange{
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
-					Denom:   "ssc",
+					Denom:   domain.DenomStableIndex,
 					Amount:  "10000000",
 					DenomTo: "usdt",
 				},
@@ -67,7 +68,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
 					Denom:   "usdt",
 					Amount:  "10000000",
-					DenomTo: "ssc",
+					DenomTo: domain.DenomStableIndex,
 				},
 			},
 			want:    &types.MsgExchangeResponse{},
@@ -79,7 +80,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 				goCtx: wctx,
 				msg: &types.MsgExchange{
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
-					Denom:   "ssc",
+					Denom:   domain.DenomStableIndex,
 					Amount:  "100",
 					DenomTo: "usdt",
 				},
@@ -95,7 +96,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
 					Denom:   "usdt",
 					Amount:  "100",
-					DenomTo: "ssc",
+					DenomTo: domain.DenomStableIndex,
 				},
 			},
 			want:    nil,
@@ -109,7 +110,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
 					Denom:   "usdt",
 					Amount:  "10000000000",
-					DenomTo: "ssc",
+					DenomTo: domain.DenomStableIndex,
 				},
 			},
 			want:    nil,
@@ -123,7 +124,7 @@ func Test_msgServer_Exchange(t *testing.T) {
 					Creator: "stwart1hdl6ny2kdpvth9p7u43ar9qer7tcvualelp0at",
 					Denom:   "usdc",
 					Amount:  "100000",
-					DenomTo: "ssc",
+					DenomTo: domain.DenomStableIndex,
 				},
 			},
 			want:    nil,

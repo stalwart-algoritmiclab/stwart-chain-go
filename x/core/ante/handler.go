@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package ante
@@ -19,7 +19,12 @@ import (
 	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
 )
 
-func (f CoreDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, next sdk.AnteHandler) (sdk.Context, error) {
+func (f CoreDecorator) AnteHandle(
+	ctx sdk.Context,
+	tx sdk.Tx,
+	simulate bool,
+	next sdk.AnteHandler,
+) (sdk.Context, error) {
 	for i, msgSend := range tx.GetMsgs() {
 		switch msgSend.(type) {
 		case *types.MsgSend:
@@ -33,7 +38,13 @@ func (f CoreDecorator) AnteHandle(ctx sdk.Context, tx sdk.Tx, simulate bool, nex
 }
 
 // deductFees - deduct fees from the fee payer and send to the system modules or referrers
-func (f CoreDecorator) deductFees(ctx sdk.Context, feeInfo sendFees, feePayer sdk.AccAddress, addressTo string, txFullAmount sdk.Coins) (sdk.Context, error) {
+func (f CoreDecorator) deductFees(
+	ctx sdk.Context,
+	feeInfo sendFees,
+	feePayer sdk.AccAddress,
+	addressTo string,
+	txFullAmount sdk.Coins,
+) (sdk.Context, error) {
 	feeCoin := feeInfo.feeCoin
 	fees := feeInfo.fee
 
@@ -144,17 +155,17 @@ func (f CoreDecorator) sendReferralReward(
 	}
 
 	// check if referrer have enough minRefBalance
-	if minRefBalance.Amount.GT(sdkmath.NewInt(0)) {
-		// todo STAKE related
-		// refStake, found := f.stakek.GetStakes(ctx, referrerAddress.String())
-		// if !found {
-		// 	return false, nil
-		// }
-		//
-		// if refStake.Stake.StakeAmount.IsLT(minRefBalance) {
-		// 	return false, nil
-		// }
-	}
+	// if minRefBalance.Amount.GT(sdkmath.NewInt(0)) {
+	//	// todo STAKE related
+	//	refStake, found := f.stakek.GetStakes(ctx, referrerAddress.String())
+	//	if !found {
+	//		return false, nil
+	//	}
+	//
+	//	if refStake.Stake.StakeAmount.IsLT(minRefBalance) {
+	//		return false, nil
+	//	}
+	// }
 
 	if err = f.bk.SendCoins(ctx, addressFrom, referrerAddress, refReward); err != nil {
 		return false, err

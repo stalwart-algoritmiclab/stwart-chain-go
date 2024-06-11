@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: BUSL-1.1
  * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/blob/main/LICENCE
+ * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
  */
 
 package ante
@@ -120,7 +120,11 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 			// get receiver stake balance
 			recStakeBal, ok := receiverStakeBalances[recipient.String()]
 			if !ok {
-				return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInsufficientFunds, "receiver stake balance not found for %s", recipient.String())
+				return ctx, sdkioerrors.Wrapf(
+					sdkerrors.ErrInsufficientFunds,
+					"receiver stake balance not found for %s",
+					recipient.String(),
+				)
 			}
 			// trying to get fee info (percents, min amount) for the coin
 			feeInfo.fee, feeInfo.minRefBalance, found = f.fek.GetFees(
@@ -165,13 +169,23 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 		// check if sender have enough funds
 		spendable := spendableCoins.AmountOf(denom)
 		if spendable.LT(txFullAmount.AmountOf(denom)) {
-			return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInsufficientFunds, "sender have not enough funds, want %s, got %s", txFullAmount.AmountOf(denom), spendable.String())
+			return ctx, sdkioerrors.Wrapf(
+				sdkerrors.ErrInsufficientFunds,
+				"sender have not enough funds, want %s, got %s",
+				txFullAmount.AmountOf(denom),
+				spendable.String(),
+			)
 		}
 
 		if denom == domain.DenomStake {
 			stakeSpendable := f.stakeKeeper.GetFreeStake(ctx, feePayer)
 			if txFullAmount.AmountOf(denom).LT(stakeSpendable) {
-				return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInsufficientFunds, "sender have not enough funds, want %s, got %s", txFullAmount.AmountOf(denom), stakeSpendable.String())
+				return ctx, sdkioerrors.Wrapf(
+					sdkerrors.ErrInsufficientFunds,
+					"sender have not enough funds, want %s, got %s",
+					txFullAmount.AmountOf(denom),
+					stakeSpendable.String(),
+				)
 			}
 		}
 	}
@@ -186,7 +200,11 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 		// check recipient address and add to the stats if needed
 		recipient, err := sdk.AccAddressFromBech32(output.Address)
 		if err != nil {
-			return ctx, sdkioerrors.Wrapf(sdkerrors.ErrInvalidAddress, "recipient address: %s is not correct", output.Address)
+			return ctx, sdkioerrors.Wrapf(
+				sdkerrors.ErrInvalidAddress,
+				"recipient address: %s is not correct",
+				output.Address,
+			)
 		}
 		if !f.ak.HasAccount(ctx, recipient) {
 			f.uk.AddNewUserToStat(ctx)
@@ -214,16 +232,16 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 	tx.GetMsgs()[i] = msgCopy
 
 	// set noFee denoms to the stats
-	for _, denom := range txFullAmount.Denoms() {
-		// is denom is excluded from fee
-		_, found := feesEnabled[denom]
-		if !found {
-			// todo Stats related
-			// fullAmount := sdk.NewCoin(denom, txFullAmount.AmountOf(denom))
-			// f.corek.SetStatsNoFee(ctx, sdk.NewCoins(fullAmount))
-			continue
-		}
-	}
+	// for _, denom := range txFullAmount.Denoms() {
+	//	// is denom is excluded from fee
+	//	_, found := feesEnabled[denom]
+	//	if !found {
+	//		// todo Stats related
+	//		fullAmount := sdk.NewCoin(denom, txFullAmount.AmountOf(denom))
+	//		f.corek.SetStatsNoFee(ctx, sdk.NewCoins(fullAmount))
+	//		continue
+	//	}
+	// }
 
 	for addressTo, feeCoinsInfo := range amountsFeesToSend {
 		for _, feeInfo := range feeCoinsInfo {
