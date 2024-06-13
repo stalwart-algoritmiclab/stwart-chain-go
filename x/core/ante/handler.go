@@ -16,6 +16,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
 
 	coretypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	staketypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
 	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
 )
 
@@ -79,20 +80,19 @@ func (f CoreDecorator) deductFees(
 		}
 	}
 
-	// todo STAKE related
-	// if feeStakeReward > 0 {
-	// 	coinStakeReward := sdk.NewCoins(sdk.NewCoin(feeCoin.Denom, sdkmath.NewIntFromUint64(feeStakeReward)))
-	// 	// send fee to the stake reward module
-	// 	if err := f.bk.SendCoinsFromAccountToModule(
-	// 		ctx,
-	// 		feePayer,
-	// 		f.stakeRewardsModuleName,
-	// 		coinStakeReward,
-	// 	); err != nil {
-	// 		return ctx, err
-	// 	}
-	// 	f.stakeRewarsKeeper.AddStats(ctx, coinStakeReward...)
-	// }
+	if feeStakeReward > 0 {
+		coinStakeReward := sdk.NewCoins(sdk.NewCoin(feeCoin.Denom, sdkmath.NewIntFromUint64(feeStakeReward)))
+		// send fee to the stake reward module
+		if err := f.bk.SendCoinsFromAccountToModule(
+			ctx,
+			feePayer,
+			staketypes.ModuleName,
+			coinStakeReward,
+		); err != nil {
+			return ctx, err
+		}
+		//f.stats.AddStats(ctx, coinStakeReward...) // TODO: fix it
+	}
 
 	if feeRefReward == 0 {
 		return ctx, nil

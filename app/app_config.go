@@ -238,6 +238,7 @@ var (
 		{Account: ratesmoduletypes.ModuleName},
 		{Account: faucetmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: exchangermoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
+		{Account: stakemoduletypes.ModuleName},
 
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}

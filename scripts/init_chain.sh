@@ -14,7 +14,7 @@ DEFAULT_MONIKER="alice"
      MONIKER="${DEFAULT_MONIKER}-$1"
  else
      MONIKER="${DEFAULT_MONIKER}"
- fi#
+ fi
 MINIMUM_GAS_PRICE="\"0.5stwart\""
 
 
