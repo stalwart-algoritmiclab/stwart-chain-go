@@ -59,42 +59,42 @@ import (
 	ibcexported "github.com/cosmos/ibc-go/v8/modules/core/exported"
 	"google.golang.org/protobuf/types/known/durationpb"
 
-	coremodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/core/module"
-	exchangermodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/exchanger/module"
-	faucetmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/faucet/module"
-	feepolicymodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/feepolicy/module"
-	ratesmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/rates/module"
-	referralmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/referral/module"
-	securedmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/secured/module"
-	stakemodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/stake/module"
-	statsmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/stats/module"
-	stwartmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/stwart/module"
-	systemrewardsmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/systemrewards/module"
-	usersmodulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/users/module"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/module" // import for side-effects
-	coremoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/module" // import for side-effects
-	exchangermoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/module" // import for side-effects
-	faucetmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/module" // import for side-effects
-	feepolicymoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/module" // import for side-effects
-	ratesmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/module" // import for side-effects
-	referralmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/module" // import for side-effects
-	securedmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/module" // import for side-effects
-	stakemoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/module" // import for side-effects
-	statsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/module" // import for side-effects
-	stwartmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/module" // import for side-effects
-	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
-	_ "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/module" // import for side-effects
-	usersmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	coremodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/core/module"
+	exchangermodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/exchanger/module"
+	faucetmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/faucet/module"
+	feepolicymodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/feepolicy/module"
+	ratesmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/rates/module"
+	referralmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/referral/module"
+	securedmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/secured/module"
+	stakemodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/stake/module"
+	statsmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/stats/module"
+	stwartmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/stwart/module"
+	systemrewardsmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/systemrewards/module"
+	usersmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/users/module"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/module" // import for side-effects
+	coremoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/module" // import for side-effects
+	exchangermoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/module" // import for side-effects
+	faucetmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/module" // import for side-effects
+	feepolicymoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/module" // import for side-effects
+	ratesmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/module" // import for side-effects
+	referralmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/module" // import for side-effects
+	securedmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/module" // import for side-effects
+	stakemoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stats/module" // import for side-effects
+	statsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stats/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/module" // import for side-effects
+	stwartmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/module" // import for side-effects
+	systemrewardsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/module" // import for side-effects
+	usersmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 

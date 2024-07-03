@@ -9,7 +9,7 @@ package keeper
 import (
 	"context"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 
 	"cosmossdk.io/store/prefix"
 	"github.com/cosmos/cosmos-sdk/runtime"

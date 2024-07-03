@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 func (k Keeper) Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

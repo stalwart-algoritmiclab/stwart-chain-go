@@ -9,10 +9,10 @@ package secured_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	secured "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	secured "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 
 	"github.com/stretchr/testify/require"
 )

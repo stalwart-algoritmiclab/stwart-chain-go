@@ -15,9 +15,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 )
 
 func TestAddressesQuerySingle(t *testing.T) {

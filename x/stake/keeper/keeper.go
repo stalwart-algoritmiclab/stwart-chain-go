@@ -14,7 +14,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 type (

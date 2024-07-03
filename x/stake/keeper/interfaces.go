@@ -13,8 +13,8 @@ import (
 	sdkmath "cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
-	staketypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
+	staketypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 type (

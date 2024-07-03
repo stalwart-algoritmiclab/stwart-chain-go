@@ -16,11 +16,11 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	d "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	d "github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 // Prevent strconv unused error

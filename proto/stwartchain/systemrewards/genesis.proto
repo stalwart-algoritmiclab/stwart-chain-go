@@ -7,7 +7,7 @@ import "gogoproto/gogo.proto";
 import "stwartchain/systemrewards/params.proto";
 import "stwartchain/systemrewards/stats.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types";
 
 // GenesisState defines the systemrewards module's genesis state.
 message GenesisState {

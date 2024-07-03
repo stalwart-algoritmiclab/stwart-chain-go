@@ -9,10 +9,10 @@ package stake_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	stake "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	stake "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 
 	"github.com/stretchr/testify/require"
 )

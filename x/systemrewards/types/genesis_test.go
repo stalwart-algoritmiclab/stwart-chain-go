@@ -9,7 +9,7 @@ package types_test
 import (
 	"testing"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 
 	"github.com/stretchr/testify/require"
 )

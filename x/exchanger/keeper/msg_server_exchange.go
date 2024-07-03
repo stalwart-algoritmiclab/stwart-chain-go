@@ -15,9 +15,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
-	ratestypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
+	ratestypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 )
 
 func (k msgServer) Exchange(goCtx context.Context, msg *types.MsgExchange) (*types.MsgExchangeResponse, error) {

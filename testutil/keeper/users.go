@@ -23,8 +23,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 func UsersKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

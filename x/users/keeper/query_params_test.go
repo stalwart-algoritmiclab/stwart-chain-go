@@ -11,8 +11,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 func TestParamsQuery(t *testing.T) {

@@ -9,8 +9,8 @@ package systemrewards
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

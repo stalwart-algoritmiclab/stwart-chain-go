@@ -14,9 +14,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/sample"
-	feepolicysimulation "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/simulation"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/sample"
+	feepolicysimulation "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/simulation"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 )
 
 // avoid unused import issue

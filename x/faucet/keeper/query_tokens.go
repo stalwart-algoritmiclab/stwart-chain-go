@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 )
 
 func (k Keeper) TokensAll(

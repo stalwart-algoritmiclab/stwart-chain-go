@@ -10,7 +10,7 @@ import (
 	"context"
 	"fmt"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"

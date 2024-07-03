@@ -9,8 +9,8 @@ package core
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

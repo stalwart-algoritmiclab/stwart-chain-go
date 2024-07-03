@@ -13,8 +13,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 
-	feepolicytypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
-	referralmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
+	feepolicytypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	referralmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 )
 
 // AccountKeeper specifies the interface that FeeDeductor requires

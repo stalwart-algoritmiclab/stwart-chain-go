@@ -14,7 +14,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 func (m msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error) {

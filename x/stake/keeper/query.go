@@ -7,7 +7,7 @@
 package keeper
 
 import (
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 var _ types.QueryServer = Keeper{}

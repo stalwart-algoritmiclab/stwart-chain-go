@@ -13,7 +13,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"

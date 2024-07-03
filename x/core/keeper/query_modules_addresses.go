@@ -10,7 +10,7 @@ import (
 	"context"
 	"fmt"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 // ModulesAddresses returns all modules addresses

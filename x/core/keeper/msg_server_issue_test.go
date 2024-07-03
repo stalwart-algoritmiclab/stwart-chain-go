@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"testing"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 func Test_msgServer_Issue(t *testing.T) {

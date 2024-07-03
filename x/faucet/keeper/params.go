@@ -11,7 +11,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/runtime"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 )
 
 // GetParams get all parameters as types.Params

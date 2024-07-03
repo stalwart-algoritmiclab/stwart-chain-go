@@ -13,9 +13,9 @@ import (
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {

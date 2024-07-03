@@ -14,11 +14,11 @@ import (
 	"cosmossdk.io/math"
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
-	ratesmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
+	ratesmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 )
 
 func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {

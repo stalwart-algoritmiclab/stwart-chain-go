@@ -9,8 +9,8 @@ package rates
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

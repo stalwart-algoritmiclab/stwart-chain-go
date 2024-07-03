@@ -12,7 +12,7 @@ import (
 	"cosmossdk.io/log"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 )
 
 type (

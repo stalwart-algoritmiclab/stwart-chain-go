@@ -9,8 +9,8 @@ package simulation
 import (
 	"math/rand"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

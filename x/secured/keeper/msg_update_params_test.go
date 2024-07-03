@@ -12,7 +12,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 )
 
 func TestMsgUpdateParams(t *testing.T) {

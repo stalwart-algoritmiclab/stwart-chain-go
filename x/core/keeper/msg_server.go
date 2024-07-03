@@ -7,7 +7,7 @@
 package keeper
 
 import (
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 var _ CoreMsgServer = (*msgServer)(nil)

@@ -9,10 +9,10 @@ package systemrewards_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	systemrewards "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	systemrewards "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 
 	"github.com/stretchr/testify/require"
 )

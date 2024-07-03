@@ -9,10 +9,10 @@ package stwart_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	stwart "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	stwart "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/types"
 
 	"github.com/stretchr/testify/require"
 )

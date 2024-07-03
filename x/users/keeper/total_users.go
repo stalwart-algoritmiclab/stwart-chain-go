@@ -13,7 +13,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/runtime"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 // IncrementTotalUsers set a specific uniqueUsers in the store from its index

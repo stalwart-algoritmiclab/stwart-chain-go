@@ -9,7 +9,7 @@ package keeper
 import (
 	"context"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

@@ -14,8 +14,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
-	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
+	securedkeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
 )
 
 var _ ReferralKeeper = (*Keeper)(nil)

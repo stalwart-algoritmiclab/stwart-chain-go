@@ -9,8 +9,8 @@ package simulation
 import (
 	"math/rand"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

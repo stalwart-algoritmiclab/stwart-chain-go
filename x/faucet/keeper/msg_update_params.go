@@ -12,7 +12,7 @@ import (
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 )
 
 func (m msgServer) UpdateParams(

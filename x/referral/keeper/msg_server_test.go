@@ -12,9 +12,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 )
 
 func setupMsgServer(t testing.TB) (keeper.Keeper, types.MsgServer, context.Context) {

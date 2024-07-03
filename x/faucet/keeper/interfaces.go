@@ -11,7 +11,7 @@ import (
 
 	"cosmossdk.io/log"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 )
 
 type (

@@ -12,9 +12,9 @@ import (
 
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/rand"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	d "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/rand"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	d "github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 func Test_msgServer_Withdraw(t *testing.T) {

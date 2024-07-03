@@ -14,7 +14,7 @@ import (
 	sdkioerrors "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stats/types"
 
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"

@@ -15,9 +15,9 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	coretypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	staketypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
-	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	coretypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	staketypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
+	systemrewardsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
 
 func (f CoreDecorator) AnteHandle(

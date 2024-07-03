@@ -24,10 +24,10 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
-	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
-	securedtypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	securedkeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
+	securedtypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 )
 
 const (

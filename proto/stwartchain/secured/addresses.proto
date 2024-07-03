@@ -1,7 +1,7 @@
 syntax = "proto3";
 package stwartchain.secured;
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types";
 
 message Addresses {
   uint64 id = 1;

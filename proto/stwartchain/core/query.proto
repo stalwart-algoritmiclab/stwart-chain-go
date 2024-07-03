@@ -10,7 +10,7 @@ import "stwartchain/core/params.proto";
 import "stwartchain/core/stats.proto";
 import "stwartchain/core/daily_stats.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types";
 
 // Query defines the gRPC querier service.
 service Query {
