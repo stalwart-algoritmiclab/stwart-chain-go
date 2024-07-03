@@ -13,8 +13,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 // Burn burns coins from the void module account.

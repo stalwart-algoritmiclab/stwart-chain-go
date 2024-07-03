@@ -1,7 +1,7 @@
 syntax = "proto3";
 package stwartchain.core;
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types";
 import "stwartchain/core/daily_stats.proto";
 
 message Stats {

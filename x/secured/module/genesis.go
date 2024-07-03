@@ -9,8 +9,8 @@ package secured
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

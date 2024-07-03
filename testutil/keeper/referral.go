@@ -23,9 +23,9 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
-	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
+	securedkeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
 )
 
 func ReferralKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

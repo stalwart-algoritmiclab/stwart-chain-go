@@ -15,13 +15,13 @@ import (
 	icatypes "github.com/cosmos/ibc-go/v8/modules/apps/27-interchain-accounts/types"
 	ibctransfertypes "github.com/cosmos/ibc-go/v8/modules/apps/transfer/types"
 
-	coremoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	exchangermoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
-	faucetmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
-	feepolicymoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
-	securedmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
-	stwartmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/types"
-	systemrewardsmoduletypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	coremoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	exchangermoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
+	faucetmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
+	feepolicymoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	securedmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
+	stwartmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/types"
+	systemrewardsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
 
 const PrefixSTWART = "stwart"

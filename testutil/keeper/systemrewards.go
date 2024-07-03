@@ -23,8 +23,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
 
 func SystemrewardsKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

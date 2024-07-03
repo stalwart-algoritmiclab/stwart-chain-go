@@ -14,8 +14,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
 )
 
 func TestAddressesMsgServerExchange(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 	"context"
 	"time"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"

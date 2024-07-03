@@ -9,8 +9,8 @@ package keeper_test
 import (
 	"testing"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 )
 
 func Test_msgServer_Issue(t *testing.T) {

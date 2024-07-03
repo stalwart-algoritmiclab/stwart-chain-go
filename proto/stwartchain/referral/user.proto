@@ -1,7 +1,7 @@
 syntax = "proto3";
 package stwartchain.referral;
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types";
 
 message User {
   string accountAddress = 1; 

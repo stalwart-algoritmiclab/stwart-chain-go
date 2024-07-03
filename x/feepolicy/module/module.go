@@ -26,10 +26,10 @@ import (
 
 	// this line is used by starport scaffolding # 1
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/feepolicy/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
-	securedmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/feepolicy/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	securedmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
 )
 
 var (

@@ -11,10 +11,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	exchanger "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	exchanger "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
 )
 
 func TestGenesis(t *testing.T) {

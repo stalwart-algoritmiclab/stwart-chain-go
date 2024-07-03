@@ -6,7 +6,7 @@ import "cosmos/app/v1alpha1/module.proto";
 // Module is the config object for the module.
 message Module {
   option (cosmos.app.v1alpha1.module) = {
-    go_import: "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet"
+    go_import: "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet"
   };
 
   // authority defines the custom module authority. If not set, defaults to the governance module.

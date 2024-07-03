@@ -7,7 +7,7 @@
 package keeper
 
 import (
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 )
 
 var _ SecuredKeeper = (*msgServer)(nil)

@@ -29,12 +29,12 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/rand"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
-	securedtypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
-	usersmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/rand"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	securedkeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
+	securedtypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
+	usersmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/keeper"
 )
 
 func CoreKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

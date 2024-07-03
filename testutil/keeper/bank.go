@@ -30,8 +30,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/rand"
-	coretypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/rand"
+	coretypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 )
 
 func BankKeeperWithAccounts(

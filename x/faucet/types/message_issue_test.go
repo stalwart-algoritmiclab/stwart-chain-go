@@ -12,7 +12,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/sample"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/sample"
 )
 
 func TestMsgIssue_ValidateBasic(t *testing.T) {

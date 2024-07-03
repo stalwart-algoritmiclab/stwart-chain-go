@@ -26,9 +26,9 @@ import (
 
 	// this line is used by starport scaffolding # 1
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/systemrewards/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/systemrewards/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
 
 var (

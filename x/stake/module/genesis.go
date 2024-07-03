@@ -9,8 +9,8 @@ package stake
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

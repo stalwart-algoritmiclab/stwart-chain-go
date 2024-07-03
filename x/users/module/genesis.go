@@ -9,8 +9,8 @@ package users
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

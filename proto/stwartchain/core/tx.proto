@@ -9,7 +9,7 @@ import "gogoproto/gogo.proto";
 import "stwartchain/core/params.proto";
 import "cosmos/base/v1beta1/coin.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types";
 
 // Msg defines the Msg service.
 service Msg {

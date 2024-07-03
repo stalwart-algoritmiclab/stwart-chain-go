@@ -16,7 +16,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend sdk.Msg, i int) (sdk.Context, error) {

@@ -26,9 +26,9 @@ import (
 
 	// this line is used by starport scaffolding # 1
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/secured/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/types"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/secured/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
 )
 
 var (

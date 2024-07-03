@@ -25,8 +25,8 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 func StakeKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

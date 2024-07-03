@@ -11,7 +11,7 @@ import (
 
 	"cosmossdk.io/log"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
 )
 
 type (

@@ -20,7 +20,7 @@ import (
 	simcli "github.com/cosmos/cosmos-sdk/x/simulation/client/cli"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/app"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/app"
 )
 
 // Profile with:

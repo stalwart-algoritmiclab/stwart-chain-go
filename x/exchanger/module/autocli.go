@@ -9,7 +9,7 @@ package exchanger
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/exchanger"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/exchanger"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

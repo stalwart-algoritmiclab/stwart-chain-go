@@ -9,10 +9,10 @@ package core_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	core "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	core "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 
 	"github.com/stretchr/testify/require"
 )

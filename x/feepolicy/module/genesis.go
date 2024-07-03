@@ -9,8 +9,8 @@ package feepolicy
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

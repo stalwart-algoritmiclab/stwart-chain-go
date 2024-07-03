@@ -12,7 +12,7 @@ import "stwartchain/feepolicy/tariff.proto";
 import "stwartchain/feepolicy/fees.proto";
 import "stwartchain/feepolicy/tariffs.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types";
 
 // Query defines the gRPC querier service.
 service Query {

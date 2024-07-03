@@ -82,28 +82,28 @@ import (
 	ibctransferkeeper "github.com/cosmos/ibc-go/v8/modules/apps/transfer/keeper"
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
-	coreante "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/ante"
-	securedmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
-	stwartmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/keeper"
+	coreante "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/ante"
+	securedmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
+	stwartmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/keeper"
 
-	feepolicymodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/keeper"
-	systemrewardsmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/keeper"
+	feepolicymodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/keeper"
+	systemrewardsmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/keeper"
 
-	coremodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/keeper"
-	referralmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/keeper"
+	coremodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/keeper"
+	referralmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/keeper"
 
-	statsmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/keeper"
-	usersmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/keeper"
+	statsmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stats/keeper"
+	usersmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/keeper"
 
-	ratesmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
-	stakemodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/keeper"
+	ratesmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/keeper"
+	stakemodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/keeper"
 
-	exchangermodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/keeper"
-	faucetmodulekeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/faucet/keeper"
+	exchangermodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/keeper"
+	faucetmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/keeper"
 
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/docs"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/docs"
 )
 
 const (

@@ -7,7 +7,7 @@
 package keeper
 
 import (
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stwart/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stwart/types"
 )
 
 type msgServer struct {

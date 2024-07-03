@@ -29,12 +29,12 @@ import (
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
 	"github.com/stretchr/testify/require"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/domain"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/exchanger/types"
-	rateskeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/keeper"
-	ratestypes "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
-	securedkeeper "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/secured/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
+	rateskeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/keeper"
+	ratestypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
+	securedkeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
 )
 
 func ExchangerKeeper(t testing.TB) (keeper.Keeper, sdk.Context) {

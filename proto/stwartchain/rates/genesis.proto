@@ -8,7 +8,7 @@ import "stwartchain/rates/params.proto";
 import "stwartchain/rates/addresses.proto";
 import "stwartchain/rates/rates.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types";
 
 // GenesisState defines the rates module's genesis state.
 message GenesisState {

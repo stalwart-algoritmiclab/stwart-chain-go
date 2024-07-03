@@ -7,7 +7,7 @@ import "gogoproto/gogo.proto";
 import "stwartchain/stake/params.proto";
 import "stwartchain/stake/stake.proto";
 
-option go_package = "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types";
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types";
 
 // GenesisState defines the stake module's genesis state.
 message GenesisState {

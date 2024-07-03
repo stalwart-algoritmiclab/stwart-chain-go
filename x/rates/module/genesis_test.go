@@ -9,10 +9,10 @@ package rates_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	rates "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/rates/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	rates "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 
 	"github.com/stretchr/testify/require"
 )

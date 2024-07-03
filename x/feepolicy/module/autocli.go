@@ -9,7 +9,7 @@ package feepolicy
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/feepolicy"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/feepolicy"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

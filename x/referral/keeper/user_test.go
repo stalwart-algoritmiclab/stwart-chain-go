@@ -11,10 +11,10 @@ import (
 	"strconv"
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/referral/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 
 	"github.com/stretchr/testify/require"
 )

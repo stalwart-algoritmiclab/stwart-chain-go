@@ -11,9 +11,9 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	core "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/core/types"
-	rewards "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/systemrewards/types"
-	user "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/users/types"
+	core "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
+	rewards "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
+	user "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/types"
 )
 
 // AccountKeeper defines the expected interface for the Account module.

@@ -26,9 +26,9 @@ import (
 
 	// this line is used by starport scaffolding # 1
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/stake/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stake/types"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/stake/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 )
 
 var (

@@ -9,7 +9,7 @@ package rates
 import (
 	autocliv1 "cosmossdk.io/api/cosmos/autocli/v1"
 
-	modulev1 "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/api/stwartchain/rates"
+	modulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/rates"
 )
 
 // AutoCLIOptions implements the autocli.HasAutoCLIConfig interface.

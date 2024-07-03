@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/stats/types"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/stats/types"
 )
 
 func (k Keeper) UserStats(goCtx context.Context, req *types.QueryDateRequest) (*types.QueryUserStatsResponse, error) {

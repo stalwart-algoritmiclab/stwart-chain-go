@@ -1,4 +1,4 @@
-module gitlab.stalwart.tech/ijio/main/backend/stwart-chain
+module github.com/stalwart-algoritmiclab/stwart-chain-go
 
 go 1.22.2
 

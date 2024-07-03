@@ -9,10 +9,10 @@ package feepolicy_test
 import (
 	"testing"
 
-	keepertest "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/keeper"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/testutil/nullify"
-	feepolicy "gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/module"
-	"gitlab.stalwart.tech/ijio/main/backend/stwart-chain/x/feepolicy/types"
+	keepertest "github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/keeper"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/testutil/nullify"
+	feepolicy "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/module"
+	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
 
 	"github.com/stretchr/testify/require"
 )
