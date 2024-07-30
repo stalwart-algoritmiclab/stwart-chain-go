@@ -15,7 +15,6 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
-	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/domain"
 )
 
 func (m msgServer) Withdraw(goCtx context.Context, msg *types.MsgWithdraw) (*types.MsgWithdrawResponse, error) {
@@ -39,27 +38,14 @@ func (m msgServer) Withdraw(goCtx context.Context, msg *types.MsgWithdraw) (*typ
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount: %s", msg.Amount)
 	}
 
-	if msg.Denom == "" {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
-	}
-
 	coinAmount := sdk.NewCoin(msg.Denom, amount)
 	coins := sdk.NewCoins(coinAmount)
 
-	if coinAmount.IsZero() {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount: %s", msg.Amount)
-	}
-
-	if coinAmount.Denom == domain.DenomStake {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInsufficientFunds, "cannot withdraw stake")
-	}
-
-	if err = m.Burn(ctx, address, coinAmount); err != nil {
+	if err = m.BurnCoinsWithoutStats(ctx, address, coinAmount); err != nil {
 		return nil, err
 	}
 
 	m.AddWithdrawnToDailyStats(ctx, coins...)
-	m.AddBurnedToDailyStats(ctx, coins...)
 
 	if err = ctx.EventManager().EmitTypedEvents(msg); err != nil {
 		return nil, err

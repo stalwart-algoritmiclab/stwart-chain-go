@@ -101,6 +101,7 @@ import (
 	exchangermodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/keeper"
 	faucetmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/keeper"
 
+	pollsmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/keeper"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/stalwart-algoritmiclab/stwart-chain-go/docs"
@@ -177,6 +178,7 @@ type App struct {
 	StakeKeeper         stakemodulekeeper.Keeper
 	FaucetKeeper        faucetmodulekeeper.Keeper
 	ExchangerKeeper     exchangermodulekeeper.Keeper
+	PollsKeeper         pollsmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -327,6 +329,7 @@ func New(
 		&app.RatesKeeper,
 		&app.FaucetKeeper,
 		&app.ExchangerKeeper,
+		&app.PollsKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
@@ -417,7 +420,7 @@ func New(
 			RewardsKeeper:   app.SystemrewardsKeeper,
 			UsersKeeper:     app.UsersKeeper,
 			StakeKeeper:     app.StakeKeeper,
-			// stats
+			StatsKeeper:     app.StatsKeeper,
 		},
 	)
 	if err != nil {

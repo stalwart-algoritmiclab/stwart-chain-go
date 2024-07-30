@@ -36,8 +36,6 @@ type BankKeeper interface {
 // CoreKeeper specifies the interface that FeeDeductor requires for core module
 type CoreKeeper interface {
 	Burn(ctx sdk.Context, address sdk.AccAddress, amount sdk.Coin) error
-	// SetStatsNoFee(ctx context.Context, amount sdk.Coins)
-	// SetStatsFee(ctx context.Context, amountFee sdk.Coins, amountTx sdk.Coins)
 }
 
 // FeePolicyKeeper specifies the interface that FeeDeductor requires
@@ -48,7 +46,7 @@ type FeePolicyKeeper interface {
 
 // RewardsKeeper specifies the interface that FeeDeductor requires
 type RewardsKeeper interface {
-	AddStats(ctx context.Context, coins ...sdk.Coin) // Sys Reward Stats
+	AddStats(ctx context.Context, rewardType uint8, coins ...sdk.Coin) // Sys Reward Stats
 }
 
 // RefKeeper specifies the interface that FeeDeductor requires
@@ -64,4 +62,9 @@ type UserKeeper interface {
 
 type StakeKeeper interface {
 	GetFreeStake(ctx context.Context, address sdk.AccAddress) sdkmath.Int
+}
+
+type StatsKeeper interface {
+	SetStatsFee(ctx sdk.Context, amountFee sdk.Coins, amountTx sdk.Coins)
+	SetStatsNoFee(ctx sdk.Context, amount sdk.Coins)
 }

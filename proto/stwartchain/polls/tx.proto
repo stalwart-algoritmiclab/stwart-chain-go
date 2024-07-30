@@ -1,0 +1,102 @@
+syntax = "proto3";
+
+package stwartchain.polls;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/polls/params.proto";
+import "stwartchain/polls/polls_params.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "stwartchain/polls/options.proto";
+
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams      (MsgUpdateParams     ) returns (MsgUpdateParamsResponse     );
+  rpc CreatePollsParams (MsgCreatePollsParams) returns (MsgCreatePollsParamsResponse);
+  rpc UpdatePollsParams (MsgUpdatePollsParams) returns (MsgUpdatePollsParamsResponse);
+  rpc DeletePollsParams (MsgDeletePollsParams) returns (MsgDeletePollsParamsResponse);
+  rpc CreatePoll        (MsgCreatePoll       ) returns (MsgCreatePollResponse       );
+  rpc Vote              (MsgVote             ) returns (MsgVoteResponse             );
+}
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) =                           "authority";
+  option           (amino.name) = "stwartchain/x/polls/MsgUpdateParams";
+  
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+  
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+message MsgCreatePollsParams {
+  option (cosmos.msg.v1.signer) = "creator";
+           string                   creator         = 1;
+           string                   minDaysDuration = 2;
+           string                   maxDaysDuration = 3;
+           string                   maxDaysPending  = 4;
+  repeated cosmos.base.v1beta1.Coin proposerDeposit = 5 [(gogoproto.nullable) = false];
+           bool                     burnVeto        = 6;
+}
+
+message MsgCreatePollsParamsResponse {}
+
+message MsgUpdatePollsParams {
+  option (cosmos.msg.v1.signer) = "creator";
+           string                   creator         = 1;
+           string                   minDaysDuration = 2;
+           string                   maxDaysDuration = 3;
+           string                   maxDaysPending  = 4;
+  repeated cosmos.base.v1beta1.Coin proposerDeposit = 5 [(gogoproto.nullable) = false];
+           bool                     burnVeto        = 6;
+}
+
+message MsgUpdatePollsParamsResponse {}
+
+message MsgDeletePollsParams {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+}
+
+message MsgDeletePollsParamsResponse {}
+
+message MsgCreatePoll {
+  option (cosmos.msg.v1.signer) = "creator";
+           string  creator            = 1;
+           string  title              = 2;
+           string  description        = 3;
+           string  votingStartTime    = 4;
+           string  votingPeriod       = 5;
+           uint64  minVoteAmount      = 6;
+           uint64  minAdressesCount   = 7;
+           uint64  minVoteCoinsAmount = 8;
+  repeated Options options            = 9 [(gogoproto.nullable) = false];
+}
+
+message MsgCreatePollResponse {}
+
+message MsgVote {
+  option (cosmos.msg.v1.signer) = "creator";
+           string                   creator  = 1;
+           uint64                   pollId   = 2;
+           uint64                   optionId = 3;
+  repeated cosmos.base.v1beta1.Coin amount   = 4 [(gogoproto.nullable) = false];
+}
+
+message MsgVoteResponse {}
+

@@ -27,5 +27,16 @@ func (msg *MsgSetReferrer) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	_, err = sdk.AccAddressFromBech32(msg.ReferrerAddress)
+	if err != nil {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid referrer address (%s)", err)
+	}
+
+	_, err = sdk.AccAddressFromBech32(msg.ReferralAddress)
+	if err != nil {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid referral address (%s)", err)
+	}
+
 	return nil
 }

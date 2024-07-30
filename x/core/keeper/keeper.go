@@ -17,8 +17,10 @@ import (
 	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 	exchangermoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/exchanger/types"
 	feepolicymoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	referraltypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/types"
 	securedmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/keeper"
 	securedmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/secured/types"
+	stakemoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 	systemrewardsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 	usersmodulekeeper "github.com/stalwart-algoritmiclab/stwart-chain-go/x/users/keeper"
 )
@@ -63,6 +65,8 @@ func NewKeeper(
 		securedmoduletypes.ModuleName,
 		feepolicymoduletypes.ModuleName,
 		systemrewardsmoduletypes.ModuleName,
+		stakemoduletypes.ModuleName,
+		referraltypes.ModuleName,
 	}
 
 	modulesList := make([]types.ModuleInfo, 0, len(modulesAddresses))

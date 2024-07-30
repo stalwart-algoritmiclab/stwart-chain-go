@@ -22,8 +22,6 @@ const (
 	Query_Params_FullMethodName       = "/stwartchain.feepolicy.Query/Params"
 	Query_Addresses_FullMethodName    = "/stwartchain.feepolicy.Query/Addresses"
 	Query_AddressesAll_FullMethodName = "/stwartchain.feepolicy.Query/AddressesAll"
-	Query_Tariff_FullMethodName       = "/stwartchain.feepolicy.Query/Tariff"
-	Query_TariffAll_FullMethodName    = "/stwartchain.feepolicy.Query/TariffAll"
 	Query_Tariffs_FullMethodName      = "/stwartchain.feepolicy.Query/Tariffs"
 	Query_TariffsAll_FullMethodName   = "/stwartchain.feepolicy.Query/TariffsAll"
 )
@@ -37,9 +35,6 @@ type QueryClient interface {
 	// Queries a list of Addresses items.
 	Addresses(ctx context.Context, in *QueryGetAddressesRequest, opts ...grpc.CallOption) (*QueryGetAddressesResponse, error)
 	AddressesAll(ctx context.Context, in *QueryAllAddressesRequest, opts ...grpc.CallOption) (*QueryAllAddressesResponse, error)
-	// Queries a list of Tariff items.
-	Tariff(ctx context.Context, in *QueryGetTariffRequest, opts ...grpc.CallOption) (*QueryGetTariffResponse, error)
-	TariffAll(ctx context.Context, in *QueryAllTariffRequest, opts ...grpc.CallOption) (*QueryAllTariffResponse, error)
 	// Queries a list of Tariffs items.
 	Tariffs(ctx context.Context, in *QueryGetTariffsRequest, opts ...grpc.CallOption) (*QueryGetTariffsResponse, error)
 	TariffsAll(ctx context.Context, in *QueryAllTariffsRequest, opts ...grpc.CallOption) (*QueryAllTariffsResponse, error)
@@ -80,24 +75,6 @@ func (c *queryClient) AddressesAll(ctx context.Context, in *QueryAllAddressesReq
 	return out, nil
 }
 
-func (c *queryClient) Tariff(ctx context.Context, in *QueryGetTariffRequest, opts ...grpc.CallOption) (*QueryGetTariffResponse, error) {
-	out := new(QueryGetTariffResponse)
-	err := c.cc.Invoke(ctx, Query_Tariff_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *queryClient) TariffAll(ctx context.Context, in *QueryAllTariffRequest, opts ...grpc.CallOption) (*QueryAllTariffResponse, error) {
-	out := new(QueryAllTariffResponse)
-	err := c.cc.Invoke(ctx, Query_TariffAll_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *queryClient) Tariffs(ctx context.Context, in *QueryGetTariffsRequest, opts ...grpc.CallOption) (*QueryGetTariffsResponse, error) {
 	out := new(QueryGetTariffsResponse)
 	err := c.cc.Invoke(ctx, Query_Tariffs_FullMethodName, in, out, opts...)
@@ -125,9 +102,6 @@ type QueryServer interface {
 	// Queries a list of Addresses items.
 	Addresses(context.Context, *QueryGetAddressesRequest) (*QueryGetAddressesResponse, error)
 	AddressesAll(context.Context, *QueryAllAddressesRequest) (*QueryAllAddressesResponse, error)
-	// Queries a list of Tariff items.
-	Tariff(context.Context, *QueryGetTariffRequest) (*QueryGetTariffResponse, error)
-	TariffAll(context.Context, *QueryAllTariffRequest) (*QueryAllTariffResponse, error)
 	// Queries a list of Tariffs items.
 	Tariffs(context.Context, *QueryGetTariffsRequest) (*QueryGetTariffsResponse, error)
 	TariffsAll(context.Context, *QueryAllTariffsRequest) (*QueryAllTariffsResponse, error)
@@ -146,12 +120,6 @@ func (UnimplementedQueryServer) Addresses(context.Context, *QueryGetAddressesReq
 }
 func (UnimplementedQueryServer) AddressesAll(context.Context, *QueryAllAddressesRequest) (*QueryAllAddressesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddressesAll not implemented")
-}
-func (UnimplementedQueryServer) Tariff(context.Context, *QueryGetTariffRequest) (*QueryGetTariffResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Tariff not implemented")
-}
-func (UnimplementedQueryServer) TariffAll(context.Context, *QueryAllTariffRequest) (*QueryAllTariffResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TariffAll not implemented")
 }
 func (UnimplementedQueryServer) Tariffs(context.Context, *QueryGetTariffsRequest) (*QueryGetTariffsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Tariffs not implemented")
@@ -226,42 +194,6 @@ func _Query_AddressesAll_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Query_Tariff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryGetTariffRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).Tariff(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Query_Tariff_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).Tariff(ctx, req.(*QueryGetTariffRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Query_TariffAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(QueryAllTariffRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueryServer).TariffAll(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Query_TariffAll_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueryServer).TariffAll(ctx, req.(*QueryAllTariffRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Query_Tariffs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryGetTariffsRequest)
 	if err := dec(in); err != nil {
@@ -316,14 +248,6 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddressesAll",
 			Handler:    _Query_AddressesAll_Handler,
-		},
-		{
-			MethodName: "Tariff",
-			Handler:    _Query_Tariff_Handler,
-		},
-		{
-			MethodName: "TariffAll",
-			Handler:    _Query_TariffAll_Handler,
 		},
 		{
 			MethodName: "Tariffs",

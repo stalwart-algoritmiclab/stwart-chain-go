@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package stwartchain.polls;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "stwartchain/polls/params.proto";
+import "stwartchain/polls/polls_params.proto";
+import "stwartchain/polls/votes.proto";
+import "stwartchain/polls/options.proto";
+import "stwartchain/polls/polls.proto";
+
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types";
+
+// GenesisState defines the polls module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params      params       = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+           PollsParams pollsParams  = 2;
+  repeated Votes       votesList    = 3 [(gogoproto.nullable) = false] ;
+           uint64      votesCount   = 4;
+  repeated Options     optionsList  = 5 [(gogoproto.nullable) = false] ;
+           uint64      optionsCount = 6;
+  repeated Polls       pollsList    = 7 [(gogoproto.nullable) = false] ;
+           uint64      pollsCount   = 8;
+}
+

@@ -2,14 +2,12 @@
 package rates
 
 import (
-	binary "encoding/binary"
 	fmt "fmt"
 	runtime "github.com/cosmos/cosmos-proto/runtime"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoiface "google.golang.org/protobuf/runtime/protoiface"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	io "io"
-	math "math"
 	reflect "reflect"
 	sync "sync"
 )
@@ -102,8 +100,8 @@ func (x *fastReflection_Rates) Range(f func(protoreflect.FieldDescriptor, protor
 			return
 		}
 	}
-	if x.Rate != float64(0) || math.Signbit(x.Rate) {
-		value := protoreflect.ValueOfFloat64(x.Rate)
+	if x.Rate != "" {
+		value := protoreflect.ValueOfString(x.Rate)
 		if !f(fd_Rates_rate, value) {
 			return
 		}
@@ -138,7 +136,7 @@ func (x *fastReflection_Rates) Has(fd protoreflect.FieldDescriptor) bool {
 	case "stwartchain.rates.Rates.denom":
 		return x.Denom != ""
 	case "stwartchain.rates.Rates.rate":
-		return x.Rate != float64(0) || math.Signbit(x.Rate)
+		return x.Rate != ""
 	case "stwartchain.rates.Rates.creator":
 		return x.Creator != ""
 	case "stwartchain.rates.Rates.decimals":
@@ -162,7 +160,7 @@ func (x *fastReflection_Rates) Clear(fd protoreflect.FieldDescriptor) {
 	case "stwartchain.rates.Rates.denom":
 		x.Denom = ""
 	case "stwartchain.rates.Rates.rate":
-		x.Rate = float64(0)
+		x.Rate = ""
 	case "stwartchain.rates.Rates.creator":
 		x.Creator = ""
 	case "stwartchain.rates.Rates.decimals":
@@ -188,7 +186,7 @@ func (x *fastReflection_Rates) Get(descriptor protoreflect.FieldDescriptor) prot
 		return protoreflect.ValueOfString(value)
 	case "stwartchain.rates.Rates.rate":
 		value := x.Rate
-		return protoreflect.ValueOfFloat64(value)
+		return protoreflect.ValueOfString(value)
 	case "stwartchain.rates.Rates.creator":
 		value := x.Creator
 		return protoreflect.ValueOfString(value)
@@ -218,7 +216,7 @@ func (x *fastReflection_Rates) Set(fd protoreflect.FieldDescriptor, value protor
 	case "stwartchain.rates.Rates.denom":
 		x.Denom = value.Interface().(string)
 	case "stwartchain.rates.Rates.rate":
-		x.Rate = value.Float()
+		x.Rate = value.Interface().(string)
 	case "stwartchain.rates.Rates.creator":
 		x.Creator = value.Interface().(string)
 	case "stwartchain.rates.Rates.decimals":
@@ -267,7 +265,7 @@ func (x *fastReflection_Rates) NewField(fd protoreflect.FieldDescriptor) protore
 	case "stwartchain.rates.Rates.denom":
 		return protoreflect.ValueOfString("")
 	case "stwartchain.rates.Rates.rate":
-		return protoreflect.ValueOfFloat64(float64(0))
+		return protoreflect.ValueOfString("")
 	case "stwartchain.rates.Rates.creator":
 		return protoreflect.ValueOfString("")
 	case "stwartchain.rates.Rates.decimals":
@@ -345,8 +343,9 @@ func (x *fastReflection_Rates) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.Rate != 0 || math.Signbit(x.Rate) {
-			n += 9
+		l = len(x.Rate)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
 		}
 		l = len(x.Creator)
 		if l > 0 {
@@ -396,11 +395,12 @@ func (x *fastReflection_Rates) ProtoMethods() *protoiface.Methods {
 			i--
 			dAtA[i] = 0x1a
 		}
-		if x.Rate != 0 || math.Signbit(x.Rate) {
-			i -= 8
-			binary.LittleEndian.PutUint64(dAtA[i:], uint64(math.Float64bits(float64(x.Rate))))
+		if len(x.Rate) > 0 {
+			i -= len(x.Rate)
+			copy(dAtA[i:], x.Rate)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Rate)))
 			i--
-			dAtA[i] = 0x11
+			dAtA[i] = 0x12
 		}
 		if len(x.Denom) > 0 {
 			i -= len(x.Denom)
@@ -491,16 +491,37 @@ func (x *fastReflection_Rates) ProtoMethods() *protoiface.Methods {
 				x.Denom = string(dAtA[iNdEx:postIndex])
 				iNdEx = postIndex
 			case 2:
-				if wireType != 1 {
+				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Rate", wireType)
 				}
-				var v uint64
-				if (iNdEx + 8) > l {
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
 				}
-				v = uint64(binary.LittleEndian.Uint64(dAtA[iNdEx:]))
-				iNdEx += 8
-				x.Rate = float64(math.Float64frombits(v))
+				x.Rate = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
 			case 3:
 				if wireType != 2 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
@@ -605,10 +626,10 @@ type Rates struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Denom    string  `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
-	Rate     float64 `protobuf:"fixed64,2,opt,name=rate,proto3" json:"rate,omitempty"`
-	Creator  string  `protobuf:"bytes,3,opt,name=creator,proto3" json:"creator,omitempty"`
-	Decimals int32   `protobuf:"varint,4,opt,name=decimals,proto3" json:"decimals,omitempty"`
+	Denom    string `protobuf:"bytes,1,opt,name=denom,proto3" json:"denom,omitempty"`
+	Rate     string `protobuf:"bytes,2,opt,name=rate,proto3" json:"rate,omitempty"`
+	Creator  string `protobuf:"bytes,3,opt,name=creator,proto3" json:"creator,omitempty"`
+	Decimals int32  `protobuf:"varint,4,opt,name=decimals,proto3" json:"decimals,omitempty"`
 }
 
 func (x *Rates) Reset() {
@@ -638,11 +659,11 @@ func (x *Rates) GetDenom() string {
 	return ""
 }
 
-func (x *Rates) GetRate() float64 {
+func (x *Rates) GetRate() string {
 	if x != nil {
 		return x.Rate
 	}
-	return 0
+	return ""
 }
 
 func (x *Rates) GetCreator() string {
@@ -667,7 +688,7 @@ var file_stwartchain_rates_rates_proto_rawDesc = []byte{
 	0x11, 0x73, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x72, 0x61, 0x74,
 	0x65, 0x73, 0x22, 0x67, 0x0a, 0x05, 0x52, 0x61, 0x74, 0x65, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x64,
 	0x65, 0x6e, 0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x64, 0x65, 0x6e, 0x6f,
-	0x6d, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x6d, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x04, 0x72, 0x61, 0x74, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72,
 	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x12,
 	0x1a, 0x0a, 0x08, 0x64, 0x65, 0x63, 0x69, 0x6d, 0x61, 0x6c, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28,

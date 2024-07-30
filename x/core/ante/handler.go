@@ -52,8 +52,7 @@ func (f CoreDecorator) deductFees(
 	if addressTo == "" {
 		return ctx, nil
 	}
-	// todo STATS related
-	// f.corek.SetStatsFee(ctx, sdk.NewCoins(feeCoin), txFullAmount)
+	f.statsKeeper.SetStatsFee(ctx, sdk.NewCoins(feeCoin), txFullAmount)
 
 	// log fee event
 	_ = ctx.EventManager().EmitTypedEvents(&coretypes.MsgFees{
@@ -91,7 +90,7 @@ func (f CoreDecorator) deductFees(
 		); err != nil {
 			return ctx, err
 		}
-		//f.stats.AddStats(ctx, coinStakeReward...) // TODO: fix it
+		f.rewk.AddStats(ctx, systemrewardsmoduletypes.StakeReward, coinStakeReward...)
 	}
 
 	if feeRefReward == 0 {
@@ -122,7 +121,7 @@ func (f CoreDecorator) deductFees(
 		); err != nil {
 			return ctx, err
 		}
-		f.rewk.AddStats(ctx, coinRefReward...)
+		f.rewk.AddStats(ctx, systemrewardsmoduletypes.SystemReward, coinRefReward...)
 	}
 
 	return ctx, nil

@@ -4,8 +4,8 @@ package stwartchain.rates;
 option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types";
 
 message Rates {
-  string denom = 1; 
-  double rate = 2;
+  string denom = 1;
+  string rate = 2;
   string creator = 3;
   int32 decimals = 4;
 }

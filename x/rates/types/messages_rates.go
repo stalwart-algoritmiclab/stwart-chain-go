@@ -7,6 +7,8 @@
 package types
 
 import (
+	"strconv"
+
 	errorsmod "cosmossdk.io/errors"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -34,6 +36,20 @@ func (msg *MsgCreateRates) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	rate, err := strconv.ParseFloat(msg.Rate, 64)
+	if err != nil {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
+	}
+
+	if rate <= 0 {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "rate must be greater than zero")
+	}
+
+	if msg.Decimals <= 0 {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "decimals must be greater than zero")
+	}
+
 	return nil
 }
 
@@ -57,6 +73,20 @@ func (msg *MsgUpdateRates) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	rate, err := strconv.ParseFloat(msg.Rate, 64)
+	if err != nil {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
+	}
+
+	if rate <= 0 {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "rate must be greater than zero")
+	}
+
+	if msg.Decimals <= 0 {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "decimals must be greater than zero")
+	}
+
 	return nil
 }
 

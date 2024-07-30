@@ -34,14 +34,6 @@ func (m msgServer) Send(goCtx context.Context, msg *types.MsgSend) (*types.MsgSe
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount: %s", msg.Amount)
 	}
 
-	if amount.IsZero() {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "amount is zero")
-	}
-
-	if msg.Denom == "" {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
-	}
-
 	coins := sdk.NewCoins(sdk.NewCoin(msg.Denom, amount))
 
 	var moduleName string

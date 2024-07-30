@@ -33,16 +33,6 @@ service Query {
   
   }
   
-  // Queries a list of Tariff items.
-  rpc Tariff    (QueryGetTariffRequest) returns (QueryGetTariffResponse) {
-    option (google.api.http).get = "/stwart/feepolicy/tariff/{denom}";
-  
-  }
-  rpc TariffAll (QueryAllTariffRequest) returns (QueryAllTariffResponse) {
-    option (google.api.http).get = "/stwart/feepolicy/tariff";
-  
-  }
-  
   // Queries a list of Tariffs items.
   rpc Tariffs    (QueryGetTariffsRequest) returns (QueryGetTariffsResponse) {
     option (google.api.http).get = "/stwart/feepolicy/tariffs/{denom}";

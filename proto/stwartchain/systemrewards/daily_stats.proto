@@ -6,7 +6,11 @@ import "gogoproto/gogo.proto";
 import "cosmos/base/v1beta1/coin.proto"; 
 
 message DailyStats {
-  
-  repeated cosmos.base.v1beta1.Coin reward = 1 [(gogoproto.nullable) = false]; 
-  uint64 count = 2; 
+
+  repeated cosmos.base.v1beta1.Coin reward = 1 [(gogoproto.nullable) = false];
+  uint64 count = 2;
+  repeated cosmos.base.v1beta1.Coin sysReward = 3 [(gogoproto.nullable) = false];
+  uint64 countSysReward = 4;
+  repeated cosmos.base.v1beta1.Coin stakeReward = 5 [(gogoproto.nullable) = false];
+  uint64 countStakeReward = 6;
 }

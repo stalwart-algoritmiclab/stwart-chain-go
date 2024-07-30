@@ -18,9 +18,6 @@ service Msg {
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
   rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
-  rpc CreateUser   (MsgCreateUser  ) returns (MsgCreateUserResponse  );
-  rpc UpdateUser   (MsgUpdateUser  ) returns (MsgUpdateUserResponse  );
-  rpc DeleteUser   (MsgDeleteUser  ) returns (MsgDeleteUserResponse  );
   rpc SetReferrer  (MsgSetReferrer ) returns (MsgSetReferrerResponse );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
@@ -40,34 +37,6 @@ message MsgUpdateParams {
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
-
-message MsgCreateUser {
-  option (cosmos.msg.v1.signer) = "creator";
-           string creator        = 1;
-           string accountAddress = 2;
-           string referrer       = 3;
-  repeated string referrals      = 4;
-}
-
-message MsgCreateUserResponse {}
-
-message MsgUpdateUser {
-  option (cosmos.msg.v1.signer) = "creator";
-           string creator        = 1;
-           string accountAddress = 2;
-           string referrer       = 3;
-  repeated string referrals      = 4;
-}
-
-message MsgUpdateUserResponse {}
-
-message MsgDeleteUser {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator        = 1;
-  string accountAddress = 2;
-}
-
-message MsgDeleteUserResponse {}
 
 message MsgSetReferrer {
   option (cosmos.msg.v1.signer) = "creator";

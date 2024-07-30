@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package stwartchain.polls;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "stwartchain/polls/params.proto";
+import "stwartchain/polls/polls_params.proto";
+import "stwartchain/polls/votes.proto";
+import "stwartchain/polls/options.proto";
+import "stwartchain/polls/polls.proto";
+
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/params";
+  
+  }
+  
+  // Queries a PollsParams by index.
+  rpc PollsParams (QueryGetPollsParamsRequest) returns (QueryGetPollsParamsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/polls_params";
+  
+  }
+  
+  // Queries a list of Votes items.
+  rpc Votes    (QueryGetVotesRequest) returns (QueryGetVotesResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/votes/{id}";
+  
+  }
+  rpc VotesAll (QueryAllVotesRequest) returns (QueryAllVotesResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/votes";
+  
+  }
+  
+  // Queries a list of Options items.
+  rpc Options    (QueryGetOptionsRequest) returns (QueryGetOptionsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/options/{id}";
+  
+  }
+  rpc OptionsAll (QueryAllOptionsRequest) returns (QueryAllOptionsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/options";
+  
+  }
+  
+  // Queries a list of Polls items.
+  rpc Polls    (QueryGetPollsRequest) returns (QueryGetPollsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/polls/{id}";
+  
+  }
+  rpc PollsAll (QueryAllPollsRequest) returns (QueryAllPollsResponse) {
+    option (google.api.http).get = "/backend/stwart-chain/polls/polls";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetPollsParamsRequest {}
+
+message QueryGetPollsParamsResponse {
+  PollsParams PollsParams = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetVotesRequest {
+  uint64 id = 1;
+}
+
+message QueryGetVotesResponse {
+  Votes Votes = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllVotesRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllVotesResponse {
+  repeated Votes                                  Votes      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetOptionsRequest {
+  uint64 id = 1;
+}
+
+message QueryGetOptionsResponse {
+  Options Options = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllOptionsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllOptionsResponse {
+  repeated Options                                Options    = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetPollsRequest {
+  uint64 id = 1;
+}
+
+message QueryGetPollsResponse {
+  Polls Polls = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPollsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPollsResponse {
+  repeated Polls                                  Polls      = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

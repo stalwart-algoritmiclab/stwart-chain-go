@@ -5,3 +5,8 @@
  */
 
 package types
+
+const (
+	SystemReward = iota
+	StakeReward
+)

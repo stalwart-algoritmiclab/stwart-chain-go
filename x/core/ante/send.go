@@ -116,7 +116,7 @@ func (f CoreDecorator) processMsgSend(ctx sdk.Context, tx sdk.Tx, msgSend sdk.Ms
 				return ctx, sdkioerrors.Wrapf(sdkerrors.ErrLogic, "cant parse fee amount %s", fee.Fee)
 			}
 
-			feeAmount := uint64(math.Round(float64(tokens.Uint64()) * feeAmountFloat))
+			feeAmount := uint64(math.Ceil(float64(tokens.Uint64()) * feeAmountFloat))
 			feeCoin.Amount = sdkmath.NewIntFromUint64(feeAmount)
 
 			msg.Amount = msg.Amount.Sub(feeCoin)
@@ -127,11 +127,9 @@ func (f CoreDecorator) processMsgSend(ctx sdk.Context, tx sdk.Tx, msgSend sdk.Ms
 			if err != nil {
 				return ctx, err
 			}
+		} else {
+			f.statsKeeper.SetStatsNoFee(ctx, txFullAmount)
 		}
-		// else {
-		//	// todo stats
-		//	f.corek.SetStatsNoFee(ctx, txFullAmount)
-		// }
 	}
 
 	f.uk.CountUsers(ctx, []string{feePayer.String()})

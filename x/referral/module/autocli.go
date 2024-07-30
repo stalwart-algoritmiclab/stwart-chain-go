@@ -46,24 +46,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Skip:      true, // skipped because authority gated
 				},
 				{
-					RpcMethod:      "CreateUser",
-					Use:            "create-user [accountAddress] [referrer] [referrals]",
-					Short:          "Create a new User",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "accountAddress"}, {ProtoField: "referrer"}, {ProtoField: "referrals"}},
-				},
-				{
-					RpcMethod:      "UpdateUser",
-					Use:            "update-user [accountAddress] [referrer] [referrals]",
-					Short:          "Update User",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "accountAddress"}, {ProtoField: "referrer"}, {ProtoField: "referrals"}},
-				},
-				{
-					RpcMethod:      "DeleteUser",
-					Use:            "delete-user [accountAddress]",
-					Short:          "Delete User",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "accountAddress"}},
-				},
-				{
 					RpcMethod:      "SetReferrer",
 					Use:            "set-referrer [referrer-address] [referral-address]",
 					Short:          "Send a SetReferrer tx",
