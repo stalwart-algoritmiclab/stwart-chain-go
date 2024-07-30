@@ -26,6 +26,13 @@ func (msg *MsgCreateAddresses) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	for _, address := range msg.Address {
+		if _, err = sdk.AccAddressFromBech32(address); err != nil {
+			return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid address (%s)", err)
+		}
+	}
+
 	return nil
 }
 
@@ -44,6 +51,13 @@ func (msg *MsgUpdateAddresses) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	for _, address := range msg.Address {
+		if _, err = sdk.AccAddressFromBech32(address); err != nil {
+			return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid address (%s)", err)
+		}
+	}
+
 	return nil
 }
 

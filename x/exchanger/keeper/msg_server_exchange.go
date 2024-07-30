@@ -9,6 +9,7 @@ package keeper
 import (
 	"context"
 	math2 "math"
+	"strconv"
 
 	errorsmod "cosmossdk.io/errors"
 	"cosmossdk.io/math"
@@ -27,6 +28,7 @@ func (k msgServer) Exchange(goCtx context.Context, msg *types.MsgExchange) (*typ
 	if err != nil {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
 	amountToExchange, ok := math.NewIntFromString(msg.Amount)
 	if !ok {
 		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidCoins, "invalid exchange amount (%s)", msg.Amount)
@@ -47,7 +49,12 @@ func (k msgServer) Exchange(goCtx context.Context, msg *types.MsgExchange) (*typ
 		}
 
 		rate := ratesInfo.Rates
-		amountToExchangeFloat := (float64(amountToExchange.Uint64()) / math2.Pow10(int(rate.Decimals))) * rate.Rate
+		rateFloat, err := strconv.ParseFloat(rate.Rate, 64)
+		if err != nil {
+			return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
+		}
+
+		amountToExchangeFloat := (float64(amountToExchange.Uint64()) / math2.Pow10(int(rate.Decimals))) * rateFloat
 		if amountToExchangeFloat < 0.1 {
 			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidCoins, "exchange amount less than 0.1")
 		}
@@ -91,11 +98,18 @@ func (k msgServer) Exchange(goCtx context.Context, msg *types.MsgExchange) (*typ
 		}
 
 		rate := ratesInfo.Rates
+
 		amountToExchangeFloat := (float64(amountToExchange.Uint64()) / math2.Pow10(domain.DenomStableDecimals))
 		if amountToExchangeFloat < 0.1 {
 			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidCoins, "exchange amount less than 0.1")
 		}
-		amountToExchangeTo := amountToExchangeFloat / rate.Rate
+
+		rateFloat, err := strconv.ParseFloat(rate.Rate, 64)
+		if err != nil {
+			return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
+		}
+
+		amountToExchangeTo := amountToExchangeFloat / rateFloat
 
 		transferAmount := math.NewInt(int64(amountToExchangeTo * math2.Pow10(int(rate.Decimals))))
 		if transferAmount.IsZero() {

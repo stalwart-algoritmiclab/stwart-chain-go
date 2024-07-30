@@ -33,6 +33,7 @@ type HandlerOptions struct {
 	RewardsKeeper          RewardsKeeper
 	UsersKeeper            UserKeeper
 	StakeKeeper            StakeKeeper
+	StatsKeeper            StatsKeeper
 }
 
 func (options HandlerOptions) Validate() error {
@@ -101,6 +102,7 @@ func NewAnteHandler(options HandlerOptions) (sdk.AnteHandler, error) {
 			options.UsersKeeper,
 			options.RewardsKeeper,
 			options.StakeKeeper,
+			options.StatsKeeper,
 		),
 	}
 

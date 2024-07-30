@@ -65,10 +65,116 @@ func (x *_DailyStats_1_list) IsValid() bool {
 	return x.list != nil
 }
 
+var _ protoreflect.List = (*_DailyStats_3_list)(nil)
+
+type _DailyStats_3_list struct {
+	list *[]*v1beta1.Coin
+}
+
+func (x *_DailyStats_3_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_DailyStats_3_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_DailyStats_3_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_DailyStats_3_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_DailyStats_3_list) AppendMutable() protoreflect.Value {
+	v := new(v1beta1.Coin)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_DailyStats_3_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_DailyStats_3_list) NewElement() protoreflect.Value {
+	v := new(v1beta1.Coin)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_DailyStats_3_list) IsValid() bool {
+	return x.list != nil
+}
+
+var _ protoreflect.List = (*_DailyStats_5_list)(nil)
+
+type _DailyStats_5_list struct {
+	list *[]*v1beta1.Coin
+}
+
+func (x *_DailyStats_5_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_DailyStats_5_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_DailyStats_5_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_DailyStats_5_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*v1beta1.Coin)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_DailyStats_5_list) AppendMutable() protoreflect.Value {
+	v := new(v1beta1.Coin)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_DailyStats_5_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_DailyStats_5_list) NewElement() protoreflect.Value {
+	v := new(v1beta1.Coin)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_DailyStats_5_list) IsValid() bool {
+	return x.list != nil
+}
+
 var (
-	md_DailyStats        protoreflect.MessageDescriptor
-	fd_DailyStats_reward protoreflect.FieldDescriptor
-	fd_DailyStats_count  protoreflect.FieldDescriptor
+	md_DailyStats                  protoreflect.MessageDescriptor
+	fd_DailyStats_reward           protoreflect.FieldDescriptor
+	fd_DailyStats_count            protoreflect.FieldDescriptor
+	fd_DailyStats_sysReward        protoreflect.FieldDescriptor
+	fd_DailyStats_countSysReward   protoreflect.FieldDescriptor
+	fd_DailyStats_stakeReward      protoreflect.FieldDescriptor
+	fd_DailyStats_countStakeReward protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -76,6 +182,10 @@ func init() {
 	md_DailyStats = File_stwartchain_systemrewards_daily_stats_proto.Messages().ByName("DailyStats")
 	fd_DailyStats_reward = md_DailyStats.Fields().ByName("reward")
 	fd_DailyStats_count = md_DailyStats.Fields().ByName("count")
+	fd_DailyStats_sysReward = md_DailyStats.Fields().ByName("sysReward")
+	fd_DailyStats_countSysReward = md_DailyStats.Fields().ByName("countSysReward")
+	fd_DailyStats_stakeReward = md_DailyStats.Fields().ByName("stakeReward")
+	fd_DailyStats_countStakeReward = md_DailyStats.Fields().ByName("countStakeReward")
 }
 
 var _ protoreflect.Message = (*fastReflection_DailyStats)(nil)
@@ -155,6 +265,30 @@ func (x *fastReflection_DailyStats) Range(f func(protoreflect.FieldDescriptor, p
 			return
 		}
 	}
+	if len(x.SysReward) != 0 {
+		value := protoreflect.ValueOfList(&_DailyStats_3_list{list: &x.SysReward})
+		if !f(fd_DailyStats_sysReward, value) {
+			return
+		}
+	}
+	if x.CountSysReward != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.CountSysReward)
+		if !f(fd_DailyStats_countSysReward, value) {
+			return
+		}
+	}
+	if len(x.StakeReward) != 0 {
+		value := protoreflect.ValueOfList(&_DailyStats_5_list{list: &x.StakeReward})
+		if !f(fd_DailyStats_stakeReward, value) {
+			return
+		}
+	}
+	if x.CountStakeReward != uint64(0) {
+		value := protoreflect.ValueOfUint64(x.CountStakeReward)
+		if !f(fd_DailyStats_countStakeReward, value) {
+			return
+		}
+	}
 }
 
 // Has reports whether a field is populated.
@@ -174,6 +308,14 @@ func (x *fastReflection_DailyStats) Has(fd protoreflect.FieldDescriptor) bool {
 		return len(x.Reward) != 0
 	case "stwartchain.systemrewards.DailyStats.count":
 		return x.Count != uint64(0)
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		return len(x.SysReward) != 0
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		return x.CountSysReward != uint64(0)
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		return len(x.StakeReward) != 0
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
+		return x.CountStakeReward != uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.systemrewards.DailyStats"))
@@ -194,6 +336,14 @@ func (x *fastReflection_DailyStats) Clear(fd protoreflect.FieldDescriptor) {
 		x.Reward = nil
 	case "stwartchain.systemrewards.DailyStats.count":
 		x.Count = uint64(0)
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		x.SysReward = nil
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		x.CountSysReward = uint64(0)
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		x.StakeReward = nil
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
+		x.CountStakeReward = uint64(0)
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.systemrewards.DailyStats"))
@@ -218,6 +368,24 @@ func (x *fastReflection_DailyStats) Get(descriptor protoreflect.FieldDescriptor)
 		return protoreflect.ValueOfList(listValue)
 	case "stwartchain.systemrewards.DailyStats.count":
 		value := x.Count
+		return protoreflect.ValueOfUint64(value)
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		if len(x.SysReward) == 0 {
+			return protoreflect.ValueOfList(&_DailyStats_3_list{})
+		}
+		listValue := &_DailyStats_3_list{list: &x.SysReward}
+		return protoreflect.ValueOfList(listValue)
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		value := x.CountSysReward
+		return protoreflect.ValueOfUint64(value)
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		if len(x.StakeReward) == 0 {
+			return protoreflect.ValueOfList(&_DailyStats_5_list{})
+		}
+		listValue := &_DailyStats_5_list{list: &x.StakeReward}
+		return protoreflect.ValueOfList(listValue)
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
+		value := x.CountStakeReward
 		return protoreflect.ValueOfUint64(value)
 	default:
 		if descriptor.IsExtension() {
@@ -245,6 +413,18 @@ func (x *fastReflection_DailyStats) Set(fd protoreflect.FieldDescriptor, value p
 		x.Reward = *clv.list
 	case "stwartchain.systemrewards.DailyStats.count":
 		x.Count = value.Uint()
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		lv := value.List()
+		clv := lv.(*_DailyStats_3_list)
+		x.SysReward = *clv.list
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		x.CountSysReward = value.Uint()
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		lv := value.List()
+		clv := lv.(*_DailyStats_5_list)
+		x.StakeReward = *clv.list
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
+		x.CountStakeReward = value.Uint()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.systemrewards.DailyStats"))
@@ -271,8 +451,24 @@ func (x *fastReflection_DailyStats) Mutable(fd protoreflect.FieldDescriptor) pro
 		}
 		value := &_DailyStats_1_list{list: &x.Reward}
 		return protoreflect.ValueOfList(value)
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		if x.SysReward == nil {
+			x.SysReward = []*v1beta1.Coin{}
+		}
+		value := &_DailyStats_3_list{list: &x.SysReward}
+		return protoreflect.ValueOfList(value)
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		if x.StakeReward == nil {
+			x.StakeReward = []*v1beta1.Coin{}
+		}
+		value := &_DailyStats_5_list{list: &x.StakeReward}
+		return protoreflect.ValueOfList(value)
 	case "stwartchain.systemrewards.DailyStats.count":
 		panic(fmt.Errorf("field count of message stwartchain.systemrewards.DailyStats is not mutable"))
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		panic(fmt.Errorf("field countSysReward of message stwartchain.systemrewards.DailyStats is not mutable"))
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
+		panic(fmt.Errorf("field countStakeReward of message stwartchain.systemrewards.DailyStats is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.systemrewards.DailyStats"))
@@ -290,6 +486,16 @@ func (x *fastReflection_DailyStats) NewField(fd protoreflect.FieldDescriptor) pr
 		list := []*v1beta1.Coin{}
 		return protoreflect.ValueOfList(&_DailyStats_1_list{list: &list})
 	case "stwartchain.systemrewards.DailyStats.count":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "stwartchain.systemrewards.DailyStats.sysReward":
+		list := []*v1beta1.Coin{}
+		return protoreflect.ValueOfList(&_DailyStats_3_list{list: &list})
+	case "stwartchain.systemrewards.DailyStats.countSysReward":
+		return protoreflect.ValueOfUint64(uint64(0))
+	case "stwartchain.systemrewards.DailyStats.stakeReward":
+		list := []*v1beta1.Coin{}
+		return protoreflect.ValueOfList(&_DailyStats_5_list{list: &list})
+	case "stwartchain.systemrewards.DailyStats.countStakeReward":
 		return protoreflect.ValueOfUint64(uint64(0))
 	default:
 		if fd.IsExtension() {
@@ -369,6 +575,24 @@ func (x *fastReflection_DailyStats) ProtoMethods() *protoiface.Methods {
 		if x.Count != 0 {
 			n += 1 + runtime.Sov(uint64(x.Count))
 		}
+		if len(x.SysReward) > 0 {
+			for _, e := range x.SysReward {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.CountSysReward != 0 {
+			n += 1 + runtime.Sov(uint64(x.CountSysReward))
+		}
+		if len(x.StakeReward) > 0 {
+			for _, e := range x.StakeReward {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.CountStakeReward != 0 {
+			n += 1 + runtime.Sov(uint64(x.CountStakeReward))
+		}
 		if x.unknownFields != nil {
 			n += len(x.unknownFields)
 		}
@@ -397,6 +621,48 @@ func (x *fastReflection_DailyStats) ProtoMethods() *protoiface.Methods {
 		if x.unknownFields != nil {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.CountStakeReward != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.CountStakeReward))
+			i--
+			dAtA[i] = 0x30
+		}
+		if len(x.StakeReward) > 0 {
+			for iNdEx := len(x.StakeReward) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.StakeReward[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x2a
+			}
+		}
+		if x.CountSysReward != 0 {
+			i = runtime.EncodeVarint(dAtA, i, uint64(x.CountSysReward))
+			i--
+			dAtA[i] = 0x20
+		}
+		if len(x.SysReward) > 0 {
+			for iNdEx := len(x.SysReward) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.SysReward[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0x1a
+			}
 		}
 		if x.Count != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Count))
@@ -521,6 +787,112 @@ func (x *fastReflection_DailyStats) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
+			case 3:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field SysReward", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.SysReward = append(x.SysReward, &v1beta1.Coin{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.SysReward[len(x.SysReward)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 4:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CountSysReward", wireType)
+				}
+				x.CountSysReward = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.CountSysReward |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+			case 5:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field StakeReward", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.StakeReward = append(x.StakeReward, &v1beta1.Coin{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.StakeReward[len(x.StakeReward)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 6:
+				if wireType != 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field CountStakeReward", wireType)
+				}
+				x.CountStakeReward = 0
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					x.CountStakeReward |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -574,8 +946,12 @@ type DailyStats struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Reward []*v1beta1.Coin `protobuf:"bytes,1,rep,name=reward,proto3" json:"reward,omitempty"`
-	Count  uint64          `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	Reward           []*v1beta1.Coin `protobuf:"bytes,1,rep,name=reward,proto3" json:"reward,omitempty"`
+	Count            uint64          `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
+	SysReward        []*v1beta1.Coin `protobuf:"bytes,3,rep,name=sysReward,proto3" json:"sysReward,omitempty"`
+	CountSysReward   uint64          `protobuf:"varint,4,opt,name=countSysReward,proto3" json:"countSysReward,omitempty"`
+	StakeReward      []*v1beta1.Coin `protobuf:"bytes,5,rep,name=stakeReward,proto3" json:"stakeReward,omitempty"`
+	CountStakeReward uint64          `protobuf:"varint,6,opt,name=countStakeReward,proto3" json:"countStakeReward,omitempty"`
 }
 
 func (x *DailyStats) Reset() {
@@ -612,6 +988,34 @@ func (x *DailyStats) GetCount() uint64 {
 	return 0
 }
 
+func (x *DailyStats) GetSysReward() []*v1beta1.Coin {
+	if x != nil {
+		return x.SysReward
+	}
+	return nil
+}
+
+func (x *DailyStats) GetCountSysReward() uint64 {
+	if x != nil {
+		return x.CountSysReward
+	}
+	return 0
+}
+
+func (x *DailyStats) GetStakeReward() []*v1beta1.Coin {
+	if x != nil {
+		return x.StakeReward
+	}
+	return nil
+}
+
+func (x *DailyStats) GetCountStakeReward() uint64 {
+	if x != nil {
+		return x.CountStakeReward
+	}
+	return 0
+}
+
 var File_stwartchain_systemrewards_daily_stats_proto protoreflect.FileDescriptor
 
 var file_stwartchain_systemrewards_daily_stats_proto_rawDesc = []byte{
@@ -622,28 +1026,41 @@ var file_stwartchain_systemrewards_daily_stats_proto_rawDesc = []byte{
 	0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x1a, 0x14, 0x67, 0x6f, 0x67, 0x6f, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x67, 0x6f, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1e,
 	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2f, 0x62, 0x61, 0x73, 0x65, 0x2f, 0x76, 0x31, 0x62, 0x65,
-	0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x5b,
-	0x0a, 0x0a, 0x44, 0x61, 0x69, 0x6c, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x37, 0x0a, 0x06,
-	0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63,
-	0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74,
-	0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06, 0x72,
-	0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x42, 0xe1, 0x01, 0x0a, 0x1d,
-	0x63, 0x6f, 0x6d, 0x2e, 0x73, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e,
-	0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x42, 0x0f, 0x44,
-	0x61, 0x69, 0x6c, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01,
-	0x5a, 0x2a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73, 0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61,
-	0x70, 0x69, 0x2f, 0x73, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x73,
-	0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0xa2, 0x02, 0x03, 0x53,
-	0x53, 0x58, 0xaa, 0x02, 0x19, 0x53, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e,
-	0x2e, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0xca, 0x02,
-	0x19, 0x53, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x53, 0x79, 0x73,
-	0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0xe2, 0x02, 0x25, 0x53, 0x74, 0x77,
-	0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72,
-	0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0xea, 0x02, 0x1a, 0x53, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e,
-	0x3a, 0x3a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x61, 0x31, 0x2f, 0x63, 0x6f, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0xb1,
+	0x02, 0x0a, 0x0a, 0x44, 0x61, 0x69, 0x6c, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x37, 0x0a,
+	0x06, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e,
+	0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65,
+	0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x06,
+	0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x3d, 0x0a, 0x09,
+	0x73, 0x79, 0x73, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31,
+	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43, 0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00,
+	0x52, 0x09, 0x73, 0x79, 0x73, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x26, 0x0a, 0x0e, 0x63,
+	0x6f, 0x75, 0x6e, 0x74, 0x53, 0x79, 0x73, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x04, 0x52, 0x0e, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x53, 0x79, 0x73, 0x52, 0x65, 0x77,
+	0x61, 0x72, 0x64, 0x12, 0x41, 0x0a, 0x0b, 0x73, 0x74, 0x61, 0x6b, 0x65, 0x52, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x18, 0x05, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
+	0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x43,
+	0x6f, 0x69, 0x6e, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0b, 0x73, 0x74, 0x61, 0x6b, 0x65,
+	0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x12, 0x2a, 0x0a, 0x10, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x53,
+	0x74, 0x61, 0x6b, 0x65, 0x52, 0x65, 0x77, 0x61, 0x72, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x10, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x6b, 0x65, 0x52, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x42, 0xe1, 0x01, 0x0a, 0x1d, 0x63, 0x6f, 0x6d, 0x2e, 0x73, 0x74, 0x77, 0x61, 0x72,
+	0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77,
+	0x61, 0x72, 0x64, 0x73, 0x42, 0x0f, 0x44, 0x61, 0x69, 0x6c, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x2a, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x73,
+	0x64, 0x6b, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x73, 0x74, 0x77, 0x61, 0x72, 0x74,
+	0x63, 0x68, 0x61, 0x69, 0x6e, 0x2f, 0x73, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61,
+	0x72, 0x64, 0x73, 0xa2, 0x02, 0x03, 0x53, 0x53, 0x58, 0xaa, 0x02, 0x19, 0x53, 0x74, 0x77, 0x61,
+	0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65,
+	0x77, 0x61, 0x72, 0x64, 0x73, 0xca, 0x02, 0x19, 0x53, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68,
+	0x61, 0x69, 0x6e, 0x5c, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64,
+	0x73, 0xe2, 0x02, 0x25, 0x53, 0x74, 0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x5c,
+	0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72, 0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x5c, 0x47, 0x50,
+	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x1a, 0x53, 0x74, 0x77, 0x61,
+	0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x3a, 0x3a, 0x53, 0x79, 0x73, 0x74, 0x65, 0x6d, 0x72,
+	0x65, 0x77, 0x61, 0x72, 0x64, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -665,11 +1082,13 @@ var file_stwartchain_systemrewards_daily_stats_proto_goTypes = []interface{}{
 }
 var file_stwartchain_systemrewards_daily_stats_proto_depIdxs = []int32{
 	1, // 0: stwartchain.systemrewards.DailyStats.reward:type_name -> cosmos.base.v1beta1.Coin
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1, // 1: stwartchain.systemrewards.DailyStats.sysReward:type_name -> cosmos.base.v1beta1.Coin
+	1, // 2: stwartchain.systemrewards.DailyStats.stakeReward:type_name -> cosmos.base.v1beta1.Coin
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_stwartchain_systemrewards_daily_stats_proto_init() }

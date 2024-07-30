@@ -84,7 +84,7 @@ func (k Keeper) GetAllStats(ctx context.Context) (list []types.Stats) {
 // If coins is empty, nothing will be added.
 // If coins is multiple, the same coins will be merged.
 // Coins must be sorted by denom.
-func (k Keeper) AddStats(ctx context.Context, coins ...sdk.Coin) {
+func (k Keeper) AddStats(ctx context.Context, rewardType uint8, coins ...sdk.Coin) {
 	if len(coins) == 0 {
 		return
 	}
@@ -97,21 +97,52 @@ func (k Keeper) AddStats(ctx context.Context, coins ...sdk.Coin) {
 	today := time.Now().Format(time.DateOnly)
 	coinsCount := uint64(len(coins))
 
+	stakeCoins := sdk.NewCoins()
+	stakeCoinsCount := uint64(0)
+	sysCoins := sdk.NewCoins()
+	sysCoinsCount := uint64(0)
+
+	switch rewardType {
+	case types.StakeReward:
+		stakeCoins = newCoins
+		stakeCoinsCount = coinsCount
+	case types.SystemReward:
+		sysCoins = newCoins
+		sysCoinsCount = coinsCount
+	}
+
 	stats, found := k.GetStats(ctx, today)
 	if !found || stats.DailyStats == nil {
 		k.SetStats(ctx, types.Stats{
 			Date: today,
 			DailyStats: &types.DailyStats{
-				Reward: newCoins,
-				Count:  coinsCount,
+				Reward:           newCoins,
+				Count:            coinsCount,
+				SysReward:        sysCoins,
+				CountSysReward:   sysCoinsCount,
+				StakeReward:      stakeCoins,
+				CountStakeReward: stakeCoinsCount,
 			},
 		})
 		return
 	}
 
+	// total rewards
 	rewardCoins := sdk.NewCoins(stats.DailyStats.Reward...)
 	stats.DailyStats.Reward = rewardCoins.Add(newCoins...)
 	stats.DailyStats.Count += coinsCount
+
+	// system rewards
+	sysRewardCoins := sdk.NewCoins(stats.DailyStats.Reward...)
+	stats.DailyStats.SysReward = sdk.NewCoins(stats.DailyStats.SysReward...)
+	stats.DailyStats.SysReward = sysRewardCoins.Add(sysCoins...)
+	stats.DailyStats.CountSysReward += sysCoinsCount
+
+	// stake rewards
+	stakeRewardCoins := sdk.NewCoins(stats.DailyStats.StakeReward...)
+	stats.DailyStats.StakeReward = sdk.NewCoins(stats.DailyStats.StakeReward...)
+	stats.DailyStats.StakeReward = stakeRewardCoins.Add(stakeCoins...)
+	stats.DailyStats.CountStakeReward += stakeCoinsCount
 
 	k.SetStats(ctx, stats)
 }

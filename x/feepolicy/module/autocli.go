@@ -35,17 +35,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
 				},
 				{
-					RpcMethod: "TariffAll",
-					Use:       "list-tariff",
-					Short:     "List all Tariff",
-				},
-				{
-					RpcMethod:      "Tariff",
-					Use:            "show-tariff [id]",
-					Short:          "Shows a Tariff",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "denom"}},
-				},
-				{
 					RpcMethod: "TariffsAll",
 					Use:       "list-tariffs",
 					Short:     "List all Tariffs",

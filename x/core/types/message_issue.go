@@ -8,6 +8,7 @@ package types
 
 import (
 	errorsmod "cosmossdk.io/errors"
+	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
@@ -28,5 +29,20 @@ func (msg *MsgIssue) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	_, err = sdk.AccAddressFromBech32(msg.Address)
+	if err != nil {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "address: %s is not correct", msg.Address)
+	}
+
+	amount, ok := math.NewIntFromString(msg.Amount)
+	if amount.IsNil() || !ok {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid amount (%s)", msg.Amount)
+	}
+
+	if msg.Denom == "" {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
+	}
+
 	return nil
 }

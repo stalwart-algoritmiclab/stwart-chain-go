@@ -22,6 +22,7 @@ type CoreDecorator struct {
 	rewk        RewardsKeeper
 	uk          UserKeeper
 	stakeKeeper StakeKeeper
+	statsKeeper StatsKeeper
 }
 
 // NewCoreDecorator takes an BankingKeeper and returns a new fee consumer for send transaction
@@ -34,6 +35,7 @@ func NewCoreDecorator(
 	uk UserKeeper,
 	rewk RewardsKeeper,
 	stakeKeeper StakeKeeper,
+	statsKeeper StatsKeeper,
 ) CoreDecorator {
 	return CoreDecorator{
 		ak:          ak,
@@ -44,5 +46,6 @@ func NewCoreDecorator(
 		rewk:        rewk,
 		uk:          uk,
 		stakeKeeper: stakeKeeper,
+		statsKeeper: statsKeeper,
 	}
 }

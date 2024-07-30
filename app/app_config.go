@@ -63,6 +63,7 @@ import (
 	exchangermodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/exchanger/module"
 	faucetmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/faucet/module"
 	feepolicymodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/feepolicy/module"
+	pollsmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/polls/module"
 	ratesmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/rates/module"
 	referralmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/referral/module"
 	securedmodulev1 "github.com/stalwart-algoritmiclab/stwart-chain-go/api/stwartchain/secured/module"
@@ -79,6 +80,8 @@ import (
 	faucetmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/faucet/types"
 	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/module" // import for side-effects
 	feepolicymoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/feepolicy/types"
+	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/module" // import for side-effects
+	pollsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types"
 	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/module" // import for side-effects
 	ratesmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 	_ "github.com/stalwart-algoritmiclab/stwart-chain-go/x/referral/module" // import for side-effects
@@ -144,6 +147,7 @@ var (
 		ratesmoduletypes.ModuleName,
 		faucetmoduletypes.ModuleName,
 		exchangermoduletypes.ModuleName,
+		pollsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -180,6 +184,7 @@ var (
 		stakemoduletypes.ModuleName,
 		faucetmoduletypes.ModuleName,
 		exchangermoduletypes.ModuleName,
+		pollsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -210,6 +215,7 @@ var (
 		ratesmoduletypes.ModuleName,
 		faucetmoduletypes.ModuleName,
 		exchangermoduletypes.ModuleName,
+		pollsmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -239,6 +245,8 @@ var (
 		{Account: faucetmoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: exchangermoduletypes.ModuleName, Permissions: []string{authtypes.Minter, authtypes.Burner}},
 		{Account: stakemoduletypes.ModuleName},
+		{Account: referralmoduletypes.ModuleName},
+		{Account: pollsmoduletypes.ModuleName, Permissions: []string{authtypes.Burner}},
 
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
@@ -422,6 +430,10 @@ var (
 			{
 				Name:   exchangermoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&exchangermodulev1.Module{}),
+			},
+			{
+				Name:   pollsmoduletypes.ModuleName,
+				Config: appconfig.WrapAny(&pollsmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},

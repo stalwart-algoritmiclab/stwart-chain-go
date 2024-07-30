@@ -55,3 +55,40 @@ func (k Keeper) Burn(ctx sdk.Context, address sdk.AccAddress, amount sdk.Coin) e
 
 	return nil
 }
+
+// BurnCoinsWithoutStats burns coins from the voqid module account without updating the daily stats.
+func (k Keeper) BurnCoinsWithoutStats(ctx sdk.Context, address sdk.AccAddress, amount sdk.Coin) error {
+	if amount.IsZero() {
+		return nil
+	}
+
+	if amount.IsNegative() {
+		return fmt.Errorf("invalid amount: %s", amount)
+	}
+
+	if amount.Denom == domain.DenomStake {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "cannot burn stake")
+	}
+
+	coins := sdk.NewCoins(amount)
+
+	if err := k.bankKeeper.SendCoinsFromAccountToModule(ctx, address, types.ModuleName, coins); err != nil {
+		return err
+	}
+
+	if err := k.bankKeeper.BurnCoins(ctx, types.ModuleName, coins); err != nil {
+		return err
+	}
+
+	msg := &types.MsgBurn{
+		Creator: types.ModuleName,
+		Amount:  amount.Amount.Uint64(),
+		Denom:   amount.Denom,
+		Address: address.String(),
+	}
+	if err := ctx.EventManager().EmitTypedEvents(msg); err != nil {
+		return err
+	}
+
+	return nil
+}

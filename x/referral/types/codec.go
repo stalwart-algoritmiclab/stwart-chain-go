@@ -15,11 +15,6 @@ import (
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&MsgCreateUser{},
-		&MsgUpdateUser{},
-		&MsgDeleteUser{},
-	)
-	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgSetReferrer{},
 	)
 	// this line is used by starport scaffolding # 3

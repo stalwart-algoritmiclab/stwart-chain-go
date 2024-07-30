@@ -26,7 +26,7 @@ type (
 
 	// SystemRewardsKeeper used as holder for all system rewards
 	SystemRewardsKeeper interface {
-		AddStats(ctx context.Context, coins ...sdk.Coin)
+		AddStats(ctx context.Context, rewardType uint8, coins ...sdk.Coin)
 		GetStatsByDate(ctx context.Context, startDate, endDate string) (result []types.Stats, err error)
 		GetAllStats(ctx context.Context) (list []types.Stats)
 		GetStats(ctx context.Context, date string) (val types.Stats, found bool)

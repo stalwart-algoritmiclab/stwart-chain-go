@@ -40,11 +40,9 @@ func (k msgServer) CreateTariffs(goCtx context.Context, msg *types.MsgCreateTari
 
 	var foundTariff types.Tariff
 	tariffID := len(tariffs.Tariffs)
-	feeID := 0
 	for _, t := range tariffs.Tariffs {
 		// check found tariff for existing fee trigger from amount
 		if t.Amount == msg.Tariffs.Amount {
-			feeID = len(t.Fees)
 			foundTariff = *t
 			for _, fee := range t.Fees {
 				if fee.AmountFrom == msg.Tariffs.Fees[0].AmountFrom {
@@ -54,7 +52,24 @@ func (k msgServer) CreateTariffs(goCtx context.Context, msg *types.MsgCreateTari
 		}
 	}
 
-	msg.Tariffs.Fees[0].Id = uint64(feeID)
+	for i, fee := range msg.Tariffs.Fees {
+		msg.Tariffs.Fees[i].Id = uint64(i)
+		msg.Tariffs.Fees[i].Creator = msg.Creator
+
+		stakeRewardFloat, err := strconv.ParseFloat(fee.StakeReward, 64)
+		if err != nil {
+			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "stake reward %s is invalid", fee.StakeReward)
+		}
+
+		refRewardFloat, err := strconv.ParseFloat(fee.RefReward, 64)
+		if err != nil {
+			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "ref reward %s is invalid", fee.RefReward)
+		}
+
+		if stakeRewardFloat+refRewardFloat > 1 {
+			return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "sum of stakeReward and refReward greater than 1")
+		}
+	}
 
 	if foundTariff.Amount != "" {
 		foundTariff.Fees = append(foundTariff.Fees, msg.Tariffs.Fees[0])
@@ -96,7 +111,7 @@ func (k msgServer) UpdateTariffs(goCtx context.Context, msg *types.MsgUpdateTari
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
 	}
 
-	if msg.Tariffs.Id > uint64(len(tariffs.Tariffs)-1) { // TODO: check it after cli test
+	if msg.Tariffs.Id > uint64(len(tariffs.Tariffs)-1) {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "tariff id is not set")
 	}
 
@@ -105,11 +120,19 @@ func (k msgServer) UpdateTariffs(goCtx context.Context, msg *types.MsgUpdateTari
 	tariff.Amount = msg.Tariffs.Amount
 	tariff.MinRefBalance = msg.Tariffs.MinRefBalance
 
-	if msg.Tariffs.Fees[0].Id > uint64(len(tariff.Fees)-1) { // TODO: check it after cli test
+	if msg.Tariffs.Fees[0].Id > uint64(len(tariff.Fees)-1) {
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "fee id is not set")
 	}
 
-	tariff.Fees[msg.Tariffs.Fees[0].Id] = msg.Tariffs.Fees[0]
+	tariff.Fees = msg.Tariffs.Fees
+
+	// for i, fee := range tariff.Fees {
+	//	for j, newFee := range msg.Tariffs.Fees {
+	//		if fee.Id == newFee.Id {
+	//			tariff.Fees[i] = msg.Tariffs.Fees[j]
+	//		}
+	//	}
+	// }
 
 	k.SetTariffs(ctx, tariffs)
 

@@ -8,7 +8,6 @@ package keeper
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/rates/types"
 
@@ -31,18 +30,13 @@ func (k msgServer) CreateRates(goCtx context.Context, msg *types.MsgCreateRates)
 		msg.Denom,
 	)
 	if isFound {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "index already set")
-	}
-
-	rateFloat, err := strconv.ParseFloat(msg.Rate, 64)
-	if err != nil {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom %s already exists", msg.Denom)
 	}
 
 	var rates = types.Rates{
 		Creator:  msg.Creator,
 		Denom:    msg.Denom,
-		Rate:     rateFloat,
+		Rate:     msg.Rate,
 		Decimals: msg.Decimals,
 	}
 
@@ -75,15 +69,10 @@ func (k msgServer) UpdateRates(goCtx context.Context, msg *types.MsgUpdateRates)
 		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
-	rateFloat, err := strconv.ParseFloat(msg.Rate, 64)
-	if err != nil {
-		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid rate")
-	}
-
 	var rates = types.Rates{
 		Creator:  msg.Creator,
 		Denom:    msg.Denom,
-		Rate:     rateFloat,
+		Rate:     msg.Rate,
 		Decimals: msg.Decimals,
 	}
 

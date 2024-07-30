@@ -40,10 +40,6 @@ func (m msgServer) Issue(goCtx context.Context, msg *types.MsgIssue) (*types.Msg
 		m.userKeeper.IncrementTotalUsers(ctx)
 	}
 
-	if msg.Denom == "" {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "denom is empty")
-	}
-
 	coinAmount := sdk.NewCoin(msg.Denom, amount)
 	coins := sdk.NewCoins(coinAmount)
 

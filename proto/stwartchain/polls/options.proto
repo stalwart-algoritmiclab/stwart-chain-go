@@ -1,0 +1,15 @@
+syntax = "proto3";
+package stwartchain.polls;
+
+option go_package = "github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types";
+import "gogoproto/gogo.proto"; 
+import "cosmos/base/v1beta1/coin.proto"; 
+
+message Options {
+  uint64 id = 1;
+  uint64 votersCount = 2; 
+  repeated cosmos.base.v1beta1.Coin tokensAmount = 3 [(gogoproto.nullable) = false];
+  bool isVeto = 4;
+  string text = 5;
+  bool isVinner = 6;
+}

@@ -76,39 +76,6 @@ func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
-	var weightMsgCreateUser int
-	simState.AppParams.GetOrGenerate(opWeightMsgCreateUser, &weightMsgCreateUser, nil,
-		func(_ *rand.Rand) {
-			weightMsgCreateUser = defaultWeightMsgCreateUser
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgCreateUser,
-		referralsimulation.SimulateMsgCreateUser(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
-	var weightMsgUpdateUser int
-	simState.AppParams.GetOrGenerate(opWeightMsgUpdateUser, &weightMsgUpdateUser, nil,
-		func(_ *rand.Rand) {
-			weightMsgUpdateUser = defaultWeightMsgUpdateUser
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgUpdateUser,
-		referralsimulation.SimulateMsgUpdateUser(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
-	var weightMsgDeleteUser int
-	simState.AppParams.GetOrGenerate(opWeightMsgDeleteUser, &weightMsgDeleteUser, nil,
-		func(_ *rand.Rand) {
-			weightMsgDeleteUser = defaultWeightMsgDeleteUser
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgDeleteUser,
-		referralsimulation.SimulateMsgDeleteUser(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
 	var weightMsgSetReferrer int
 	simState.AppParams.GetOrGenerate(opWeightMsgSetReferrer, &weightMsgSetReferrer, nil,
 		func(_ *rand.Rand) {
@@ -128,30 +95,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 // ProposalMsgs returns msgs used for governance proposals for simulations.
 func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgCreateUser,
-			defaultWeightMsgCreateUser,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				referralsimulation.SimulateMsgCreateUser(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgUpdateUser,
-			defaultWeightMsgUpdateUser,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				referralsimulation.SimulateMsgUpdateUser(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgDeleteUser,
-			defaultWeightMsgDeleteUser,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				referralsimulation.SimulateMsgDeleteUser(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
 		simulation.NewWeightedProposalMsg(
 			opWeightMsgSetReferrer,
 			defaultWeightMsgSetReferrer,

@@ -179,7 +179,7 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 
 		if denom == domain.DenomStake {
 			stakeSpendable := f.stakeKeeper.GetFreeStake(ctx, feePayer)
-			if txFullAmount.AmountOf(denom).LT(stakeSpendable) {
+			if stakeSpendable.LT(txFullAmount.AmountOf(denom)) {
 				return ctx, sdkioerrors.Wrapf(
 					sdkerrors.ErrInsufficientFunds,
 					"sender have not enough funds, want %s, got %s",
@@ -196,7 +196,7 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 	fullAmounts := make(map[string]sdk.Coins)
 	amountsFeesToSend := make(map[string][]sendFees)
 
-	for _, output := range msgCopy.Outputs {
+	for id, output := range msgCopy.Outputs {
 		// check recipient address and add to the stats if needed
 		recipient, err := sdk.AccAddressFromBech32(output.Address)
 		if err != nil {
@@ -222,7 +222,7 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 				}
 
 				msgCopy.Inputs[0].Coins = msgCopy.Inputs[0].Coins.Sub(feeInfo.feeCoin)
-				msgCopy.Outputs[i].Coins = msgCopy.Outputs[i].Coins.Sub(feeInfo.feeCoin)
+				msgCopy.Outputs[id].Coins = msgCopy.Outputs[id].Coins.Sub(feeInfo.feeCoin)
 				amountsFeesToSend[output.Address] = append(amountsFeesToSend[output.Address], feeInfo)
 			}
 		}
@@ -232,16 +232,15 @@ func (f CoreDecorator) processMsgMultiSend(ctx sdk.Context, tx sdk.Tx, msgSend s
 	tx.GetMsgs()[i] = msgCopy
 
 	// set noFee denoms to the stats
-	// for _, denom := range txFullAmount.Denoms() {
-	//	// is denom is excluded from fee
-	//	_, found := feesEnabled[denom]
-	//	if !found {
-	//		// todo Stats related
-	//		fullAmount := sdk.NewCoin(denom, txFullAmount.AmountOf(denom))
-	//		f.corek.SetStatsNoFee(ctx, sdk.NewCoins(fullAmount))
-	//		continue
-	//	}
-	// }
+	for _, denom := range txFullAmount.Denoms() {
+		// is denom is excluded from fee
+		_, found := feesEnabled[denom]
+		if !found {
+			fullAmount := sdk.NewCoin(denom, txFullAmount.AmountOf(denom))
+			f.statsKeeper.SetStatsNoFee(ctx, sdk.NewCoins(fullAmount))
+			continue
+		}
+	}
 
 	for addressTo, feeCoinsInfo := range amountsFeesToSend {
 		for _, feeInfo := range feeCoinsInfo {

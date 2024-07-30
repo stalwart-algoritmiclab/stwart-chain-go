@@ -20,9 +20,6 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Msg_UpdateParams_FullMethodName = "/stwartchain.referral.Msg/UpdateParams"
-	Msg_CreateUser_FullMethodName   = "/stwartchain.referral.Msg/CreateUser"
-	Msg_UpdateUser_FullMethodName   = "/stwartchain.referral.Msg/UpdateUser"
-	Msg_DeleteUser_FullMethodName   = "/stwartchain.referral.Msg/DeleteUser"
 	Msg_SetReferrer_FullMethodName  = "/stwartchain.referral.Msg/SetReferrer"
 )
 
@@ -33,9 +30,6 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
-	CreateUser(ctx context.Context, in *MsgCreateUser, opts ...grpc.CallOption) (*MsgCreateUserResponse, error)
-	UpdateUser(ctx context.Context, in *MsgUpdateUser, opts ...grpc.CallOption) (*MsgUpdateUserResponse, error)
-	DeleteUser(ctx context.Context, in *MsgDeleteUser, opts ...grpc.CallOption) (*MsgDeleteUserResponse, error)
 	SetReferrer(ctx context.Context, in *MsgSetReferrer, opts ...grpc.CallOption) (*MsgSetReferrerResponse, error)
 }
 
@@ -50,33 +44,6 @@ func NewMsgClient(cc grpc.ClientConnInterface) MsgClient {
 func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error) {
 	out := new(MsgUpdateParamsResponse)
 	err := c.cc.Invoke(ctx, Msg_UpdateParams_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) CreateUser(ctx context.Context, in *MsgCreateUser, opts ...grpc.CallOption) (*MsgCreateUserResponse, error) {
-	out := new(MsgCreateUserResponse)
-	err := c.cc.Invoke(ctx, Msg_CreateUser_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) UpdateUser(ctx context.Context, in *MsgUpdateUser, opts ...grpc.CallOption) (*MsgUpdateUserResponse, error) {
-	out := new(MsgUpdateUserResponse)
-	err := c.cc.Invoke(ctx, Msg_UpdateUser_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) DeleteUser(ctx context.Context, in *MsgDeleteUser, opts ...grpc.CallOption) (*MsgDeleteUserResponse, error) {
-	out := new(MsgDeleteUserResponse)
-	err := c.cc.Invoke(ctx, Msg_DeleteUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,9 +66,6 @@ type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
-	CreateUser(context.Context, *MsgCreateUser) (*MsgCreateUserResponse, error)
-	UpdateUser(context.Context, *MsgUpdateUser) (*MsgUpdateUserResponse, error)
-	DeleteUser(context.Context, *MsgDeleteUser) (*MsgDeleteUserResponse, error)
 	SetReferrer(context.Context, *MsgSetReferrer) (*MsgSetReferrerResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
@@ -112,15 +76,6 @@ type UnimplementedMsgServer struct {
 
 func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
-}
-func (UnimplementedMsgServer) CreateUser(context.Context, *MsgCreateUser) (*MsgCreateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
-}
-func (UnimplementedMsgServer) UpdateUser(context.Context, *MsgUpdateUser) (*MsgUpdateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
-}
-func (UnimplementedMsgServer) DeleteUser(context.Context, *MsgDeleteUser) (*MsgDeleteUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
 }
 func (UnimplementedMsgServer) SetReferrer(context.Context, *MsgSetReferrer) (*MsgSetReferrerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetReferrer not implemented")
@@ -156,60 +111,6 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgCreateUser)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).CreateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_CreateUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).CreateUser(ctx, req.(*MsgCreateUser))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgUpdateUser)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).UpdateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_UpdateUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).UpdateUser(ctx, req.(*MsgUpdateUser))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgDeleteUser)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).DeleteUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_DeleteUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).DeleteUser(ctx, req.(*MsgDeleteUser))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Msg_SetReferrer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MsgSetReferrer)
 	if err := dec(in); err != nil {
@@ -238,18 +139,6 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
-		},
-		{
-			MethodName: "CreateUser",
-			Handler:    _Msg_CreateUser_Handler,
-		},
-		{
-			MethodName: "UpdateUser",
-			Handler:    _Msg_UpdateUser_Handler,
-		},
-		{
-			MethodName: "DeleteUser",
-			Handler:    _Msg_DeleteUser_Handler,
 		},
 		{
 			MethodName: "SetReferrer",
