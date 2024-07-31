@@ -109,39 +109,6 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		coresimulation.SimulateMsgSend(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
-	var weightMsgRefund int
-	simState.AppParams.GetOrGenerate(opWeightMsgRefund, &weightMsgRefund, nil,
-		func(_ *rand.Rand) {
-			weightMsgRefund = defaultWeightMsgRefund
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgRefund,
-		coresimulation.SimulateMsgRefund(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
-	var weightMsgFees int
-	simState.AppParams.GetOrGenerate(opWeightMsgFees, &weightMsgFees, nil,
-		func(_ *rand.Rand) {
-			weightMsgFees = defaultWeightMsgFees
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgFees,
-		coresimulation.SimulateMsgFees(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
-	var weightMsgRefReward int
-	simState.AppParams.GetOrGenerate(opWeightMsgRefReward, &weightMsgRefReward, nil,
-		func(_ *rand.Rand) {
-			weightMsgRefReward = defaultWeightMsgRefReward
-		},
-	)
-	operations = append(operations, simulation.NewWeightedOperation(
-		weightMsgRefReward,
-		coresimulation.SimulateMsgRefReward(am.accountKeeper, am.bankKeeper, am.keeper),
-	))
-
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -174,30 +141,5 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 				return nil
 			},
 		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgRefund,
-			defaultWeightMsgRefund,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				coresimulation.SimulateMsgRefund(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgFees,
-			defaultWeightMsgFees,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				coresimulation.SimulateMsgFees(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
-		simulation.NewWeightedProposalMsg(
-			opWeightMsgRefReward,
-			defaultWeightMsgRefReward,
-			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
-				coresimulation.SimulateMsgRefReward(am.accountKeeper, am.bankKeeper, am.keeper)
-				return nil
-			},
-		),
-		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

@@ -23,9 +23,6 @@ const (
 	Msg_Issue_FullMethodName        = "/stwartchain.core.Msg/Issue"
 	Msg_Withdraw_FullMethodName     = "/stwartchain.core.Msg/Withdraw"
 	Msg_Send_FullMethodName         = "/stwartchain.core.Msg/Send"
-	Msg_Refund_FullMethodName       = "/stwartchain.core.Msg/Refund"
-	Msg_Fees_FullMethodName         = "/stwartchain.core.Msg/Fees"
-	Msg_RefReward_FullMethodName    = "/stwartchain.core.Msg/RefReward"
 )
 
 // MsgClient is the client API for Msg service.
@@ -38,9 +35,6 @@ type MsgClient interface {
 	Issue(ctx context.Context, in *MsgIssue, opts ...grpc.CallOption) (*MsgIssueResponse, error)
 	Withdraw(ctx context.Context, in *MsgWithdraw, opts ...grpc.CallOption) (*MsgWithdrawResponse, error)
 	Send(ctx context.Context, in *MsgSend, opts ...grpc.CallOption) (*MsgSendResponse, error)
-	Refund(ctx context.Context, in *MsgRefund, opts ...grpc.CallOption) (*MsgRefundResponse, error)
-	Fees(ctx context.Context, in *MsgFees, opts ...grpc.CallOption) (*MsgFeesResponse, error)
-	RefReward(ctx context.Context, in *MsgRefReward, opts ...grpc.CallOption) (*MsgRefRewardResponse, error)
 }
 
 type msgClient struct {
@@ -87,33 +81,6 @@ func (c *msgClient) Send(ctx context.Context, in *MsgSend, opts ...grpc.CallOpti
 	return out, nil
 }
 
-func (c *msgClient) Refund(ctx context.Context, in *MsgRefund, opts ...grpc.CallOption) (*MsgRefundResponse, error) {
-	out := new(MsgRefundResponse)
-	err := c.cc.Invoke(ctx, Msg_Refund_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) Fees(ctx context.Context, in *MsgFees, opts ...grpc.CallOption) (*MsgFeesResponse, error) {
-	out := new(MsgFeesResponse)
-	err := c.cc.Invoke(ctx, Msg_Fees_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *msgClient) RefReward(ctx context.Context, in *MsgRefReward, opts ...grpc.CallOption) (*MsgRefRewardResponse, error) {
-	out := new(MsgRefRewardResponse)
-	err := c.cc.Invoke(ctx, Msg_RefReward_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -124,9 +91,6 @@ type MsgServer interface {
 	Issue(context.Context, *MsgIssue) (*MsgIssueResponse, error)
 	Withdraw(context.Context, *MsgWithdraw) (*MsgWithdrawResponse, error)
 	Send(context.Context, *MsgSend) (*MsgSendResponse, error)
-	Refund(context.Context, *MsgRefund) (*MsgRefundResponse, error)
-	Fees(context.Context, *MsgFees) (*MsgFeesResponse, error)
-	RefReward(context.Context, *MsgRefReward) (*MsgRefRewardResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -145,15 +109,6 @@ func (UnimplementedMsgServer) Withdraw(context.Context, *MsgWithdraw) (*MsgWithd
 }
 func (UnimplementedMsgServer) Send(context.Context, *MsgSend) (*MsgSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
-}
-func (UnimplementedMsgServer) Refund(context.Context, *MsgRefund) (*MsgRefundResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Refund not implemented")
-}
-func (UnimplementedMsgServer) Fees(context.Context, *MsgFees) (*MsgFeesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Fees not implemented")
-}
-func (UnimplementedMsgServer) RefReward(context.Context, *MsgRefReward) (*MsgRefRewardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RefReward not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -240,60 +195,6 @@ func _Msg_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Msg_Refund_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgRefund)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Refund(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_Refund_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Refund(ctx, req.(*MsgRefund))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_Fees_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgFees)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).Fees(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_Fees_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).Fees(ctx, req.(*MsgFees))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Msg_RefReward_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MsgRefReward)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MsgServer).RefReward(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Msg_RefReward_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MsgServer).RefReward(ctx, req.(*MsgRefReward))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -316,18 +217,6 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Send",
 			Handler:    _Msg_Send_Handler,
-		},
-		{
-			MethodName: "Refund",
-			Handler:    _Msg_Refund_Handler,
-		},
-		{
-			MethodName: "Fees",
-			Handler:    _Msg_Fees_Handler,
-		},
-		{
-			MethodName: "RefReward",
-			Handler:    _Msg_RefReward_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

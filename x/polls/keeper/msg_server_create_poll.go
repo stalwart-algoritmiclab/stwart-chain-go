@@ -1,9 +1,3 @@
-/*
- * SPDX-License-Identifier: BUSL-1.1
- * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
- */
-
 package keeper
 
 import (
@@ -43,7 +37,7 @@ func (k msgServer) CreatePoll(goCtx context.Context, msg *types.MsgCreatePoll) (
 		return nil, errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "invalid voting start time")
 	}
 
-	pendingTime := time.Now().Sub(votingStartTime)
+	pendingTime := timeNow.Sub(votingStartTime)
 	thresholdPendingTime, err := time.ParseDuration(moduleParams.MaxDaysPending)
 	if err != nil {
 		return nil, errorsmod.Wrap(sdkerrors.ErrAppConfig, "invalid polls module params: pending time")
@@ -64,13 +58,22 @@ func (k msgServer) CreatePoll(goCtx context.Context, msg *types.MsgCreatePoll) (
 		return nil, err
 	}
 
-	thresholdVotingPeriod, err := time.ParseDuration(moduleParams.MaxDaysDuration)
+	thresholdMaxVotingPeriod, err := time.ParseDuration(moduleParams.MaxDaysDuration)
 	if err != nil {
 		return nil, err
 	}
 
-	if votingPeriod > thresholdVotingPeriod {
-		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "requested voting period %s is longer than max voting period %s", votingPeriod.String(), thresholdVotingPeriod.String())
+	if votingPeriod > thresholdMaxVotingPeriod {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "requested voting period %s is longer than max voting period %s", votingPeriod.String(), thresholdMaxVotingPeriod.String())
+	}
+
+	thresholdMinVotingPeriod, err := time.ParseDuration(moduleParams.MinDaysDuration)
+	if err != nil {
+		return nil, err
+	}
+
+	if votingPeriod < thresholdMinVotingPeriod {
+		return nil, errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "requested voting period %s is shorter than min voting period %s", votingPeriod.String(), thresholdMinVotingPeriod.String())
 	}
 
 	poll.VotingPeriod = msg.VotingPeriod
@@ -116,7 +119,7 @@ func validateAndCreateOptions(options []types.Options) ([]*types.Options, error)
 	result := make([]*types.Options, 0)
 	for id, option := range options {
 		option.IsVeto = false
-		option.IsVinner = false
+		option.IsWinner = false
 		option.Id = uint64(id)
 
 		if option.Text == "" {
@@ -128,7 +131,7 @@ func validateAndCreateOptions(options []types.Options) ([]*types.Options, error)
 	result = append(result, &types.Options{
 		Id:       uint64(len(result)),
 		IsVeto:   true,
-		IsVinner: false,
+		IsWinner: false,
 		Text:     vetoOptionText,
 	})
 

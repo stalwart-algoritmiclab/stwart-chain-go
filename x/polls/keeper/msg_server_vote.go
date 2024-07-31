@@ -1,13 +1,8 @@
-/*
- * SPDX-License-Identifier: BUSL-1.1
- * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
- */
-
 package keeper
 
 import (
 	"context"
+	"sort"
 	"time"
 
 	errorsmod "cosmossdk.io/errors"
@@ -151,7 +146,7 @@ func (k msgServer) lockTokens(goCtx context.Context, creatorAddress sdk.AccAddre
 
 	if vestingAccount.EndTime > timeNow {
 		vestingAccount.OriginalVesting = vestingAccount.OriginalVesting.Add(amount...)
-		vestingAccount.VestingPeriods = append(vestingAccount.VestingPeriods, period)
+		vestingAccount.VestingPeriods = sortPeriods(vestingAccount.VestingPeriods, amount, endTime, vestingAccount.StartTime)
 		vestingAccount.EndTime = vestingAccount.EndTime + periodLength
 	} else {
 		vestingAccount.OriginalVesting = amount
@@ -163,4 +158,36 @@ func (k msgServer) lockTokens(goCtx context.Context, creatorAddress sdk.AccAddre
 	k.accountKeeper.SetAccount(ctx, vestingAccount)
 
 	return nil
+}
+
+func sortPeriods(periods []vestingtypes.Period, newPeriodAmount sdk.Coins, newPeriodEndTime, startTime int64) []vestingtypes.Period {
+	var (
+		endTimes        []votesPeriod
+		newPeriods      []vestingtypes.Period
+		previousEndTime int64
+	)
+
+	currentTime := startTime
+	for _, period := range periods {
+		currentTime += period.Length
+		endTimes = append(endTimes, votesPeriod{period.Amount, currentTime})
+	}
+
+	endTimes = append(endTimes, votesPeriod{newPeriodAmount, newPeriodEndTime})
+
+	sort.Slice(endTimes, func(i, j int) bool {
+		return endTimes[i].endTime < endTimes[j].endTime
+	})
+
+	previousEndTime = startTime
+	for _, endTime := range endTimes {
+		periodLength := endTime.endTime - previousEndTime
+		newPeriods = append(newPeriods, vestingtypes.Period{
+			Length: periodLength,
+			Amount: endTime.amount,
+		})
+		previousEndTime = endTime.endTime
+	}
+
+	return newPeriods
 }

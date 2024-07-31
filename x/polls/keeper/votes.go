@@ -1,9 +1,3 @@
-/*
- * SPDX-License-Identifier: BUSL-1.1
- * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
- */
-
 package keeper
 
 import (
@@ -13,9 +7,15 @@ import (
 	"cosmossdk.io/store/prefix"
 	storetypes "cosmossdk.io/store/types"
 	"github.com/cosmos/cosmos-sdk/runtime"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 
 	"github.com/stalwart-algoritmiclab/stwart-chain-go/x/polls/types"
 )
+
+type votesPeriod struct {
+	amount  sdk.Coins
+	endTime int64
+}
 
 // GetVotesCount get the total number of votes
 func (k Keeper) GetVotesCount(ctx context.Context) uint64 {

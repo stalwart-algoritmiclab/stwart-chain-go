@@ -72,7 +72,7 @@ var (
 	fd_Options_tokensAmount protoreflect.FieldDescriptor
 	fd_Options_isVeto       protoreflect.FieldDescriptor
 	fd_Options_text         protoreflect.FieldDescriptor
-	fd_Options_isVinner     protoreflect.FieldDescriptor
+	fd_Options_isWinner     protoreflect.FieldDescriptor
 )
 
 func init() {
@@ -83,7 +83,7 @@ func init() {
 	fd_Options_tokensAmount = md_Options.Fields().ByName("tokensAmount")
 	fd_Options_isVeto = md_Options.Fields().ByName("isVeto")
 	fd_Options_text = md_Options.Fields().ByName("text")
-	fd_Options_isVinner = md_Options.Fields().ByName("isVinner")
+	fd_Options_isWinner = md_Options.Fields().ByName("isWinner")
 }
 
 var _ protoreflect.Message = (*fastReflection_Options)(nil)
@@ -181,9 +181,9 @@ func (x *fastReflection_Options) Range(f func(protoreflect.FieldDescriptor, prot
 			return
 		}
 	}
-	if x.IsVinner != false {
-		value := protoreflect.ValueOfBool(x.IsVinner)
-		if !f(fd_Options_isVinner, value) {
+	if x.IsWinner != false {
+		value := protoreflect.ValueOfBool(x.IsWinner)
+		if !f(fd_Options_isWinner, value) {
 			return
 		}
 	}
@@ -212,8 +212,8 @@ func (x *fastReflection_Options) Has(fd protoreflect.FieldDescriptor) bool {
 		return x.IsVeto != false
 	case "stwartchain.polls.Options.text":
 		return x.Text != ""
-	case "stwartchain.polls.Options.isVinner":
-		return x.IsVinner != false
+	case "stwartchain.polls.Options.isWinner":
+		return x.IsWinner != false
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.polls.Options"))
@@ -240,8 +240,8 @@ func (x *fastReflection_Options) Clear(fd protoreflect.FieldDescriptor) {
 		x.IsVeto = false
 	case "stwartchain.polls.Options.text":
 		x.Text = ""
-	case "stwartchain.polls.Options.isVinner":
-		x.IsVinner = false
+	case "stwartchain.polls.Options.isWinner":
+		x.IsWinner = false
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.polls.Options"))
@@ -276,8 +276,8 @@ func (x *fastReflection_Options) Get(descriptor protoreflect.FieldDescriptor) pr
 	case "stwartchain.polls.Options.text":
 		value := x.Text
 		return protoreflect.ValueOfString(value)
-	case "stwartchain.polls.Options.isVinner":
-		value := x.IsVinner
+	case "stwartchain.polls.Options.isWinner":
+		value := x.IsWinner
 		return protoreflect.ValueOfBool(value)
 	default:
 		if descriptor.IsExtension() {
@@ -311,8 +311,8 @@ func (x *fastReflection_Options) Set(fd protoreflect.FieldDescriptor, value prot
 		x.IsVeto = value.Bool()
 	case "stwartchain.polls.Options.text":
 		x.Text = value.Interface().(string)
-	case "stwartchain.polls.Options.isVinner":
-		x.IsVinner = value.Bool()
+	case "stwartchain.polls.Options.isWinner":
+		x.IsWinner = value.Bool()
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.polls.Options"))
@@ -347,8 +347,8 @@ func (x *fastReflection_Options) Mutable(fd protoreflect.FieldDescriptor) protor
 		panic(fmt.Errorf("field isVeto of message stwartchain.polls.Options is not mutable"))
 	case "stwartchain.polls.Options.text":
 		panic(fmt.Errorf("field text of message stwartchain.polls.Options is not mutable"))
-	case "stwartchain.polls.Options.isVinner":
-		panic(fmt.Errorf("field isVinner of message stwartchain.polls.Options is not mutable"))
+	case "stwartchain.polls.Options.isWinner":
+		panic(fmt.Errorf("field isWinner of message stwartchain.polls.Options is not mutable"))
 	default:
 		if fd.IsExtension() {
 			panic(fmt.Errorf("proto3 declared messages do not support extensions: stwartchain.polls.Options"))
@@ -373,7 +373,7 @@ func (x *fastReflection_Options) NewField(fd protoreflect.FieldDescriptor) proto
 		return protoreflect.ValueOfBool(false)
 	case "stwartchain.polls.Options.text":
 		return protoreflect.ValueOfString("")
-	case "stwartchain.polls.Options.isVinner":
+	case "stwartchain.polls.Options.isWinner":
 		return protoreflect.ValueOfBool(false)
 	default:
 		if fd.IsExtension() {
@@ -463,7 +463,7 @@ func (x *fastReflection_Options) ProtoMethods() *protoiface.Methods {
 		if l > 0 {
 			n += 1 + l + runtime.Sov(uint64(l))
 		}
-		if x.IsVinner {
+		if x.IsWinner {
 			n += 2
 		}
 		if x.unknownFields != nil {
@@ -495,9 +495,9 @@ func (x *fastReflection_Options) ProtoMethods() *protoiface.Methods {
 			i -= len(x.unknownFields)
 			copy(dAtA[i:], x.unknownFields)
 		}
-		if x.IsVinner {
+		if x.IsWinner {
 			i--
-			if x.IsVinner {
+			if x.IsWinner {
 				dAtA[i] = 1
 			} else {
 				dAtA[i] = 0
@@ -723,7 +723,7 @@ func (x *fastReflection_Options) ProtoMethods() *protoiface.Methods {
 				iNdEx = postIndex
 			case 6:
 				if wireType != 0 {
-					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field IsVinner", wireType)
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field IsWinner", wireType)
 				}
 				var v int
 				for shift := uint(0); ; shift += 7 {
@@ -740,7 +740,7 @@ func (x *fastReflection_Options) ProtoMethods() *protoiface.Methods {
 						break
 					}
 				}
-				x.IsVinner = bool(v != 0)
+				x.IsWinner = bool(v != 0)
 			default:
 				iNdEx = preIndex
 				skippy, err := runtime.Skip(dAtA[iNdEx:])
@@ -799,7 +799,7 @@ type Options struct {
 	TokensAmount []*v1beta1.Coin `protobuf:"bytes,3,rep,name=tokensAmount,proto3" json:"tokensAmount,omitempty"`
 	IsVeto       bool            `protobuf:"varint,4,opt,name=isVeto,proto3" json:"isVeto,omitempty"`
 	Text         string          `protobuf:"bytes,5,opt,name=text,proto3" json:"text,omitempty"`
-	IsVinner     bool            `protobuf:"varint,6,opt,name=isVinner,proto3" json:"isVinner,omitempty"`
+	IsWinner     bool            `protobuf:"varint,6,opt,name=isWinner,proto3" json:"isWinner,omitempty"`
 }
 
 func (x *Options) Reset() {
@@ -857,9 +857,9 @@ func (x *Options) GetText() string {
 	return ""
 }
 
-func (x *Options) GetIsVinner() bool {
+func (x *Options) GetIsWinner() bool {
 	if x != nil {
-		return x.IsVinner
+		return x.IsWinner
 	}
 	return false
 }
@@ -884,8 +884,8 @@ var file_stwartchain_polls_options_proto_rawDesc = []byte{
 	0x0c, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x73, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x16, 0x0a,
 	0x06, 0x69, 0x73, 0x56, 0x65, 0x74, 0x6f, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x69,
 	0x73, 0x56, 0x65, 0x74, 0x6f, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x65, 0x78, 0x74, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x73, 0x56,
-	0x69, 0x6e, 0x6e, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x69, 0x73, 0x56,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x65, 0x78, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x73, 0x57,
+	0x69, 0x6e, 0x6e, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x69, 0x73, 0x57,
 	0x69, 0x6e, 0x6e, 0x65, 0x72, 0x42, 0xae, 0x01, 0x0a, 0x15, 0x63, 0x6f, 0x6d, 0x2e, 0x73, 0x74,
 	0x77, 0x61, 0x72, 0x74, 0x63, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x70, 0x6f, 0x6c, 0x6c, 0x73, 0x42,
 	0x0c, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a,
