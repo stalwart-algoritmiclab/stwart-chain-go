@@ -70,24 +70,6 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:          "Send a Send tx",
 					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "from"}, {ProtoField: "to"}, {ProtoField: "amount"}, {ProtoField: "denom"}},
 				},
-				{
-					RpcMethod:      "Refund",
-					Use:            "refund [from] [to] [amount]",
-					Short:          "Send a Refund tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "from"}, {ProtoField: "to"}, {ProtoField: "amount"}},
-				},
-				{
-					RpcMethod:      "Fees",
-					Use:            "fees [comission] [address-to]",
-					Short:          "Send a Fees tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "comission"}, {ProtoField: "addressTo"}},
-				},
-				{
-					RpcMethod:      "RefReward",
-					Use:            "ref-reward [amount] [referrer]",
-					Short:          "Send a RefReward tx",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "amount"}, {ProtoField: "referrer"}},
-				},
 				// this line is used by ignite scaffolding # autocli/tx
 			},
 		},

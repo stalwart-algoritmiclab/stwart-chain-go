@@ -11,5 +11,5 @@ message Options {
   repeated cosmos.base.v1beta1.Coin tokensAmount = 3 [(gogoproto.nullable) = false];
   bool isVeto = 4;
   string text = 5;
-  bool isVinner = 6;
+  bool isWinner = 6;
 }

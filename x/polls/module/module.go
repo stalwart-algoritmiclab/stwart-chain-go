@@ -1,9 +1,3 @@
-/*
- * SPDX-License-Identifier: BUSL-1.1
- * Contributed by Algoritmic Lab Ltd. Copyright (C) 2024.
- * Full license is available at https://github.com/stalwart-algoritmiclab/stwart-chain-go/tree/main/LICENSES
- */
-
 package polls
 
 import (
@@ -298,7 +292,7 @@ func (am AppModule) countVotes(ctx sdk.Context, poll types.Polls) (types.Polls, 
 	}
 
 	poll.Status = keeper.StatusPassed.String()
-	winner.IsVinner = true
+	winner.IsWinner = true
 	keeper.UpdateOption(poll, winner)
 
 	return poll, nil

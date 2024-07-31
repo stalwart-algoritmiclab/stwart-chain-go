@@ -21,9 +21,6 @@ service Msg {
   rpc Issue        (MsgIssue       ) returns (MsgIssueResponse       );
   rpc Withdraw     (MsgWithdraw    ) returns (MsgWithdrawResponse    );
   rpc Send         (MsgSend        ) returns (MsgSendResponse        );
-  rpc Refund       (MsgRefund      ) returns (MsgRefundResponse      );
-  rpc Fees         (MsgFees        ) returns (MsgFeesResponse        );
-  rpc RefReward    (MsgRefReward   ) returns (MsgRefRewardResponse   );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -73,34 +70,6 @@ message MsgSend {
 }
 
 message MsgSendResponse {}
-
-message MsgRefund {
-  option (cosmos.msg.v1.signer) = "creator";
-  string creator = 1;
-  string from    = 2;
-  string to      = 3;
-  string amount  = 4;
-}
-
-message MsgRefundResponse {}
-
-message MsgFees {
-  option (cosmos.msg.v1.signer) = "creator";
-  string                   creator  = 1;
-  cosmos.base.v1beta1.Coin comission = 2 [(gogoproto.nullable) = false];
-  string                   addressTo = 3;
-}
-
-message MsgFeesResponse {}
-
-message MsgRefReward {
-  option (cosmos.msg.v1.signer) = "creator";
-  string                   creator  = 1;
-  cosmos.base.v1beta1.Coin amount   = 2 [(gogoproto.nullable) = false];
-  string                   referrer = 3;
-}
-
-message MsgRefRewardResponse {}
 
 message MsgBurn {
   string creator = 1;

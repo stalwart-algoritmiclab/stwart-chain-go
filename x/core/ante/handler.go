@@ -15,7 +15,6 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
 
-	coretypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/core/types"
 	staketypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/stake/types"
 	systemrewardsmoduletypes "github.com/stalwart-algoritmiclab/stwart-chain-go/x/systemrewards/types"
 )
@@ -53,12 +52,6 @@ func (f CoreDecorator) deductFees(
 		return ctx, nil
 	}
 	f.statsKeeper.SetStatsFee(ctx, sdk.NewCoins(feeCoin), txFullAmount)
-
-	// log fee event
-	_ = ctx.EventManager().EmitTypedEvents(&coretypes.MsgFees{
-		Comission: feeCoin,
-		AddressTo: addressTo,
-	})
 
 	// get stake reward percent
 	stakeReward, _ := strconv.ParseFloat(fees.StakeReward, 64)
@@ -168,15 +161,6 @@ func (f CoreDecorator) sendReferralReward(
 
 	if err = f.bk.SendCoins(ctx, addressFrom, referrerAddress, refReward); err != nil {
 		return false, err
-	}
-
-	// log ref reward coins
-	for _, coin := range refReward {
-		_ = ctx.EventManager().EmitTypedEvents(&coretypes.MsgRefReward{
-			Creator:  addressTo,
-			Amount:   coin,
-			Referrer: referrerAddress.String(),
-		})
 	}
 
 	return true, nil

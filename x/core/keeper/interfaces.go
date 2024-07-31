@@ -39,10 +39,7 @@ type (
 	CoreMsgServer interface {
 		CoreKeeper
 
-		Fees(goCtx context.Context, msg *types.MsgFees) (*types.MsgFeesResponse, error)
 		Issue(goCtx context.Context, msg *types.MsgIssue) (*types.MsgIssueResponse, error)
-		RefReward(goCtx context.Context, msg *types.MsgRefReward) (*types.MsgRefRewardResponse, error)
-		Refund(goCtx context.Context, msg *types.MsgRefund) (*types.MsgRefundResponse, error)
 		Send(goCtx context.Context, msg *types.MsgSend) (*types.MsgSendResponse, error)
 		UpdateParams(goCtx context.Context, req *types.MsgUpdateParams) (*types.MsgUpdateParamsResponse, error)
 		Withdraw(goCtx context.Context, msg *types.MsgWithdraw) (*types.MsgWithdrawResponse, error)

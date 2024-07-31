@@ -56,17 +56,12 @@ func (k msgServer) UpdateRates(goCtx context.Context, msg *types.MsgUpdateRates)
 	}
 
 	// Check if the value exists
-	valFound, isFound := k.GetRates(
+	_, isFound := k.GetRates(
 		ctx,
 		msg.Denom,
 	)
 	if !isFound {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
-	}
-
-	// Checks if the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
 	var rates = types.Rates{
@@ -90,17 +85,12 @@ func (k msgServer) DeleteRates(goCtx context.Context, msg *types.MsgDeleteRates)
 	}
 
 	// Check if the value exists
-	valFound, isFound := k.GetRates(
+	_, isFound := k.GetRates(
 		ctx,
 		msg.Denom,
 	)
 	if !isFound {
 		return nil, errorsmod.Wrap(sdkerrors.ErrKeyNotFound, "index not set")
-	}
-
-	// Checks if the msg creator is the same as the current owner
-	if msg.Creator != valFound.Creator {
-		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
 
 	k.RemoveRates(
